@@ -1,0 +1,30 @@
+{
+  "name": "evbem",
+  "version": "1.0.0",
+  "description": "Gestão patrimonial de bens",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffrazao/evbem.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Fernando Frazão da Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ffrazao/evbem/issues"
+  },
+  "homepage": "https://github.com/ffrazao/evbem#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}

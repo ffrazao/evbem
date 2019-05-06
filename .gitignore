@@ -1,0 +1,7 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#web ignore
+web/node_modules/**/*
+web/app/js/**/*
