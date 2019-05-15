@@ -1,7 +1,53 @@
-#OS junk files
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# System Files - OS junk files
 [Tt]humbs.db
 *.DS_Store
+.DS_Store
+Thumbs.db
 
-#web ignore
-web/node_modules/**/*
-web/app/js/**/*
+#modelo ignore
+modelo/*.bak
+modelo/*.sql
+
+# compiled output
+web/dist
+web/tmp
+web/out-tsc
+
+# Only exists if Bazel was run
+web/bazel-out
+
+# dependencies
+web/node_modules
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
+
+# IDEs and editors
+web/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+web/.sass-cache
+web/connect.lock
+web/coverage
+web/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+web/typings
