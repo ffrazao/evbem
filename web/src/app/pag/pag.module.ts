@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
+
+import { PagRoutingModule } from './pag-routing.module';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 @NgModule({
-  declarations: [LoginComponent, UsuarioComponent],
+  declarations: [UsuarioComponent, PerfilComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    PagRoutingModule
+  ], 
+  exports: [],
 })
 export class PagModule { }
