@@ -1,10 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
+import { ErrorDialogComponent } from './componente/error-dialog/errordialog.component';
+import { ErrorDialogService } from './componente/error-dialog/errordialog.service';
+import { DomService } from './servico/dom.service';
+import { MirrorComponent } from './componente/mirror/mirror.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [ErrorDialogComponent, MirrorComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    NgxViacepModule
+  ],
+  exports: [],
+  providers: [DomService, ErrorDialogService],
+  entryComponents: [ErrorDialogComponent, MirrorComponent],
 })
 export class ComumModule { }

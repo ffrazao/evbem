@@ -1,8 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material';
+import { HttpConfigInterceptor } from './comum/interceptor/httpconfig.interceptor';
+import { AngularMaterialModule } from './angular-material.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ComumModule } from './comum/comum.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -16,9 +22,20 @@ import { LogoutComponent } from './logout/logout.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ComumModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    HttpClientModule,
+    AngularMaterialModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor, multi: true
+    }
+  ],
+  entryComponents: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
