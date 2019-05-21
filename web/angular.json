@@ -60,6 +60,14 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "qa": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
             }
           }
         },
@@ -71,6 +79,9 @@
           "configurations": {
             "production": {
               "browserTarget": "web:build:production"
+            },
+            "qa": {
+              "browserTarget": "web:build:qa"
             }
           }
         },
@@ -129,6 +140,9 @@
           "configurations": {
             "production": {
               "devServerTarget": "web:serve:production"
+            },
+            "qa": {
+              "devServerTarget": "web:serve:qa"
             }
           }
         },
