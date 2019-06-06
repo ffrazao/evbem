@@ -1,8 +1,36 @@
-## MySQL
+# logging app
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: DEBUG
+            StatementCreatorUtils: TRACE
+          datasource: TRACE
+      hibernate:
+        SQL:
+          TRACE
+        type:
+          descriptor:
+            sql:
+              BasicBinder:
+                TRACE
+
+# org.springframework.jdbc.datasource
+## datasource
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
   datasource:
-    url: jdbc:mysql://localhost:3306?useSSL=false
+    url: jdbc:mysql://localhost:3306?useSSL=false&useTimezone=true&serverTimezone=UTC
     username: root
     password: root
-
-  
+    initialization-mode: never
+    continue-on-error: false
