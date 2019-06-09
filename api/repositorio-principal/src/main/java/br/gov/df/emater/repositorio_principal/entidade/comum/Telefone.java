@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import lombok.Data;
 
 
 /**
@@ -19,6 +20,7 @@ import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 @Entity
 @Table(catalog = "comum")
 @NamedQuery(name="Telefone.findAll", query="SELECT t FROM Telefone t")
+@Data
 public class Telefone extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,22 +31,8 @@ public class Telefone extends EntidadeBase implements Serializable {
 	private String numero;
 
 	public Telefone() {
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getNumero() {
-		return this.numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
+		Telefone t = new Telefone();
+		t.setNumero();
 	}
 
 }
