@@ -8,7 +8,7 @@
 		<artifactId>api</artifactId>
 		<version>${br-gov-df-emater.version}</version>
 	</parent>
-	<artifactId>rest</artifactId>
+	<artifactId>restful-servidor</artifactId>
 	<name>Rest End Points</name>
 	<description>End Points em modelo Rest Full</description>
 	<packaging>war</packaging>
@@ -27,6 +27,11 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.df.emater</groupId>
+			<artifactId>negocio</artifactId>
+			<version>${br-gov-df-emater.version}</version>
 		</dependency>
 
 		<dependency>

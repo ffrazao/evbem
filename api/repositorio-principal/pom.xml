@@ -46,6 +46,11 @@
 			<scope>test</scope>
 			<version>${spring-boot.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>br.gov.df.emater</groupId>
+			<artifactId>comum</artifactId>
+			<version>${br-gov-df-emater.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

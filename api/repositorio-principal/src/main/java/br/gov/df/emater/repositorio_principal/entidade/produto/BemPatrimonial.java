@@ -8,57 +8,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * The persistent class for the bem_patrimonial database table.
  * 
  */
 @Entity
-@Table(catalog = "produto", name="bem_patrimonial")
-@NamedQuery(name="BemPatrimonial.findAll", query="SELECT b FROM BemPatrimonial b")
+@Table(catalog = "produto", name = "bem_patrimonial")
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class BemPatrimonial extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
 
 	@Lob
 	private String descricao;
 
-	@Column(name="identificacao_patrimonial")
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
+	@Column(name = "identificacao_patrimonial")
 	private String identificacaoPatrimonial;
-
-	public BemPatrimonial() {
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getIdentificacaoPatrimonial() {
-		return this.identificacaoPatrimonial;
-	}
-
-	public void setIdentificacaoPatrimonial(String identificacaoPatrimonial) {
-		this.identificacaoPatrimonial = identificacaoPatrimonial;
-	}
 
 }

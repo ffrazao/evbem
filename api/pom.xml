@@ -37,7 +37,7 @@
 		<module>repositorio-principal</module>
 		<module>transporte-dados</module>
 		<module>negocio</module>
-		<module>rest</module>
+		<module>restful-servidor</module>
 		<module>autorizador-servidor</module>
 	</modules>
 

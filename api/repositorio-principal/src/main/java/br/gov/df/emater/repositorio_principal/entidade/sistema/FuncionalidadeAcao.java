@@ -11,11 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -24,13 +26,15 @@ import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
  */
 @Entity
 @Table(catalog = "sistema", name="funcionalidade_acao")
-@NamedQuery(name="FuncionalidadeAcao.findAll", query="SELECT f FROM FuncionalidadeAcao f")
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class FuncionalidadeAcao extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	//bi-directional many-to-one association to Acao
+	@ManyToOne
+	private Acao acao;
 
 	private String ativo;
 
@@ -39,10 +43,6 @@ public class FuncionalidadeAcao extends EntidadeBase implements Serializable {
 
 	@Lob
 	private String descricao;
-
-	//bi-directional many-to-one association to Acao
-	@ManyToOne
-	private Acao acao;
 
 	//bi-directional many-to-one association to Funcionalidade
 	@ManyToOne
@@ -57,6 +57,10 @@ public class FuncionalidadeAcao extends EntidadeBase implements Serializable {
 	@OneToMany(mappedBy="funcionalidadeAcao")
 	private List<FuncionalidadeAcao> funcionalidadeAcaos;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+
 	//bi-directional many-to-one association to ModuloFuncionalidadeAcao
 	@OneToMany(mappedBy="funcionalidadeAcao")
 	private List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaos;
@@ -64,130 +68,5 @@ public class FuncionalidadeAcao extends EntidadeBase implements Serializable {
 	//bi-directional many-to-one association to Privilegio
 	@OneToMany(mappedBy="funcionalidadeAcao")
 	private List<Privilegio> privilegios;
-
-	public FuncionalidadeAcao() {
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getAtivo() {
-		return this.ativo;
-	}
-
-	public void setAtivo(String ativo) {
-		this.ativo = ativo;
-	}
-
-	public String getConcedeAcessoA() {
-		return this.concedeAcessoA;
-	}
-
-	public void setConcedeAcessoA(String concedeAcessoA) {
-		this.concedeAcessoA = concedeAcessoA;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Acao getAcao() {
-		return this.acao;
-	}
-
-	public void setAcao(Acao acao) {
-		this.acao = acao;
-	}
-
-	public Funcionalidade getFuncionalidade() {
-		return this.funcionalidade;
-	}
-
-	public void setFuncionalidade(Funcionalidade funcionalidade) {
-		this.funcionalidade = funcionalidade;
-	}
-
-	public FuncionalidadeAcao getFuncionalidadeAcao() {
-		return this.funcionalidadeAcao;
-	}
-
-	public void setFuncionalidadeAcao(FuncionalidadeAcao funcionalidadeAcao) {
-		this.funcionalidadeAcao = funcionalidadeAcao;
-	}
-
-	public List<FuncionalidadeAcao> getFuncionalidadeAcaos() {
-		return this.funcionalidadeAcaos;
-	}
-
-	public void setFuncionalidadeAcaos(List<FuncionalidadeAcao> funcionalidadeAcaos) {
-		this.funcionalidadeAcaos = funcionalidadeAcaos;
-	}
-
-	public FuncionalidadeAcao addFuncionalidadeAcao(FuncionalidadeAcao funcionalidadeAcao) {
-		getFuncionalidadeAcaos().add(funcionalidadeAcao);
-		funcionalidadeAcao.setFuncionalidadeAcao(this);
-
-		return funcionalidadeAcao;
-	}
-
-	public FuncionalidadeAcao removeFuncionalidadeAcao(FuncionalidadeAcao funcionalidadeAcao) {
-		getFuncionalidadeAcaos().remove(funcionalidadeAcao);
-		funcionalidadeAcao.setFuncionalidadeAcao(null);
-
-		return funcionalidadeAcao;
-	}
-
-	public List<ModuloFuncionalidadeAcao> getModuloFuncionalidadeAcaos() {
-		return this.moduloFuncionalidadeAcaos;
-	}
-
-	public void setModuloFuncionalidadeAcaos(List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaos) {
-		this.moduloFuncionalidadeAcaos = moduloFuncionalidadeAcaos;
-	}
-
-	public ModuloFuncionalidadeAcao addModuloFuncionalidadeAcao(ModuloFuncionalidadeAcao moduloFuncionalidadeAcao) {
-		getModuloFuncionalidadeAcaos().add(moduloFuncionalidadeAcao);
-		moduloFuncionalidadeAcao.setFuncionalidadeAcao(this);
-
-		return moduloFuncionalidadeAcao;
-	}
-
-	public ModuloFuncionalidadeAcao removeModuloFuncionalidadeAcao(ModuloFuncionalidadeAcao moduloFuncionalidadeAcao) {
-		getModuloFuncionalidadeAcaos().remove(moduloFuncionalidadeAcao);
-		moduloFuncionalidadeAcao.setFuncionalidadeAcao(null);
-
-		return moduloFuncionalidadeAcao;
-	}
-
-	public List<Privilegio> getPrivilegios() {
-		return this.privilegios;
-	}
-
-	public void setPrivilegios(List<Privilegio> privilegios) {
-		this.privilegios = privilegios;
-	}
-
-	public Privilegio addPrivilegio(Privilegio privilegio) {
-		getPrivilegios().add(privilegio);
-		privilegio.setFuncionalidadeAcao(this);
-
-		return privilegio;
-	}
-
-	public Privilegio removePrivilegio(Privilegio privilegio) {
-		getPrivilegios().remove(privilegio);
-		privilegio.setFuncionalidadeAcao(null);
-
-		return privilegio;
-	}
 
 }

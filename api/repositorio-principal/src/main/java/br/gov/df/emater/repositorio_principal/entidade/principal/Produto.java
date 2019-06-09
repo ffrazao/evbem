@@ -8,12 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * The persistent class for the produto database table.
@@ -21,58 +22,25 @@ import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
  */
 @Entity
 @Table(catalog = "principal")
-@NamedQuery(name="Produto.findAll", query="SELECT p FROM Produto p")
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Produto extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(name="modelo_id")
-	private int modeloId;
-
-	@Column(name="numero_serie")
-	private String numeroSerie;
-
-	//bi-directional one-to-one association to Item
+	// bi-directional one-to-one association to Item
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name = "id")
 	private Item item;
 
-	public Produto() {
-	}
+	@Column(name = "modelo_id")
+	private int modeloId;
 
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getModeloId() {
-		return this.modeloId;
-	}
-
-	public void setModeloId(int modeloId) {
-		this.modeloId = modeloId;
-	}
-
-	public String getNumeroSerie() {
-		return this.numeroSerie;
-	}
-
-	public void setNumeroSerie(String numeroSerie) {
-		this.numeroSerie = numeroSerie;
-	}
-
-	public Item getItem() {
-		return this.item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
+	@Column(name = "numero_serie")
+	private String numeroSerie;
 
 }

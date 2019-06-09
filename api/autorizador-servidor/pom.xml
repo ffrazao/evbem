@@ -27,6 +27,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>br.gov.df.emater</groupId>
+			<artifactId>negocio</artifactId>
+			<version>${br-gov-df-emater.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

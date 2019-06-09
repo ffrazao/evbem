@@ -6,11 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * The persistent class for the email database table.
@@ -18,43 +19,18 @@ import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
  */
 @Entity
 @Table(catalog = "comum")
-@NamedQuery(name="Email.findAll", query="SELECT e FROM Email e")
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Email extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-
 	private String dominio;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
 	private String usuario;
-
-	public Email() {
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getDominio() {
-		return this.dominio;
-	}
-
-	public void setDominio(String dominio) {
-		this.dominio = dominio;
-	}
-
-	public String getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
 
 }
