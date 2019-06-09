@@ -1,7 +1,11 @@
 package br.gov.df.emater.comum;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class FuncoesTest extends TestCase {
+public class FuncoesTest {
+
+	@Test
+	public void teste() {
+	}
 
 }

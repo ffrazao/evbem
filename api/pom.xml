@@ -3,38 +3,44 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!-- <parent> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
+		<version>${spring-boot.version}</version> </parent> -->
 	<groupId>br.gov.df.emater</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${br-gov-df-emater.version}</version>
 
 	<name>API</name>
 	<url>http://maven.apache.org</url>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.11</java.version>
+		<java.version>1.10</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<spring-boot.version>2.1.5.RELEASE</spring-boot.version>
 		<downloadSources>true</downloadSources>
 		<downloadJavadocs>true</downloadJavadocs>
+
+		<br-gov-df-emater.version>0.0.1-SNAPSHOT</br-gov-df-emater.version>
+		<cadeiaresponsabilidade.version>0.0.1-SNAPSHOT</cadeiaresponsabilidade.version>
+		<spring-boot.version>2.1.5.RELEASE</spring-boot.version>
+		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+		<spring-security-test.version>5.1.5.RELEASE</spring-security-test.version>
+		<hikaricp.version>3.3.1</hikaricp.version>
+		<mysql.version>8.0.16</mysql.version>
+		<hibernate-spatial.version>5.4.3.Final</hibernate-spatial.version>
+		<junit.version>4.12</junit.version>
 	</properties>
 
 	<modules>
 		<module>comum</module>
 		<module>repositorio-principal</module>
+		<module>transporte-dados</module>
+		<module>negocio</module>
+		<module>rest</module>
+		<module>autorizador-servidor</module>
 	</modules>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
+	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-compiler-plugin</artifactId> <configuration> <source>${java.version}</source> 
+		<target>${java.version}</target> </configuration> </plugin> </plugins> </build> -->
 </project>
