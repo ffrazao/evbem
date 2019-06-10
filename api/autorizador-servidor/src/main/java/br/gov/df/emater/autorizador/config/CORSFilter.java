@@ -1,4 +1,4 @@
-package br.gov.df.emater.rest.config;
+package br.gov.df.emater.autorizador.config;
 
 import java.io.IOException;
 
