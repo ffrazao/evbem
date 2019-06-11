@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 
 public interface UsuarioDAO extends JpaRepository<Usuario, Integer> {
+	
+	Usuario findByLogin(String login);
+	
 }

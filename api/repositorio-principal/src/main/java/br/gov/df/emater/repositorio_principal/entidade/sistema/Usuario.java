@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +34,8 @@ import lombok.NoArgsConstructor;
 public class Usuario extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String ativo;
+	@Enumerated
+	private Confirmacao ativo;
 
 	@Column(name = "atualizado_em")
 	private Timestamp atualizadoEm;
