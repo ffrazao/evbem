@@ -10,6 +10,7 @@ public class UsuarioFecharCmd extends Comando {
 
 	@Override
 	protected void procedimento(Contexto<?, ?> contexto) throws Exception {
+		contexto.setResposta("Frz!!!");
 		System.out.println("Deu certo 3 !!!!");
 	}
 

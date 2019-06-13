@@ -32,22 +32,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Bean
 	@Primary
-	public JdbcClientDetailsService clientDetailsService() {
+	public JdbcClientDetailsService clientDetailsService() {//4
 		return new JdbcClientDetailsService(datasource);
 	}
 
 	@Bean
-	public TokenStore tokenStore() {
+	public TokenStore tokenStore() {//3
 		return new JdbcTokenStore(datasource);
 	}
 
 	@Bean
-	public ApprovalStore approvalStore() {
+	public ApprovalStore approvalStore() {//1
 		return new JdbcApprovalStore(datasource);
 	}
 
 	@Bean
-	public AuthorizationCodeServices authorizationCodeServices() {
+	public AuthorizationCodeServices authorizationCodeServices() {//2
 		return new JdbcAuthorizationCodeServices(datasource);
 	}
 
