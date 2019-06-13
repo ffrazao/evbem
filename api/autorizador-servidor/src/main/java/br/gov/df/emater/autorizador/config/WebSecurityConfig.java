@@ -62,8 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new BCryptPasswordEncoder().encode("a"));
-		System.out.println(new BCryptPasswordEncoder().encode("a"));
+		System.out.println(new BCryptPasswordEncoder().encode("senhaevbem"));
+		System.out.println(new BCryptPasswordEncoder().encode("senhaevbem"));
 	}
 
 }
