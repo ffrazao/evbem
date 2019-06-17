@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  envName: 'DESENV'
+  envName: 'DESENV',
+  API_URL: 'http://localhost:8080',
+  AUTORIZADOR_SERVER_URL: 'http://localhost:8081'
 };
 
 /*

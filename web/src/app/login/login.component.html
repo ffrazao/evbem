@@ -1,4 +1,20 @@
-<p>
-  login works! 
-  <button mat-raised-button (click)="login()">Basic</button>
-</p>
+<label>Usuário</label>
+<input id="usuario" class="form-control" formControlName="loginForm.usuario">{{loginForm.usuario}}
+<div *ngIf="loginForm.usuario.invalid && (loginForm.usuario.dirty || loginForm.usuario.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="loginForm.usuario.errors.required">
+    Preenchimento obrigatório.
+  </div>
+  <div *ngIf="loginForm.usuario.errors.minlength">
+    Ao menos 4 caracteres
+  </div>
+</div>
+
+<label>Senha</label>
+<input id="senha" class="form-control" formControlName="loginForm.senha">
+<div *ngIf="loginForm.senha.invalid && (loginForm.senha.dirty || loginForm.senha.touched)"
+    class="alert alert-danger">
+</div>
+
+<button (click)="efetuarLogin()">Login</button>
