@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
   }
 
   efetuarLogin() {
-    console.log(this.usuario, this.senha);
     this._service.login(
       this.usuario.value,
       this.senha.value

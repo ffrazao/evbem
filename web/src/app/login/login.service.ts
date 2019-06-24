@@ -1,39 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ConsultaCepService } from '../comum/servico/consulta-cep.service';
 import { environment } from 'src/environments/environment';
-import { headersToString } from 'selenium-webdriver/http';
 import { tap } from 'rxjs/operators';
+import { Token } from '../entidade/token';
+
+const KEY_TOKEN = 'token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private _http: HttpClient,
-    private _consultaCepService: ConsultaCepService) { }
+  constructor(
+    private _http: HttpClient) {
+  }
 
   public login(username, password) {
-    const client = btoa('evbem_web:senhaevbem');
+    const url = environment.AUTORIZADOR_SERVER_URL + '/oauth/token';
+    const data = `grant_type=password&username=${username}&password=${password}`;
+    const options = {
+      'headers': new HttpHeaders({
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": `Basic ${btoa('evbem_web:evbem_web')}`,
+      }),
+      'observe': 'response' as 'body'
+    };
 
-    return this._http.post(environment.AUTORIZADOR_SERVER_URL + '/oauth/token',
-      {
-        'grant_type': 'password',
-        'username': username,
-        'password': password,
-      },
-      {
-        observe: 'response',
-        //withCredentials: true,
-        //params: {'grant_type': 'password'},
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${client}`
-        })
-      }).pipe(
-        tap( // Log the result or error
-          data => console.log('Data', data),
-          error => console.error('Erro', error)
+    return this._http.post(url, data, options).pipe(
+        tap(
+          data => {
+            window.localStorage.setItem(KEY_TOKEN, JSON.stringify((data as HttpResponse<Token>).body));
+          }
         )
       );
   }
