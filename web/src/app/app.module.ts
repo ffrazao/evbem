@@ -5,6 +5,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material';
 import { HttpConfigInterceptor } from './comum/interceptor/httpconfig.interceptor';
 import { AngularMaterialModule } from './angular-material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +29,9 @@ import { LogoutComponent } from './logout/logout.component';
     BrowserAnimationsModule,
     MatDialogModule,
     HttpClientModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     {

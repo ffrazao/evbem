@@ -44,16 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		http
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.anonymous().and()
 			.authorizeRequests().antMatchers("/login", "/logout.do", "/usuario").permitAll()
-			.antMatchers(HttpMethod.OPTIONS).permitAll()
-			.anyRequest().authenticated()
-				.and().formLogin().loginProcessingUrl("/login.do").usernameParameter("username")
-				.passwordParameter("password").loginPage("/login").and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout.do")).and()
-				.userDetailsService(userDetailsServiceBean());
+								.antMatchers(HttpMethod.OPTIONS).permitAll()
+								.anyRequest().authenticated().and()
+//			.formLogin().loginProcessingUrl("/login.do").usernameParameter("username").passwordParameter("password").loginPage("/login").and()
+			//.formLogin().usernameParameter("username").passwordParameter("password").loginPage("/login").and()
+			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout.do"))
+			//.and().userDetailsService(userDetailsServiceBean())
+			;
 	}
 
 	@Override
@@ -63,7 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public static void main(String[] args) {
 		System.out.println(new BCryptPasswordEncoder().encode("a"));
-		System.out.println(new BCryptPasswordEncoder().encode("senhaevbem"));
 	}
 
 }

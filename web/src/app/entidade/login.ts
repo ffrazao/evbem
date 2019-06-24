@@ -1,4 +1,8 @@
 export class Login {
-    public usuario: string;
-    public senha: string;
+    usuario: string;
+    senha: string;
+    constructor(usuario: string, senha: string) {
+        this.usuario = usuario;
+        this.senha = senha;
+    }
 }

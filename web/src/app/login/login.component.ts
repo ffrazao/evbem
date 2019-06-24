@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Login } from '../entidade/login';
 
 @Component({
@@ -10,8 +10,8 @@ import { Login } from '../entidade/login';
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm: FormGroup;
-  public login = new Login();
+  loginForm: FormGroup;
+  login = new Login('', '');
 
   constructor(
     private _service: LoginService
@@ -19,20 +19,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      'usuario': new FormControl(this.login.usuario, [
-        Validators.required,
-        Validators.minLength(4)
-      ]),
-      'senha': new FormControl(this.login.senha)
+      'usuario': new FormControl(this.login.usuario, [Validators.required]),
+      'senha': new FormControl(this.login.senha, [])
     });
   }
 
   efetuarLogin() {
-    this._service.login(this.login.usuario, this.login.senha).
-      subscribe(
-        (res) => { console.log(res) }, 
-        (err) => { console.log(err) }
-      );
+    console.log(this.usuario, this.senha);
+    this._service.login(
+      this.usuario.value,
+      this.senha.value
+    ).subscribe(
+      (res) => {
+        console.log('resposta login', res);
+      },
+      (err) => {
+        console.log('erro login', err);
+      }
+    );
   }
+
+  get usuario() { return this.loginForm.get('usuario'); }
+
+  get senha() { return this.loginForm.get('senha'); }
 
 }

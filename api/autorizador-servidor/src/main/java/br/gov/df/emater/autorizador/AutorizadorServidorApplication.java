@@ -1,18 +1,13 @@
 package br.gov.df.emater.autorizador;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AutorizadorServidorApplication implements CommandLineRunner{
+public class AutorizadorServidorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AutorizadorServidorApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
 	}
 
 }

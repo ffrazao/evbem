@@ -1,20 +1,46 @@
-<label>Usuário</label>
-<input id="usuario" class="form-control" formControlName="loginForm.usuario">{{loginForm.usuario}}
-<div *ngIf="loginForm.usuario.invalid && (loginForm.usuario.dirty || loginForm.usuario.touched)"
-    class="alert alert-danger">
+<div class="clearfix">
+  <form class="form-horizontal" [formGroup]="loginForm">
+    <fieldset>
 
-  <div *ngIf="loginForm.usuario.errors.required">
-    Preenchimento obrigatório.
-  </div>
-  <div *ngIf="loginForm.usuario.errors.minlength">
-    Ao menos 4 caracteres
-  </div>
+      <!-- Form Name -->
+      <legend>Login</legend>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="usuario">Usuário</label>
+        <div class="col-md-4">
+          <input id="usuario" name="usuario" type="text" placeholder="nome de usuário" class="form-control input-md"
+            required="" formControlName="usuario">
+          <span class="help-block">Informe o nome do usuário com acesso ao sistema</span>
+        </div>
+        <div *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)" class="alert alert-danger">
+          <div *ngIf="usuario.errors.required">
+            Preenchimento obrigatório.
+          </div>
+        </div>
+      </div>
+
+      <!-- Password input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="senha">Senha</label>
+        <div class="col-md-4">
+          <input id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md"
+            required="" formControlName="senha">
+          <span class="help-block">Informe a senha do usuário de acesso ao sistema</span>
+        </div>
+        <div *ngIf="senha.invalid && (senha.dirty || senha.touched)" class="alert alert-danger">
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="singlebutton"></label>
+        <div class="col-md-4">
+          <button id="singlebutton" name="singlebutton" class="btn btn-primary" (click)="efetuarLogin()">Login</button>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
 </div>
-
-<label>Senha</label>
-<input id="senha" class="form-control" formControlName="loginForm.senha">
-<div *ngIf="loginForm.senha.invalid && (loginForm.senha.dirty || loginForm.senha.touched)"
-    class="alert alert-danger">
-</div>
-
-<button (click)="efetuarLogin()">Login</button>
+[{{loginForm.value | json }}]
