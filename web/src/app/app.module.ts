@@ -7,6 +7,7 @@ import { HttpConfigInterceptor } from './comum/interceptor/httpconfig.intercepto
 import { AngularMaterialModule } from './angular-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,9 @@ import { LogoutComponent } from './logout/logout.component';
     HttpClientModule,
     AngularMaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [
     {
