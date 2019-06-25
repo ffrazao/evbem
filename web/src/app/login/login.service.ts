@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { ConsultaCepService } from '../comum/servico/consulta-cep.service';
-import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { Token } from '../entidade/token';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+
+import { environment } from 'src/environments/environment';
+import { Token } from '../entidade/token';
+import { Login } from '../entidade/login';
+import { LoginComponent } from './login.component';
+import { ToastrService } from 'ngx-toastr';
 
 export const KEY_TOKEN = 'token';
 export const URL_OAUTH_TOKEN = '/oauth/token';
@@ -16,12 +20,31 @@ export class LoginService {
 
   constructor(
     private _http: HttpClient,
-    private _router: Router) {
+    private _dialog: MatDialog,
+    private _router: Router,
+    private _toastr: ToastrService,
+    ) {
   }
 
-  public login(username, password) {
+  public exibeLogin(data: Login): void {
+      const dialogRef = this._dialog.open(LoginComponent, {
+          width: '60%',
+          data: data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.login(result).subscribe((res) => {
+            this._router.navigate(['/home']);
+            this._toastr.success('Executado com sucesso!', 'Login');  
+          });
+        }
+      });
+  }
+
+  public login(login: Login) {
     const url = `${environment.AUTORIZADOR_SERVER_URL}${URL_OAUTH_TOKEN}`;
-    const data = `grant_type=password&username=${username}&password=${password}`;
+    const data = `grant_type=password&username=${login.usuario}&password=${login.senha}`;
     const options = {
       'headers': new HttpHeaders({
         "Content-Type": "application/x-www-form-urlencoded",
@@ -48,8 +71,15 @@ export class LoginService {
   }
 
   public logout() {
-    window.localStorage.removeItem(KEY_TOKEN);
-    this._router.navigate(['/home']);
+    const url = `${environment.AUTORIZADOR_SERVER_URL}/logout`;
+
+    return this._http.get(url).pipe(
+      tap(
+        data => {
+          window.localStorage.removeItem(KEY_TOKEN);
+        }
+      )
+    );
   }
 
 }

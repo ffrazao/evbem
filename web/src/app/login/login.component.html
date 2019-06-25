@@ -34,9 +34,9 @@
 
       <!-- Button -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
         <div class="col-md-4">
-          <button id="singlebutton" name="singlebutton" class="btn btn-primary" (click)="efetuarLogin()">Login</button>
+          <button class="btn btn-primary" mat-button [mat-dialog-close]="loginForm.value" cdkFocusInitial>Login</button>
+          <button class="btn btn-default" (click)="cancelar()">Cancelar</button>
         </div>
       </div>
 

@@ -34,7 +34,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
         // captar o token de acesso
         let token: Token = this._loginService.token();
-        if (token && request.url !== `${environment.AUTORIZADOR_SERVER_URL}${URL_OAUTH_TOKEN}`) {
+        if ((token) && (request.url !== `${environment.AUTORIZADOR_SERVER_URL}${URL_OAUTH_TOKEN}`)) {
             request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${token.access_token}`) });
         }
         if (!request.headers.has('Content-Type')) {

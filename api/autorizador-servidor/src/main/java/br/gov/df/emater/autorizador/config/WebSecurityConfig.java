@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.anonymous().and()
-			.authorizeRequests().antMatchers("/login", "/logout.do", "/usuario").permitAll()
+			.authorizeRequests().antMatchers("/login", "/logout", "/logout.do", "/usuario").permitAll()
 								.antMatchers(HttpMethod.OPTIONS).permitAll()
 								.anyRequest().authenticated().and()
 //			.formLogin().loginProcessingUrl("/login.do").usernameParameter("username").passwordParameter("password").loginPage("/login").and()
