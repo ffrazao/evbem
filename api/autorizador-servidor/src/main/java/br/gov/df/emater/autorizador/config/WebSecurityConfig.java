@@ -61,5 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(passwordEncoder());
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(new WebSecurityConfig().passwordEncoder().encode("evbem_web"));
+	}
 
 }

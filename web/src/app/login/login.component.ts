@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Login } from '../entidade/login';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,11 @@ import { Login } from '../entidade/login';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  login = new Login('', '');
+  login = new Login('a', 'a');
 
   constructor(
-    private _service: LoginService
+    private _service: LoginService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -30,10 +32,7 @@ export class LoginComponent implements OnInit {
       this.senha.value
     ).subscribe(
       (res) => {
-        console.log('resposta login', res);
-      },
-      (err) => {
-        console.log('erro login', err);
+        this._router.navigate(['/home']);
       }
     );
   }

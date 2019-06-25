@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { AuthGuardService } from './comum/guard/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
   },
   {
     path: "pag",
-    loadChildren: './pag/pag.module#PagModule'
+    loadChildren: './pag/pag.module#PagModule',
+    canActivate: [AuthGuardService]
   },
   {
     path: '**',

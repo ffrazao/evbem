@@ -5,6 +5,7 @@ import { ErrorDialogComponent } from './componente/error-dialog/errordialog.comp
 import { ErrorDialogService } from './componente/error-dialog/errordialog.service';
 import { DomService } from './servico/dom.service';
 import { MirrorComponent } from './componente/mirror/mirror.component';
+import { AuthGuardService } from './guard/auth-guard.service';
 
 @NgModule({
   declarations: [ErrorDialogComponent, MirrorComponent],
@@ -13,7 +14,7 @@ import { MirrorComponent } from './componente/mirror/mirror.component';
     NgxViacepModule
   ],
   exports: [],
-  providers: [DomService, ErrorDialogService],
+  providers: [DomService, ErrorDialogService, AuthGuardService],
   entryComponents: [ErrorDialogComponent, MirrorComponent],
 })
 export class ComumModule { }

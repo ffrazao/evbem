@@ -13,24 +13,29 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { DomService } from '../servico/dom.service';
 import { MirrorComponent } from '../componente/mirror/mirror.component';
+import { Token } from 'src/app/entidade/token';
+import { environment } from 'src/environments/environment';
+import { URL_OAUTH_TOKEN, LoginService } from 'src/app/login/login.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
     constructor(
         private _errorDialogService: ErrorDialogService,
-        private _domService: DomService
+        private _domService: DomService,
+        private _loginService: LoginService
     ) {
     }
+    
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         // criar um componente mirror no body
         let mirror = this._domService.appendComponentToBody(MirrorComponent);
 
         // captar o token de acesso
-        const token: string = localStorage.getItem('token');
-        if (token) {
-            request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
+        let token: Token = this._loginService.token();
+        if (token && request.url !== `${environment.AUTORIZADOR_SERVER_URL}${URL_OAUTH_TOKEN}`) {
+            request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${token.access_token}`) });
         }
         if (!request.headers.has('Content-Type')) {
             request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });

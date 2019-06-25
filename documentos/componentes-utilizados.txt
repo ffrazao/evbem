@@ -19,3 +19,8 @@ Código para inserir componentes no elemento body do dom. (ver https://hackernoo
 Necessário para fazer aparecer o mirror sobre todos os componentes para evitar que o usuário fique 
 teclando enquanto uma requisição http está em curso.
 Para tal o componente comum/componente/mirror e o servico comum/servico/dom foram criados
+
+Componente para exibir de mensagens tipo toast. (ver https://www.npmjs.com/package/ngx-toastr)
+Instalação no próprio site
+
+
