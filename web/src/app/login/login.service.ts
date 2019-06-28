@@ -9,8 +9,8 @@ import { Token } from '../entidade/token';
 import { Login } from '../entidade/login';
 import { LoginComponent } from './login.component';
 import { ToastrService } from 'ngx-toastr';
+import { TokenService } from '../comum/servico/token.service';
 
-export const KEY_TOKEN = 'token';
 export const URL_OAUTH_TOKEN = '/oauth/token';
 
 @Injectable({
@@ -23,6 +23,7 @@ export class LoginService {
     private _dialog: MatDialog,
     private _router: Router,
     private _toastr: ToastrService,
+    private _tokenService: TokenService
     ) {
   }
 
@@ -56,18 +57,18 @@ export class LoginService {
     return this._http.post(url, data, options).pipe(
       tap(
         data => {
-          window.localStorage.setItem(KEY_TOKEN, JSON.stringify((data as HttpResponse<Token>).body));
+          this._tokenService.set(JSON.stringify((data as HttpResponse<Token>).body));
         }
       )
     );
   }
 
   public token(): Token {
-    return JSON.parse(window.localStorage.getItem(KEY_TOKEN)) as Token;
+    return JSON.parse(this._tokenService.get()) as Token;
   }
 
   public estaLogado(): boolean {
-    return !(!this.token());
+    return this._tokenService.temToken();
   }
 
   public logout() {
@@ -76,7 +77,7 @@ export class LoginService {
     return this._http.get(url).pipe(
       tap(
         data => {
-          window.localStorage.removeItem(KEY_TOKEN);
+          this._tokenService.clear();
         }
       )
     );
