@@ -1,6 +1,7 @@
-export class Token {
-    public access_token: string;
-    public token_type: string;
-    public expires_in: number; 
-    public scope: string;
+export interface Token {
+    usuario: string;
+    access_token: string;
+    token_type: string;
+    expires_in: number; 
+    scope: string;
 }

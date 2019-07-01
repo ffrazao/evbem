@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
- import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { LoginService } from './login.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Login } from '../entidade/login';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,18 +11,20 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  login = new Login('', '');
+  login: Login;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     private _data: Login,
     private _dialogRef: MatDialogRef<LoginComponent>,
-    private _router: Router
   ) { }
 
   ngOnInit() {
     if (this._data) {
-       this.login = this._data;
+      this.login = this._data;
+    }
+    if (!this.login) {
+      this.login = {usuario: '', senha: ''};
     }
     this.loginForm = new FormGroup({
       'usuario': new FormControl(this.login.usuario, [Validators.required]),

@@ -6,14 +6,17 @@ import { ErrorDialogService } from './componente/error-dialog/errordialog.servic
 import { DomService } from './servico/dom.service';
 import { MirrorComponent } from './componente/mirror/mirror.component';
 import { AuthGuardService } from './guard/auth-guard.service';
+import { UsuarioLoginComponent } from './componente/usuario-login/usuario-login.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [ErrorDialogComponent, MirrorComponent],
+  declarations: [ErrorDialogComponent, MirrorComponent, UsuarioLoginComponent],
   imports: [
     CommonModule,
-    NgxViacepModule
+    NgxViacepModule,
+    RouterModule
   ],
-  exports: [],
+  exports: [UsuarioLoginComponent],
   providers: [DomService, ErrorDialogService, AuthGuardService],
   entryComponents: [ErrorDialogComponent, MirrorComponent],
 })

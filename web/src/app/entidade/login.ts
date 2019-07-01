@@ -1,8 +1,4 @@
-export class Login {
-    public usuario: string;
-    public senha: string;
-    constructor(usuario: string, senha: string) {
-        this.usuario = usuario;
-        this.senha = senha;
-    }
+export interface Login {
+    usuario: string;
+    senha: string;
 }

@@ -1,0 +1,9 @@
+<div *ngIf="(user$ | async) as usuario">
+  <i class="fa fa-user-circle mr-1"></i>
+  usuário: <strong>{{usuario}}</strong>,
+  <a [routerLink]="['/logout']">sair</a>
+</div>
+
+<div *ngIf="!(user$ | async) as usuario">
+  <button class="btn btn-primary" (click)="login()">Faça o login!</button>
+</div>

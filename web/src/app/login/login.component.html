@@ -7,8 +7,8 @@
 
       <!-- Text input-->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="usuario">Usuário</label>
-        <div class="col-md-4">
+        <label class="col-md-12 control-label" for="usuario">Usuário</label>
+        <div class="col-md-12">
           <input id="usuario" name="usuario" type="text" placeholder="nome de usuário" class="form-control input-md"
             required="" formControlName="usuario">
           <span class="help-block">Informe o nome do usuário com acesso ao sistema</span>
@@ -22,8 +22,8 @@
 
       <!-- Password input-->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="senha">Senha</label>
-        <div class="col-md-4">
+        <label class="col-md-12 control-label" for="senha">Senha</label>
+        <div class="col-md-12">
           <input id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md"
             required="" formControlName="senha">
           <span class="help-block">Informe a senha do usuário de acesso ao sistema</span>
@@ -34,7 +34,7 @@
 
       <!-- Button -->
       <div class="form-group">
-        <div class="col-md-4">
+        <div class="col-md-12">
           <button class="btn btn-primary" mat-button [mat-dialog-close]="loginForm.value" cdkFocusInitial>Login</button>
           <button class="btn btn-default" (click)="cancelar()">Cancelar</button>
         </div>
