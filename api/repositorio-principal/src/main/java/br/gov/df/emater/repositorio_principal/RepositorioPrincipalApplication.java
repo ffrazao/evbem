@@ -1,3 +1,5 @@
+// @formatter:off
+ 
 //# logging app
 //logging:
 //  level:
@@ -35,41 +37,26 @@
 //    initialization-mode: never
 //    continue-on-error: false
 
+// @formatter:on
+
 package br.gov.df.emater.repositorio_principal;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import org.yaml.snakeyaml.Yaml;
 
-import br.gov.df.emater.repositorio_principal.dao.comum.LocalizacaoTipoDAO;
-import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioDAO;
-import br.gov.df.emater.repositorio_principal.entidade.comum.LocalizacaoTipo;
-
-@SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan("br.gov.df.emater")
+@SpringBootApplication(scanBasePackages = "br.gov.df.emater")
 @EntityScan("br.gov.df.emater.repositorio_principal.entidade")
 @EnableJpaRepositories("br.gov.df.emater.repositorio_principal.dao")
-public class RepositorioPrincipalApplication implements CommandLineRunner {
+public class RepositorioPrincipalApplication {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
 
+		// @formatter:off
+		/*
 		Map<String, Object> applicationYml = null;
 		try (InputStream inputStream = RepositorioPrincipalApplication.class.getClassLoader()
 				.getResourceAsStream("application.yml")) {
@@ -119,10 +106,14 @@ public class RepositorioPrincipalApplication implements CommandLineRunner {
 			}
 			System.out.println(yaml.dump(applicationYml));
 		}
+		// @formatter:on
+		*/
 
 		SpringApplication.run(RepositorioPrincipalApplication.class, args);
 	}
 
+	// @formatter:off
+	/*
 	@Autowired
 	private LocalizacaoTipoDAO dao;
 
@@ -132,7 +123,7 @@ public class RepositorioPrincipalApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		uDao.count();
-		dao.deleteAll();
+		//dao.deleteAll();
 		if (dao.existsById(1)) {
 			System.out.println("apagando");
 			dao.deleteById(1);
@@ -145,6 +136,7 @@ public class RepositorioPrincipalApplication implements CommandLineRunner {
 		}
 		Optional<LocalizacaoTipo> t = dao.findById(1);
 		System.out.println(t);
-	}
+	}*/
+	// @formatter:on
 
 }

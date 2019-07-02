@@ -13,18 +13,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-/**
- * Created by ahmed on 30.5.18.
- */
 @EnableResourceServer
 @Configuration
 public class ResourcesServerConfiguration extends ResourceServerConfigurerAdapter {
-
-//	@Bean
-//	@ConfigurationProperties(prefix = "spring.datasource")
-//	public DataSource ouathDataSource() {
-//		return DataSourceBuilder.create().build();
-//	}
 
 	@Autowired
 	private DataSource datasource;
@@ -32,7 +23,7 @@ public class ResourcesServerConfiguration extends ResourceServerConfigurerAdapte
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 		TokenStore tokenStore = new JdbcTokenStore(datasource);
-		resources.resourceId("evbem_res").tokenStore(tokenStore);
+		resources.resourceId("evbem_api").tokenStore(tokenStore);
 	}
 
 	@Override

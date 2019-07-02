@@ -16,6 +16,14 @@ import br.com.frazao.cadeiaresponsabilidade.ContextoBase;
 @Service
 public class NegocioFacade implements BeanFactoryAware {
 
+	public NegocioFacade() {
+	}
+
+//	@Bean
+//	public NegocioFacade create() {
+//		return new NegocioFacade();
+//	}
+
 	private BeanFactory beanFactory;
 
 	private Object executar(String comandoNome, Object requisicao, Principal usuario, Contexto<String, Object> contexto)

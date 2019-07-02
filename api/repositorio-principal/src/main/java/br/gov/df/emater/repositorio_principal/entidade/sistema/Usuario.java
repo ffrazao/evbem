@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,23 +35,11 @@ import lombok.NoArgsConstructor;
 public class Usuario extends EntidadeBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
 
 	@Column(name = "atualizado_em")
 	private Timestamp atualizadoEm;
-
-	// bi-directional many-to-one association to Configuracao
-	@OneToMany(mappedBy = "usuario1")
-	private List<Configuracao> configuracaos1;
-
-	// bi-directional many-to-one association to Configuracao
-	@OneToMany(mappedBy = "usuario2")
-	private List<Configuracao> configuracaos2;
-
-	// bi-directional many-to-one association to Configuracao
-	@OneToMany(mappedBy = "usuario3")
-	private List<Configuracao> configuracaos3;
 
 	@Column(name = "criado_em")
 	private Timestamp criadoEm;
@@ -62,22 +51,16 @@ public class Usuario extends EntidadeBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private String login;
 
 	private String nome;
 
 	@Column(name = "pessoa_id")
-	private int pessoaId;
-
-	private String senha;
+	private Integer pessoaId;
 
 	private String tipo;
-
-	// bi-directional many-to-one association to Token
-	@OneToMany(mappedBy = "usuario")
-	private List<Token> tokens;
 
 	// bi-directional many-to-one association to Usuario
 	@ManyToOne
@@ -101,13 +84,5 @@ public class Usuario extends EntidadeBase implements Serializable {
 	// bi-directional many-to-one association to UsuarioPerfil
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPerfil> usuarioPerfils;
-
-	// bi-directional many-to-one association to Usuario
-	@OneToMany(mappedBy = "usuario1")
-	private List<Usuario> usuarios1;
-
-	// bi-directional many-to-one association to Usuario
-	@OneToMany(mappedBy = "usuario2")
-	private List<Usuario> usuarios2;
 
 }
