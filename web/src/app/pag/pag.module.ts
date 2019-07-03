@@ -5,16 +5,21 @@ import { PagRoutingModule } from './pag-routing.module';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuarioListComponent } from './usuario/usuario-list.component';
-import { MatTableModule, MatProgressSpinnerModule, MatPaginatorModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatRippleModule, MatTableModule, MatCheckboxModule } from '@angular/material';
 
 @NgModule({
   declarations: [UsuarioComponent, UsuarioListComponent, PerfilComponent],
   imports: [
     CommonModule,
     PagRoutingModule,
-    MatTableModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatRippleModule,
+    MatTableModule,
+    MatCheckboxModule,
   ], 
   exports: [],
 })
