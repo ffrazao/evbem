@@ -37,7 +37,6 @@ export class UsuarioListComponent implements AfterViewInit {
   ngAfterViewInit() {
     this._httpClient.get<Usuario[]>('http://localhost:8080/usuario').subscribe(
       d => {
-        console.log(d);
         this.dataSource = new MatTableDataSource<Usuario>(d);
         this.dataSource.paginator = this.paginator;
       }
@@ -64,6 +63,15 @@ export class UsuarioListComponent implements AfterViewInit {
   get totalSelecao(): number {
     console.log(this.selection);
     return this._initialSelection && this._initialSelection.length ? this._initialSelection.length : null;
+  }
+
+  public selectedIds(): string[] {
+    let result = ['/pag', 'usuario'];
+    if (this.selection && this.selection.selected && (this.selection.selected as []).length) {
+      result.push(this.selection.selected.map(e=>e.id).join());
+      result.push('0');
+    }
+    return result;
   }
 
 }

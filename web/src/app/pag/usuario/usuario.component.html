@@ -1,3 +1,8 @@
 <p>
   usuario works!
+
+  <button [routerLink]="['/pag', 'usuario', ids, 0]">Primeiro</button>
+  <button [routerLink]="['/pag', 'usuario', ids, pos+1]">Anterior</button>
+  <button [routerLink]="['/pag', 'usuario', ids, pos-1]">Próximo</button>
+  <button [routerLink]="['/pag', 'usuario', ids, ids?.length -1]">Último</button>
 </p>

@@ -2,8 +2,11 @@
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
   </mat-form-field>
+  <button [routerLink]="['/pag', 'usuario', 'n']">Incluir</button>
   <span *ngIf="selection?.selected?.length">
     [{{selection.selected.length}}] registro(s) selecionado(s)
+    <button [routerLink]="selectedIds()">Ver</button>
+    <button>Excluir</button>
   </span>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
