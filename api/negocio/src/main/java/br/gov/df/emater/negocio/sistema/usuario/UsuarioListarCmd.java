@@ -15,7 +15,11 @@ public class UsuarioListarCmd extends Comando {
 
 	@Override
 	protected void procedimento(Contexto<?, ?> contexto) throws Exception {
-		contexto.setResposta(dao.findAll());
+		if (contexto.getRequisicao() != null) {
+			contexto.setResposta(dao.findById((Integer) contexto.getRequisicao()).orElseGet(null));
+		} else {			
+			contexto.setResposta(dao.findAll());
+		}
 	}
 
 }
