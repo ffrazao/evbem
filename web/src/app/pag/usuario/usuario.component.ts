@@ -1,7 +1,5 @@
-import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Usuario } from './usuario-list.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,11 +23,9 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _activatedRoute: ActivatedRoute
   ) {
-    console.log('constructor');
   }
 
   ngOnInit(): void {
-    console.log('ngOnInit');
     this.sub = this._activatedRoute.paramMap.subscribe(params => {
       let temp: string;
       temp = params.get('ids');
@@ -47,21 +43,18 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
       if (!this.pos) {
         this.setPos(0);
       }
+      this.novaPos = this.pos + 1;
     });
   }
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit');
     this._activatedRoute.url.subscribe(url => {
-      console.log('navegacao', url);
       this._httpClient.get<Usuario>('http://localhost:8080/usuario/' + this.id).subscribe(
         registro => {
-          console.log(registro);
           this.registro = registro;
         }
       );
     });
-
   }
 
   get id() {
@@ -88,15 +81,20 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
   }
 
   public vaiPara(pos): void {
+    pos = ("" + pos).trim();
     console.log(pos);
-    if (pos < 0) { pos = 0; }
-    if (pos >= this.ids.length) { pos = this.ids.length - 1; }
-    this._router.navigate(['/pag', 'usuario', this.ids.join(), pos]);
+    if ((pos || pos == 0) && !isNaN(pos)) {
+      this._router.navigate(['/pag', 'usuario', this.ids.join(), pos]);
+    }
   }
 
   private setPos(vlr: number) {
+    if (vlr < 0) {
+      vlr = 0;
+    } else if (vlr >= this.ids.length) {
+      vlr = this.ids.length -1;
+    }
     this.pos = vlr;
-    this.novaPos = this.pos + 1;
   }
 
 }

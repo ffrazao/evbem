@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
@@ -26,28 +27,31 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Autowired
 	private DataSource datasource;
-	
+
 	@Autowired
-	private AuthenticationManager authenticationManager;	
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private TokenEnhancer tokenEnhancer;
 
 	@Bean
 	@Primary
-	public JdbcClientDetailsService clientDetailsService() {//4
+	public JdbcClientDetailsService clientDetailsService() {// 4
 		return new JdbcClientDetailsService(datasource);
 	}
 
 	@Bean
-	public TokenStore tokenStore() {//3
+	public TokenStore tokenStore() {// 3
 		return new JdbcTokenStore(datasource);
 	}
 
 	@Bean
-	public ApprovalStore approvalStore() {//1
+	public ApprovalStore approvalStore() {// 1
 		return new JdbcApprovalStore(datasource);
 	}
 
 	@Bean
-	public AuthorizationCodeServices authorizationCodeServices() {//2
+	public AuthorizationCodeServices authorizationCodeServices() {// 2
 		return new JdbcAuthorizationCodeServices(datasource);
 	}
 
@@ -63,11 +67,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints
-			.authenticationManager(authenticationManager)
-			.approvalStore(approvalStore())
-				.authorizationCodeServices(authorizationCodeServices()).tokenStore(tokenStore());
+		endpoints.authenticationManager(authenticationManager).approvalStore(approvalStore())
+				.authorizationCodeServices(authorizationCodeServices()).tokenStore(tokenStore())
+				.tokenEnhancer(tokenEnhancer);
 	}
-
 
 }

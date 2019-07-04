@@ -1,8 +1,8 @@
 <p>
-  usuario works! {{id}}
+  usuario works! [{{id}}] [{{novaPos}}]
   <button (click)="vaiParaPrimeiro()">Primeiro</button>
   <button (click)="vaiParaAnterior()">Anterior</button>
-  <input (ngModel)="novaPos">
+  <input [(ngModel)]="novaPos">
   <button (click)="vaiPara(novaPos - 1)">Vai</button>
   <button (click)="vaiParaProximo()">Próximo</button>
   <button (click)="vaiParaUltimo()">Último</button>
