@@ -13,7 +13,6 @@ export class CrudComponent implements OnInit {
   public novaPos: number;
 
   constructor(
-    protected _httpClient: HttpClient,
     protected _router: Router,
     protected _activatedRoute: ActivatedRoute,
     private _urlPrincipal: string[]

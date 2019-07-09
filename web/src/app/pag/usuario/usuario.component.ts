@@ -1,31 +1,31 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CrudComponent } from 'src/app/comum/componente/crud-component';
-import { Usuario } from 'src/app/pag/usuario/usuario-list.component';
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { UsuarioService } from './usuario.service';
 
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.scss']
 })
-export class UsuarioComponent extends CrudComponent implements OnInit, AfterViewInit {
+export class UsuarioComponent extends CrudComponent implements OnInit {
 
   // seleçao
   public registro: FormGroup;
 
   constructor(
-    protected _httpClient: HttpClient,
+    protected _service: UsuarioService,
     protected _router: Router,
-    protected _activatedRoute: ActivatedRoute,
+    protected _actr: ActivatedRoute,
     private _formBuilder: FormBuilder
   ) {
-    super(_httpClient, _router, _activatedRoute, ['/pag', 'usuario']);
+    super(_router, _actr, ['/pag', 'usuario']);
   }
 
   ngOnInit() {
+    console.log('Embutindo o registro');
     super.ngOnInit();
     this.registro = this._formBuilder.group({
       id: [null, []],
@@ -35,26 +35,13 @@ export class UsuarioComponent extends CrudComponent implements OnInit, AfterView
       email: ['', [Validators.required, Validators.maxLength(255), Validators.email]],
       ativo: ['', [Validators.required]],
     });
-  }
 
-  ngAfterViewInit() {
-    console.log(1);
-    let frz = this._activatedRoute.data.subscribe(v => console.log(v));
-
-    if (this.id) {
-      this._activatedRoute.url.subscribe(url => {
-        this._httpClient.get<Usuario>('http://localhost:8080/usuario/' + this.id).subscribe(
-          registro => {
-            registro.email = '123@123';
-            this.registro.patchValue(registro);
-          }
-        );
-      });
-    }
+    this._actr.snapshot.data.registro.email = '123@123';
+    this.registro.patchValue(this._actr.snapshot.data.registro);
   }
 
   salvar() {
-    this._httpClient.post<Usuario>('http://localhost:8080/usuario/', this.registro.value)
+    this._service.salvar(this.registro.value)
       .subscribe(
       registro => {
         this.registro.setValue(registro);

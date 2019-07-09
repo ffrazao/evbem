@@ -3,31 +3,39 @@ import { Routes, RouterModule } from '@angular/router';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuarioListComponent } from './usuario/usuario-list.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { UsuarioListResolver } from './usuario/usuario-list.resolver';
+import { UsuarioResolver } from './usuario/usuario.resolver';
 
 const routes: Routes = [
   {
     path: 'usuario',
-    component: UsuarioListComponent
+    component: UsuarioListComponent,
+    resolve: {dados: UsuarioListResolver}
   },
   {
     path: 'usuario/:pag',
-    component: UsuarioListComponent
+    component: UsuarioListComponent,
+    resolve: {dados: UsuarioListResolver}
   },
   {
     path: 'usuario/:pag/n',
-    component: UsuarioComponent
+    component: UsuarioComponent,
+    resolve: {registro: UsuarioResolver}
   },
   {
     path: 'usuario/:pag/:ids',
-    component: UsuarioComponent
+    component: UsuarioComponent,
+    resolve: {registro: UsuarioResolver}
   },
   {
     path: 'usuario/:pag/:ids/n',
-    component: UsuarioComponent
+    component: UsuarioComponent,
+    resolve: {registro: UsuarioResolver}
   },
   {
     path: 'usuario/:pag/:ids/:pos',
-    component: UsuarioComponent
+    component: UsuarioComponent,
+    resolve: {registro: UsuarioResolver}
   },
   {
     path: 'perfil',
@@ -37,6 +45,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [UsuarioListResolver, UsuarioResolver]
 })
 export class PagRoutingModule { }

@@ -1,17 +1,8 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ActivatedRoute, Router } from '@angular/router';
-
-export interface Usuario {
-  id: number;
-  nome: string;
-  login: string;
-  email: string;
-  tipo: string;
-  ativo: string;
-}
+import { Router, ActivatedRoute } from '@angular/router';
+import { Usuario } from 'src/app/entidade/usuario';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -21,30 +12,31 @@ export interface Usuario {
   styleUrls: ['./usuario-list.component.scss'],
   templateUrl: './usuario-list.component.html',
 })
-export class UsuarioListComponent implements AfterViewInit {
+export class UsuarioListComponent implements AfterViewInit, OnInit {
+  
   displayedColumns: string[] = ['select', 'nome', 'login', 'email', 'tipo'];
   dataSource: MatTableDataSource<Usuario>;
   quantidadeRegistros = 0;
-
+  
   // seleçao
   selection;
   _initialSelection = [];
   allowMultiSelect = true;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-  constructor(private _httpClient: HttpClient, 
-    private _router: Router) {
+  
+  constructor(
+    private _router: Router,
+    private _actr: ActivatedRoute) {
     this.selection = new SelectionModel<Usuario>(this.allowMultiSelect, this._initialSelection);
   }
 
+  ngOnInit(): void {
+    this.dataSource = new MatTableDataSource<Usuario>(this._actr.snapshot.data.dados);
+    this.dataSource.paginator = this.paginator;
+  }
+
   ngAfterViewInit() {
-    this._httpClient.get<Usuario[]>('http://localhost:8080/usuario').subscribe(
-      d => {
-        this.dataSource = new MatTableDataSource<Usuario>(d);
-        this.dataSource.paginator = this.paginator;
-      }
-    );
   }
 
   applyFilter(filterValue: string) {

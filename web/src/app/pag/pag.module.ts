@@ -24,6 +24,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatCheckboxModule,
   ], 
-  exports: [],
+  exports: []
 })
 export class PagModule { }
