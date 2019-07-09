@@ -6,13 +6,14 @@ import { UsuarioComponent } from './usuario/usuario.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuarioListComponent } from './usuario/usuario-list.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatRippleModule, MatTableModule, MatCheckboxModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [UsuarioComponent, UsuarioListComponent, PerfilComponent],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     PagRoutingModule,
     MatButtonModule,
     MatFormFieldModule,

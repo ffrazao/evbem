@@ -6,20 +6,28 @@ import { UsuarioComponent } from './usuario/usuario.component';
 
 const routes: Routes = [
   {
-    path: 'usuario/n',
-    component: UsuarioComponent
-  },
-  {
-    path: 'usuario/:ids/:pos',
-    component: UsuarioComponent
-  },
-  {
-    path: 'usuario/:ids',
-    component: UsuarioComponent
-  },
-  {
     path: 'usuario',
     component: UsuarioListComponent
+  },
+  {
+    path: 'usuario/:pag',
+    component: UsuarioListComponent
+  },
+  {
+    path: 'usuario/:pag/n',
+    component: UsuarioComponent
+  },
+  {
+    path: 'usuario/:pag/:ids',
+    component: UsuarioComponent
+  },
+  {
+    path: 'usuario/:pag/:ids/n',
+    component: UsuarioComponent
+  },
+  {
+    path: 'usuario/:pag/:ids/:pos',
+    component: UsuarioComponent
   },
   {
     path: 'perfil',

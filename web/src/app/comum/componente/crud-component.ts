@@ -3,10 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({})
-export class CrudComponent  implements OnInit {
+export class CrudComponent implements OnInit {
 
   // seleçao
   public sub;
+  public pag: string;
   public ids: number[];
   public pos: number;
   public novaPos: number;
@@ -17,12 +18,14 @@ export class CrudComponent  implements OnInit {
     protected _activatedRoute: ActivatedRoute,
     private _urlPrincipal: string[]
   ) {
-      console.log(1);
   }
 
   ngOnInit(): void {
     this.sub = this._activatedRoute.paramMap.subscribe(params => {
+      console.log(12);
       let temp: string;
+      temp = params.get('pag');
+      this.pag = temp;
       temp = params.get('ids');
       if (!(/n/i).test(temp)) {
         try {
@@ -41,10 +44,9 @@ export class CrudComponent  implements OnInit {
       this.novaPos = this.pos + 1;
     });
   }
-  
+
   get id() {
-    if (!this.ids || !Array.isArray(this.ids)) return null;
-    return this.ids[this.pos];
+    return (!this.ids || !Array.isArray(this.ids)) ? null : this.ids[this.pos];
   }
 
   public vaiParaPrimeiro(): void {
@@ -77,7 +79,7 @@ export class CrudComponent  implements OnInit {
     if (vlr < 0 || !this.ids || !this.ids.length) {
       vlr = 0;
     } else if (vlr >= this.ids.length) {
-      vlr = this.ids.length -1;
+      vlr = this.ids.length - 1;
     }
     this.pos = vlr;
   }

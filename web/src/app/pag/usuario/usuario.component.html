@@ -1,14 +1,51 @@
 <p>
-  usuario works! [{{id}}] [{{novaPos}}]
-  <span *ngIf="ids?.length > 1">
-    <button (click)="vaiParaPrimeiro()">Primeiro</button>
-    <button (click)="vaiParaAnterior()">Anterior</button>
-    <input [(ngModel)]="novaPos">
-    <button (click)="vaiPara(novaPos - 1)">Vai</button>
-    <button (click)="vaiParaProximo()">Próximo</button>
-    <button (click)="vaiParaUltimo()">Último</button>
-  </span>
+  usuario works! [{{pag}}]/[{{id}}]/[{{novaPos}}]
+  <button (click)="vaiParaPrimeiro()">Primeiro</button>
+  <button (click)="vaiParaAnterior()">Anterior</button>
+  <input [(ngModel)]="novaPos">
+  <button (click)="vaiPara(novaPos - 1)">Vai</button>
+  <button (click)="vaiParaProximo()">Próximo</button>
+  <button (click)="vaiParaUltimo()">Último</button>
   <button [routerLink]="['/pag', 'usuario']">Voltar</button>
 </p>
 
-<div>{{registro | json}}</div>
+<div>{{registro.value | json}}</div>
+
+<form [formGroup]="registro" (submit)="salvar()">
+  <div class="container">
+    <div class="row">
+      <div class="form-group">
+        <label class="form-label">Nome</label>
+        <input class="form-control" formControlName="nome">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="form-label">Login</label>
+        <input class="form-control" formControlName="login">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="form-label">Tipo</label>
+        <input class="form-control" formControlName="tipo">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-control" formControlName="email">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="form-label">Ativo</label>
+        <input class="form-control" formControlName="ativo">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="registro.invalid">
+      Salvar
+    </button>
+
+  </div>
+</form>
