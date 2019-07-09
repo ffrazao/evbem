@@ -1,12 +1,14 @@
 package br.gov.df.emater.repositorio_principal.dominio;
 
-public enum Confirmacao {
+public enum UsuarioTipo {
 	
-	S("Sim"), N("Não");
+	COMUM("Usuário Comum"),
+	SISTEMA("Sistema Externo"),
+	ADMIN("Administrador do Sistema");
 
 	private String descricao;
 
-	private Confirmacao(String descricao) {
+	private UsuarioTipo(String descricao) {
 		this.descricao = descricao;
 	}
 

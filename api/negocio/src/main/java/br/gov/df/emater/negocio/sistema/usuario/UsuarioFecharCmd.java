@@ -9,8 +9,8 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 public class UsuarioFecharCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto<?, ?> contexto) throws Exception {
-		contexto.setResposta("Frz!!!");
+	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+		ctx.setResposta("Frz!!!");
 		System.out.println("Deu certo 3 !!!!");
 	}
 

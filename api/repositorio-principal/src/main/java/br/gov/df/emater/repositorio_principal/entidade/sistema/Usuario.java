@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.dominio.UsuarioTipo;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,10 +39,10 @@ public class Usuario extends EntidadeBase implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
 
-	@Column(name = "atualizado_em")
+	@Column(name = "atualizado_em", insertable = false, updatable = false)
 	private Timestamp atualizadoEm;
 
-	@Column(name = "criado_em")
+	@Column(name = "criado_em", insertable = false, updatable = false)
 	private Timestamp criadoEm;
 
 	private String email;
@@ -60,21 +61,22 @@ public class Usuario extends EntidadeBase implements Serializable {
 	@Column(name = "pessoa_id")
 	private Integer pessoaId;
 
-	private String tipo;
+	@Enumerated(EnumType.STRING)
+	private UsuarioTipo tipo;
 
 	// bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumn(name = "criado_usuario_id")
-	private Usuario usuario1;
+	@JoinColumn(name = "criado_usuario_id", updatable = false)
+	private Usuario criadoUsuario;
 
 	// bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name = "atualizado_usuario_id")
-	private Usuario usuario2;
+	private Usuario atualizadoUsuario;
 
 	// bi-directional many-to-one association to UsuarioFormaAutenticacao
 	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaos;
+	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaoList;
 
 	// bi-directional many-to-one association to UsuarioPerfil
 	@ManyToOne
@@ -83,6 +85,6 @@ public class Usuario extends EntidadeBase implements Serializable {
 
 	// bi-directional many-to-one association to UsuarioPerfil
 	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioPerfil> usuarioPerfils;
+	private List<UsuarioPerfil> usuarioPerfilList;
 
 }

@@ -14,11 +14,11 @@ public class UsuarioListarCmd extends Comando {
 	private UsuarioDAO dao;
 
 	@Override
-	protected void procedimento(Contexto<?, ?> contexto) throws Exception {
-		if (contexto.getRequisicao() != null) {
-			contexto.setResposta(dao.findById((Integer) contexto.getRequisicao()).orElseGet(null));
+	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+		if (ctx.getRequisicao() != null) {
+			ctx.setResposta(dao.findById((Integer) ctx.getRequisicao()).orElseGet(null));
 		} else {			
-			contexto.setResposta(dao.findAll());
+			ctx.setResposta(dao.findAll());
 		}
 	}
 
