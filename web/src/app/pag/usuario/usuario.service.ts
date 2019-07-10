@@ -17,6 +17,10 @@ export class UsuarioService {
         return this._http.get<Usuario[]>(`${environment.API_URL}/${FUNCIONALIDADE}`);
     }
 
+    criar() {
+        return this._http.get<Usuario>(`${environment.API_URL}/${FUNCIONALIDADE}/criar`);
+    }
+
     ver(id: number) {
         return this._http.get<Usuario>(`${environment.API_URL}/${FUNCIONALIDADE}/${id}`);
     }

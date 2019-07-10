@@ -1,49 +1,43 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
-@Component({})
-export class CrudComponent implements OnInit {
+export class CrudComponent {
 
   // seleçao
-  public sub;
-  public pag: string;
-  public ids: number[];
-  public pos: number;
-  public novaPos: number;
+  protected sub;
+  protected pag: string;
+  protected ids: number[];
+  protected pos: number;
+  protected novaPos: number;
 
   constructor(
-    protected _router: Router,
-    protected _activatedRoute: ActivatedRoute,
-    private _urlPrincipal: string[]
+    protected _urlPrincipal: string[]
   ) {
   }
 
-  ngOnInit(): void {
-    this.sub = this._activatedRoute.paramMap.subscribe(params => {
-      console.log(12);
-      let temp: string;
-      temp = params.get('pag');
-      this.pag = temp;
-      temp = params.get('ids');
-      if (!(/n/i).test(temp)) {
-        try {
-          this.ids = temp.split(',').map(e => Number.parseInt(e, 10));
-          temp = params.get('pos');
-          this.setPos(Number.parseInt(temp, 10));
-        } catch (e) {
-        }
-      }
-      if (!this.ids) {
-        this._router.navigate(this._urlPrincipal);
-      }
-      if (!this.pos) {
-        this.setPos(0);
-      }
-      this.novaPos = this.pos + 1;
-    });
-  }
+  // ngOnInit(): void {
+    // this.sub = this._activatedRoute.paramMap.subscribe(params => {
+    //   console.log(12);
+    //   let temp: string;
+    //   temp = params.get('pag');
+    //   this.pag = temp;
+    //   temp = params.get('ids');
+    //   if (!(/n/i).test(temp)) {
+    //     try {
+    //       this.ids = temp.split(',').map(e => Number.parseInt(e, 10));
+    //       temp = params.get('pos');
+    //       this.setPos(Number.parseInt(temp, 10));
+    //     } catch (e) {
+    //     }
+    //   }
+    //   if (!this.ids) {
+    //     this._router.navigate(this._urlPrincipal);
+    //   }
+    //   if (!this.pos) {
+    //     this.setPos(0);
+    //   }
+    //   this.novaPos = this.pos + 1;
+    // });
+  // }
 
+  
   get id() {
     return (!this.ids || !Array.isArray(this.ids)) ? null : this.ids[this.pos];
   }
@@ -70,11 +64,11 @@ export class CrudComponent implements OnInit {
       let url = this._urlPrincipal.slice(0);
       url.push(this.ids.join());
       url.push(pos);
-      this._router.navigate(url);
+      //this._router.navigate(url);
     }
   }
 
-  private setPos(vlr: number) {
+  protected setPos(vlr: number) {
     if (vlr < 0 || !this.ids || !this.ids.length) {
       vlr = 0;
     } else if (vlr >= this.ids.length) {

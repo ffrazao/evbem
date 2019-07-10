@@ -9,9 +9,9 @@
   <button [routerLink]="['/pag', 'usuario']">Voltar</button>
 </p>
 
-<div>{{registro.value | json}}</div>
+<div>{{formulario.value | json}}</div>
 
-<form [formGroup]="registro" (submit)="salvar()">
+<form [formGroup]="formulario" (submit)="salvar()">
   <div class="container">
     <div class="row">
       <div class="form-group">
@@ -43,7 +43,7 @@
         <input class="form-control" formControlName="ativo">
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="registro.invalid">
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="formulario.invalid">
       Salvar
     </button>
 

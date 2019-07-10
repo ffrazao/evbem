@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { PagRoutingModule } from './pag-routing.module';
-import { UsuarioComponent } from './usuario/usuario.component';
-import { PerfilComponent } from './perfil/perfil.component';
-import { UsuarioListComponent } from './usuario/usuario-list.component';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatRippleModule, MatTableModule, MatCheckboxModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { PagRoutingModule } from './pag-routing.module';
+import { UsuarioTabComponent } from './usuario/usuario-tab.component';
+import { UsuarioFormComponent } from './usuario/usuario-form.component';
+import { PerfilComponent } from './perfil/perfil.component';
+
 @NgModule({
-  declarations: [UsuarioComponent, UsuarioListComponent, PerfilComponent],
+  declarations: [UsuarioTabComponent, UsuarioFormComponent, PerfilComponent],
   imports: [
     CommonModule,
     FormsModule,
