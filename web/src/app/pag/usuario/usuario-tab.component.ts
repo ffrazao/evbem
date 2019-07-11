@@ -29,16 +29,34 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
     // configurar o componente
     this.dataSource.paginator = this.paginator;
     this.selection = new SelectionModel<Usuario>(this.allowMultiSelect, this._initialSelection);
-    this.displayedColumns = ['select', 'nome', 'login', 'email', 'tipo'];
+    this.displayedColumns = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
     this._initialSelection = [];
     this.allowMultiSelect = true;
     this.quantidadeRegistros = 0;
+    this.tamanhoPagina = 10;
   }
 
   public getRoute(): Route {
-    return this._router
-      .config.find(v=>v.path == 'pag')['_loadedConfig']
-      .routes.find(v=>v.path == 'usuario/:id');
+    return this._router.config.find(v=>v.path == 'pag')['_loadedConfig'].routes.find(v=>v.path == 'usuario/:id');
+  }
+  
+  onPaginateChange(event){
+    this.pag = event.pageIndex;
+    console.log('onPaginateChange', event);
+  }
+  
+  public ver(pos: number = 0) {
+    console.log('ver posicao ', pos);
+    // exemplo de passagem de parametros via propriedade data
+    let lista = this.getIdList(pos);
+    
+    if (lista.idList.length) {
+      let url : string[] = this._urlPrincipal.slice(0);
+      url.push(lista.idList[lista.pos].toString());
+      this.getRoute().data.config = {pagina: 0, quebra: 0, filtro: {}, lista};
+      this._router.navigate(url);
+    }
+    
   }
 
 }

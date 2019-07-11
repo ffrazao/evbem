@@ -9,15 +9,17 @@ export abstract class CrudTabComponent extends CrudComponent {
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
-  quantidadeRegistros: number;
+  quantidadeRegistros: number = 0;
+  tamanhoPagina: number = 10;
+  tamanhoPaginaOpcoes: [5, 10, 20];
   selection: SelectionModel<any>;
   _initialSelection : [];
-  allowMultiSelect : boolean;
+  allowMultiSelect : boolean = true;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    protected _urlPrincipal: string[]
+    protected _urlPrincipal: string[],
   ) {
     super(_urlPrincipal);
   }
@@ -45,29 +47,17 @@ export abstract class CrudTabComponent extends CrudComponent {
 
   abstract getRoute(): Route;
 
-  public getIdList() {
+  public getIdList(posGeral: number) {
     console.log(1);
     let pos = 0;
     let idList : number[] = [];
     if (this.selection && this.selection.selected && (this.selection.selected as []).length) {
       this.selection.selected.forEach(e => idList.push(e.id));
     } else if (this.dataSource && this.dataSource.data && (this.dataSource.data as []).length) {
+      pos = posGeral;
       this.dataSource.data.forEach(e => idList.push(e.id));
-      //TODO: Frz calcular a posição atual quando não houver registro inicial selecionado
     }
     return {pos, idList};
-  }
-
-  public selectedIds(): string[] {
-    let result : any[] = this._urlPrincipal.slice(0);
-
-    // exemplo de passagem de parametros via propriedade data
-    let idList = this.getIdList();
-    this.getRoute().data = idList;
-
-    result.push(idList.idList[idList.pos]);
-
-    return result;
   }
 
 }
