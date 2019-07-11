@@ -24,14 +24,14 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
   
   ngOnInit(): void {
     // carregar a tabela
-    this.dataSource = new MatTableDataSource<Usuario>(this._actr.snapshot.data.tabela);
+    this.fonteDados = new MatTableDataSource<Usuario>(this._actr.snapshot.data.tabela);
 
     // configurar o componente
-    this.dataSource.paginator = this.paginator;
-    this.selection = new SelectionModel<Usuario>(this.allowMultiSelect, this._initialSelection);
-    this.displayedColumns = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
-    this._initialSelection = [];
-    this.allowMultiSelect = true;
+    this.fonteDados.paginator = this.paginator;
+    this.permitirMultiSelecao = true;
+    this.selecaoInicial = [];
+    this.selecaoRegistros = new SelectionModel<Usuario>(this.permitirMultiSelecao, this.selecaoInicial);
+    this.colunasExibidas = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
     this.quantidadeRegistros = 0;
     this.tamanhoPagina = 10;
   }
@@ -39,9 +39,14 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
   public getRoute(): Route {
     return this._router.config.find(v=>v.path == 'pag')['_loadedConfig'].routes.find(v=>v.path == 'usuario/:id');
   }
+
+  public vaiPara(pos): void {
+    
+  }
   
   onPaginateChange(event){
-    this.pag = event.pageIndex;
+    this.paginaAtual = event.pageIndex;
+    this.tamanhoPagina = event.pageSize;
     console.log('onPaginateChange', event);
   }
   
@@ -53,7 +58,12 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
     if (lista.idList.length) {
       let url : string[] = this._urlPrincipal.slice(0);
       url.push(lista.idList[lista.pos].toString());
-      this.getRoute().data.config = {pagina: 0, quebra: 0, filtro: {}, lista};
+      this.getRoute().data.config = {
+        paginaAtual: this.paginaAtual, 
+        tamanhoPagina: this.tamanhoPagina, 
+        filtro: {}, 
+        lista
+      };
       this._router.navigate(url);
     }
     

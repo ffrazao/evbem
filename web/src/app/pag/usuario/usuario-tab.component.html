@@ -3,39 +3,35 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
   </mat-form-field>
   <button [routerLink]="['/pag', 'usuario', 'n']">Incluir</button>
-  <span *ngIf="selection?.selected?.length">
-    [{{selection.selected.length}}] registro(s) selecionado(s)
+  <span *ngIf="selecaoRegistros?.selected?.length">
+    [{{selecaoRegistros.selected.length}}] registro(s) selecionado(s)
     <button (click)="ver()">Ver</button>
     <button>Excluir</button>
   </span>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+  <table mat-table [dataSource]="fonteDados" class="mat-elevation-z8" >
 
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selecaoRegistros.hasValue() && isAllSelected()"
+          [indeterminate]="selecaoRegistros.hasValue() && !isAllSelected()">
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-          [checked]="selection.isSelected(row)">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selecaoRegistros.toggle(row) : null"
+          [checked]="selecaoRegistros.isSelected(row)">
         </mat-checkbox>
       </td>
     </ng-container>
 
-    <!-- <ng-container matColumnDef="indice">
-      <th mat-header-cell *matHeaderCellDef> Índice. </th>
-      <td mat-cell> {{index}} </td>
-    </ng-container> -->
     <ng-container matColumnDef="indice">
       <th mat-header-cell *matHeaderCellDef> Num. </th>
-      <td mat-cell *matCellDef="let i = index">{{i}} {{pag}} {{i + pag}}</td>
+      <td mat-cell *matCellDef="let i = index">{{(paginaAtual * tamanhoPagina) + i + 1}}.</td>
     </ng-container>
 
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef> Nome. </th>
-      <td mat-cell *matCellDef="let e" (click)="ver(index)"> {{index}} - {{e.nome}} </td>
+      <td mat-cell *matCellDef="let e; let i = index" (click)="ver((paginaAtual * tamanhoPagina) + i)"> {{e.nome}} </td>
     </ng-container>
 
     <!-- Name Column -->
@@ -56,8 +52,8 @@
       <td mat-cell *matCellDef="let e"> {{e.tipo}} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunasExibidas;"></tr>
   </table>
 
   <mat-paginator 

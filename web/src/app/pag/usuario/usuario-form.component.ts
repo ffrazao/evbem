@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from './usuario.service';
 import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component';
 
@@ -12,13 +12,11 @@ import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component'
 })
 export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
 
-  public formulario: FormGroup;
-
   constructor(
-    protected _router: Router,
     protected _actr: ActivatedRoute,
+    protected _router: Router,
+    private _formBuilder: FormBuilder,
     protected _service: UsuarioService,
-    private _formBuilder: FormBuilder
   ) {
     super(['/pag', 'usuario']);
   }
@@ -36,10 +34,25 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
     });
     // carregar o formulário
     this.formulario.patchValue(this._actr.snapshot.data.formulario);
+
+    if (this._actr.snapshot.data.config) {
+      this.ids = this._actr.snapshot.data.config.lista.idList;
+      this.pos = this._actr.snapshot.data.config.lista.pos;
+    }
   }
 
   salvar() {
     this._service.salvar(this.formulario.value).subscribe(f => this.formulario.setValue(f));
+  }
+
+  public vaiPara(pos): void {
+    pos = ("" + pos).trim();
+    if ((pos || pos == 0) && !isNaN(pos)) {
+      let url = this._urlPrincipal.slice(0);
+      //url.push(this.ids.join());
+      url.push(this.ids[pos]);
+      this._router.navigate(url);
+    }
   }
 
 }

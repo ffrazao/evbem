@@ -12,17 +12,20 @@ const routes: Routes = [
   {
     path: 'usuario/n',
     component: UsuarioFormComponent,
-    resolve: {formulario: UsuarioCriarResolver}
+    resolve: {formulario: UsuarioCriarResolver},
+    data: {}
   },
   {
     path: 'usuario/:id',
     component: UsuarioFormComponent,
-    resolve: {formulario: UsuarioVerResolver}
+    resolve: {formulario: UsuarioVerResolver},
+    data: {}
   },
   {
     path: 'usuario',
     component: UsuarioTabComponent,
-    resolve: {tabela: UsuarioListarResolver}
+    resolve: {tabela: UsuarioListarResolver},
+    data: {}
   },
   {
     path: 'perfil',
