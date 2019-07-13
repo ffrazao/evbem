@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,18 +22,28 @@ public class UsuarioCtrl {
 	@Autowired
 	private NegocioFacade negocioFacade;
 
+	@PostMapping()
+	private Usuario alterar(@RequestBody Usuario registro) throws Exception {
+		return (Usuario) negocioFacade.executarComEscrita("UsuarioSalvarCdSq", registro);
+	}
+
+	@GetMapping(value = "/criar")
+	private Usuario criar() throws Exception {
+		return (Usuario) negocioFacade.executarSomenteLeitura("UsuarioCriarCdSq");
+	}
+
+	@PutMapping()
+	private Usuario incluir(@RequestBody Usuario registro) throws Exception {
+		return (Usuario) negocioFacade.executarComEscrita("UsuarioSalvarCdSq", registro);
+	}
+
 	@GetMapping
-	private List<Usuario> get() throws Exception {
+	private List<Usuario> listar() throws Exception {
 		return (List<Usuario>) negocioFacade.executarSomenteLeitura("UsuarioListarCdSq");
 	}
 
 	@GetMapping(value = "/{id}")
-	private Usuario get(@PathVariable Integer id) throws Exception {
+	private Usuario ver(@PathVariable Integer id) throws Exception {
 		return (Usuario) negocioFacade.executarSomenteLeitura("UsuarioListarCdSq", id);
-	}
-
-	@PostMapping()
-	private Usuario post(@RequestBody Usuario registro) throws Exception {
-		return (Usuario) negocioFacade.executarComEscrita("UsuarioSalvarCdSq", registro);
 	}
 }

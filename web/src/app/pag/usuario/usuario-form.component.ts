@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from './usuario.service';
 import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component';
+import { Usuario } from 'src/app/entidade/usuario';
 
 @Component({
   selector: 'app-usuario-form',
@@ -33,12 +34,19 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
       ativo: [null, [Validators.required]],
     });
     // carregar o formulário
-    this.formulario.patchValue(this._actr.snapshot.data.formulario);
+    this._actr.data.subscribe((data: any) => {
+      console.log(data.formulario);
+      this.formulario.patchValue(data.formulario);
+      if (data.config && !this.ids) {
+        this.ids = data.config.lista.idList;
+        this.pos = data.config.lista.pos;
+      }
+      this.novaPos = 1;
+      if (!isNaN(this.pos)) {
+        this.novaPos = this.pos + 1;
+      }
+    });
 
-    if (this._actr.snapshot.data.config) {
-      this.ids = this._actr.snapshot.data.config.lista.idList;
-      this.pos = this._actr.snapshot.data.config.lista.pos;
-    }
   }
 
   salvar() {
@@ -49,8 +57,8 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
     pos = ("" + pos).trim();
     if ((pos || pos == 0) && !isNaN(pos)) {
       let url = this._urlPrincipal.slice(0);
-      //url.push(this.ids.join());
-      url.push(this.ids[pos]);
+      this.setPos(parseInt(pos));
+      url.push(this.ids[this.pos]);
       this._router.navigate(url);
     }
   }

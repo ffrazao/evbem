@@ -51,7 +51,7 @@ public class Usuario extends EntidadeBase implements Serializable {
 	private byte[] foto;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String login;

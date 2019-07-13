@@ -2,7 +2,8 @@ export abstract class CrudComponent {
 
   protected ids;
   protected pos;
-
+  protected novaPos;
+  
   constructor(
     protected _urlPrincipal: string[]
   ) {
