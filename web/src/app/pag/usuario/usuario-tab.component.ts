@@ -4,6 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { Usuario } from 'src/app/entidade/usuario';
 import { CrudTabComponent } from 'src/app/comum/componente/crud-tab-component';
+import { CrudConfig } from 'src/app/comum/componente/crud-config';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -16,32 +17,31 @@ import { CrudTabComponent } from 'src/app/comum/componente/crud-tab-component';
 export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
    
   constructor(
+    protected _config: CrudConfig,
     protected _router: Router,
     protected _actr: ActivatedRoute
   ) {
-    super(['/pag', 'usuario']);
+    super(_config, ['/pag', 'usuario']);
   }
   
   ngOnInit(): void {
-    // carregar a tabela
-    this.fonteDados = new MatTableDataSource<Usuario>(this._actr.snapshot.data.tabela);
-
-    // configurar o componente
-    this.fonteDados.paginator = this.paginator;
-    this.permitirMultiSelecao = true;
-    this.selecaoInicial = [];
-    this.selecaoRegistros = new SelectionModel<Usuario>(this.permitirMultiSelecao, this.selecaoInicial);
-    this.colunasExibidas = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
-    this.quantidadeRegistros = 0;
-    this.tamanhoPagina = 10;
+    this._actr.data.subscribe((data: any) => {
+      // carregar a tabela
+      this.fonteDados = new MatTableDataSource<Usuario>(data.tabela);
+  
+      // configurar o componente
+      this.fonteDados.paginator = this.paginator;
+      this.permitirMultiSelecao = true;
+      this.selecaoInicial = [];
+      this.selecaoRegistros = new SelectionModel<Usuario>(this.permitirMultiSelecao, this.selecaoInicial);
+      this.colunasExibidas = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
+      this.quantidadeRegistros = 0;
+      this.tamanhoPagina = 10;
+    });
   }
 
   public getRoute(): Route {
     return this._router.config.find(v=>v.path == 'pag')['_loadedConfig'].routes.find(v=>v.path == 'usuario/:id');
-  }
-
-  public vaiPara(pos): void {
-    
   }
   
   onPaginateChange(event){

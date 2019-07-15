@@ -3,6 +3,7 @@ import { CrudComponent } from './crud-component';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Route } from '@angular/router';
+import { CrudConfig } from './crud-config';
 
 @Component({})
 export abstract class CrudTabComponent extends CrudComponent {
@@ -20,9 +21,10 @@ export abstract class CrudTabComponent extends CrudComponent {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
+    protected _config: CrudConfig,
     protected _urlPrincipal: string[],
   ) {
-    super(_urlPrincipal);
+    super(_config, _urlPrincipal);
   }
 
   applyFilter(filterValue: string) {

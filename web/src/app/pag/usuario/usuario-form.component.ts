@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from './usuario.service';
 import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component';
 import { Usuario } from 'src/app/entidade/usuario';
+import { CrudConfig } from 'src/app/comum/componente/crud-config';
 
 @Component({
   selector: 'app-usuario-form',
@@ -14,16 +15,17 @@ import { Usuario } from 'src/app/entidade/usuario';
 export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
 
   constructor(
+    protected _config: CrudConfig,
     protected _actr: ActivatedRoute,
     protected _router: Router,
     private _formBuilder: FormBuilder,
     protected _service: UsuarioService,
   ) {
-    super(['/pag', 'usuario']);
+    super(_config, ['/pag', 'usuario']);
   }
 
   ngOnInit() {
-    console.log('form');
+
     // construir o formulário
     this.formulario = this._formBuilder.group({
       id: [null, []],
@@ -33,34 +35,28 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
       email: [null, [Validators.required, Validators.maxLength(255), Validators.email]],
       ativo: [null, [Validators.required]],
     });
-    // carregar o formulário
+
+    // carregar os dados do formulário
     this._actr.data.subscribe((data: any) => {
-      console.log(data.formulario);
-      this.formulario.patchValue(data.formulario);
-      if (data.config && !this.ids) {
-        this.ids = data.config.lista.idList;
-        this.pos = data.config.lista.pos;
+      this.formulario.reset();
+      if (data.formulario) {
+        this.formulario.patchValue(data.formulario);
       }
-      this.novaPos = 1;
-      if (!isNaN(this.pos)) {
-        this.novaPos = this.pos + 1;
+      if (data.config && !this.config.ids) {
+        this.config.ids = data.config.lista.idList;
+        this.config.pos = data.config.lista.pos;
+      }
+      this.config.novaPos = 1;
+      if (!isNaN(this.config.pos)) {
+        this.config.novaPos = this.config.pos + 1;
+      } else {
+        this.config.pos = 0;
       }
     });
-
   }
 
   salvar() {
     this._service.salvar(this.formulario.value).subscribe(f => this.formulario.setValue(f));
-  }
-
-  public vaiPara(pos): void {
-    pos = ("" + pos).trim();
-    if ((pos || pos == 0) && !isNaN(pos)) {
-      let url = this._urlPrincipal.slice(0);
-      this.setPos(parseInt(pos));
-      url.push(this.ids[this.pos]);
-      this._router.navigate(url);
-    }
   }
 
 }

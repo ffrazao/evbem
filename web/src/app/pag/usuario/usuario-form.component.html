@@ -1,10 +1,10 @@
-<p *ngIf="ids?.length">
-  <button (click)="vaiParaPrimeiro()">Primeiro</button>
-  <button (click)="vaiParaAnterior()">Anterior</button>
-  <input [(ngModel)]="novaPos"> de {{ids?.length}}
-  <button (click)="vaiPara(novaPos - 1)">Vai</button>
-  <button (click)="vaiParaProximo()">Próximo</button>
-  <button (click)="vaiParaUltimo()">Último</button>
+<p *ngIf="config?.ids?.length">
+  <button (click)="config.vaiParaPrimeiro()">Primeiro</button>
+  <button (click)="config.vaiParaAnterior()">Anterior</button>
+  <input [(ngModel)]="config.novaPos"> de {{config?.ids?.length}}
+  <button (click)="config.vaiPara(config.novaPos - 1)">Vai</button>
+  <button (click)="config.vaiParaProximo()">Próximo</button>
+  <button (click)="config.vaiParaUltimo()">Último</button>
 </p>
 <p>
   <button [routerLink]="['/pag', 'usuario']">Voltar</button>
