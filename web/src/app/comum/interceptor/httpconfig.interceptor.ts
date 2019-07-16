@@ -49,7 +49,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 mirror = this._domService.destroyComponentToBody(mirror);
 
                 if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
+                    // console.log('event--->>>', event);
                     // this._errorDialogService.openDialog(event);
                 }
                 return event;

@@ -1,7 +1,8 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute, Route } from '@angular/router';
+
 import { Usuario } from 'src/app/entidade/usuario';
 import { CrudTabComponent } from 'src/app/comum/componente/crud-tab-component';
 import { CrudConfig } from 'src/app/comum/componente/crud-config';
@@ -15,7 +16,7 @@ import { CrudConfig } from 'src/app/comum/componente/crud-config';
   templateUrl: './usuario-tab.component.html',
 })
 export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
-   
+
   constructor(
     protected _config: CrudConfig,
     protected _router: Router,
@@ -23,50 +24,28 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
   ) {
     super(_config, ['/pag', 'usuario']);
   }
-  
+
   ngOnInit(): void {
     this._actr.data.subscribe((data: any) => {
       // carregar a tabela
-      this.fonteDados = new MatTableDataSource<Usuario>(data.tabela);
-  
-      // configurar o componente
-      this.fonteDados.paginator = this.paginator;
-      this.permitirMultiSelecao = true;
-      this.selecaoInicial = [];
-      this.selecaoRegistros = new SelectionModel<Usuario>(this.permitirMultiSelecao, this.selecaoInicial);
-      this.colunasExibidas = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
-      this.quantidadeRegistros = 0;
-      this.tamanhoPagina = 10;
+      this.config.fonteDados = new MatTableDataSource<Usuario>(data.tabela);
     });
+    // configurar o componente
+    this.config.colunasExibidas = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
+    this.config.selecaoRegistros = new SelectionModel<Usuario>(this.config.permitirMultiSelecao, this.config.selecaoInicial);
+    this.config.fonteDados.paginator = this.paginator;
   }
 
   public getRoute(): Route {
-    return this._router.config.find(v=>v.path == 'pag')['_loadedConfig'].routes.find(v=>v.path == 'usuario/:id');
+    return this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario/:id');
   }
-  
-  onPaginateChange(event){
-    this.paginaAtual = event.pageIndex;
-    this.tamanhoPagina = event.pageSize;
-    console.log('onPaginateChange', event);
-  }
-  
+
   public ver(pos: number = 0) {
-    console.log('ver posicao ', pos);
-    // exemplo de passagem de parametros via propriedade data
-    let lista = this.getIdList(pos);
-    
-    if (lista.idList.length) {
-      let url : string[] = this._urlPrincipal.slice(0);
-      url.push(lista.idList[lista.pos].toString());
-      this.getRoute().data.config = {
-        paginaAtual: this.paginaAtual, 
-        tamanhoPagina: this.tamanhoPagina, 
-        filtro: {}, 
-        lista
-      };
-      this._router.navigate(url);
-    }
-    
+    this.config.pos = this.config.selecaoRegistros.isEmpty() ? pos : 0;
+    let url = this._urlPrincipal.slice(0);
+    url.push(this.config.ids[this.config.pos].id);
+    this.getRoute().data.config = this.config;
+    this._router.navigate(url);
   }
 
 }

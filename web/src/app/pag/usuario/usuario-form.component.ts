@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
+import { ActivatedRoute, Router, Route } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+
 import { UsuarioService } from './usuario.service';
 import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component';
-import { Usuario } from 'src/app/entidade/usuario';
 import { CrudConfig } from 'src/app/comum/componente/crud-config';
 
 @Component({
@@ -16,10 +15,10 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
 
   constructor(
     protected _config: CrudConfig,
-    protected _actr: ActivatedRoute,
-    protected _router: Router,
+    private _actr: ActivatedRoute,
+    private _router: Router,
     private _formBuilder: FormBuilder,
-    protected _service: UsuarioService,
+    private _service: UsuarioService,
   ) {
     super(_config, ['/pag', 'usuario']);
   }
@@ -38,13 +37,15 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
 
     // carregar os dados do formulário
     this._actr.data.subscribe((data: any) => {
+      console.log(12);
       this.formulario.reset();
       if (data.formulario) {
         this.formulario.patchValue(data.formulario);
       }
-      if (data.config && !this.config.ids) {
-        this.config.ids = data.config.lista.idList;
-        this.config.pos = data.config.lista.pos;
+      if (data.config) {
+        //this.config.ids = data.config.lista.idList;
+        this.config = data.config;
+        delete data['config'];
       }
       this.config.novaPos = 1;
       if (!isNaN(this.config.pos)) {
@@ -55,8 +56,44 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
     });
   }
 
+  public getRoute(): Route {
+    return this._router.config.find(v=>v.path == 'pag')['_loadedConfig'].routes.find(v=>v.path == 'usuario');
+  }
+
+  voltar() {
+    let url : string[] = this._urlPrincipal.slice(0);
+
+    this.getRoute().data.config = {
+      paginaAtual: this.config.paginaAtual, 
+      tamanhoPagina: this.config.tamanhoPagina, 
+      filtro: {}, 
+      lista: {ids: this.config.ids, pos: this.config.pos},
+    };
+    this._router.navigate(url);
+  }
+
   salvar() {
-    this._service.salvar(this.formulario.value).subscribe(f => this.formulario.setValue(f));
+    this._service.salvar(this.formulario.value).subscribe(f => this.formulario.patchValue(f));
+  }
+
+  vaiParaPrimeiro() {
+    this._router.navigate(this.config.vaiParaPrimeiro());
+  }
+
+  vaiParaAnterior() {
+    this._router.navigate(this.config.vaiParaAnterior());
+  }
+
+  vaiPara(_pos: number) {
+    this._router.navigate(this.config.vaiPara(_pos));
+  }
+
+  vaiParaProximo() {
+    this._router.navigate(this.config.vaiParaProximo());
+  }
+
+  vaiParaUltimo() {
+    this._router.navigate(this.config.vaiParaUltimo());
   }
 
 }

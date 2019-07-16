@@ -14,7 +14,6 @@ export class UsuarioVerResolver implements Resolve<Observable<Usuario>> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Usuario> {
-        console.log('form vendo ' + route.params.id);
         return this._service.ver(route.params.id);
     }
 

@@ -6,13 +6,21 @@ import { CrudConfig } from './crud-config';
 @Component({})
 export abstract class CrudFormComponent extends CrudComponent {
 
-  protected formulario: FormGroup;
+  private _formulario: FormGroup;
 
   constructor(
     protected _config: CrudConfig,
     protected _urlPrincipal: string[]
   ) {
     super(_config, _urlPrincipal);
+  }
+
+  get formulario(): FormGroup {
+    return this._formulario;
+  }
+
+  set formulario(_formulario: FormGroup) {
+    this._formulario = _formulario;
   }
 
 }

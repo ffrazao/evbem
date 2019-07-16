@@ -6,11 +6,15 @@ export abstract class CrudComponent {
     protected _config: CrudConfig,
     protected _urlPrincipal: string[],
   ) {
-    this._config.urlPrincipal = _urlPrincipal;
+    this._config.urlPrincipal = this._urlPrincipal;
   }
 
   get config() : CrudConfig {
     return this._config;
+  }
+
+  set config(_config : CrudConfig) {
+    this._config = _config;
   }
 
 }
