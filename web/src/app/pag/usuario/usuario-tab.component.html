@@ -10,7 +10,6 @@
   </span>
 
   <table mat-table [dataSource]="config.fonteDados" class="mat-elevation-z8">
-
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? comutadorMestre() : null"
@@ -19,8 +18,8 @@
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? config.selecaoRegistros.toggle(row) : null"
-          [checked]="config.selecaoRegistros.isSelected(row)">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? config.selecaoRegistros.toggle(row.id) : null"
+          [checked]="config.selecaoRegistros.isSelected(row.id)">
         </mat-checkbox>
       </td>
     </ng-container>

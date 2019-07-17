@@ -14,44 +14,47 @@ import { CrudConfig } from 'src/app/comum/componente/crud-config';
 export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
 
   constructor(
-    protected _config: CrudConfig,
-    private _actr: ActivatedRoute,
     private _router: Router,
+    private _actr: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private _service: UsuarioService,
   ) {
-    super(_config, ['/pag', 'usuario']);
+    super();
   }
 
   ngOnInit() {
 
-    // construir o formulário
-    this.formulario = this._formBuilder.group({
-      id: [null, []],
-      nome: [null, [Validators.required, Validators.maxLength(255)]],
-      login: [null, [Validators.required, Validators.maxLength(255)]],
-      tipo: [null, [Validators.required, Validators.maxLength(255)]],
-      email: [null, [Validators.required, Validators.maxLength(255), Validators.email]],
-      ativo: [null, [Validators.required]],
-    });
-
-    // carregar os dados do formulário
     this._actr.data.subscribe((data: any) => {
-      console.log(12);
-      this.formulario.reset();
-      if (data.formulario) {
-        this.formulario.patchValue(data.formulario);
-      }
+      // carregar as configurações
       if (data.config) {
-        //this.config.ids = data.config.lista.idList;
+        // console.log('Recuperar config form');
         this.config = data.config;
-        delete data['config'];
+        delete this._actr.snapshot.data['config'];
+      } else if (!this.config) {
+        this.config = new CrudConfig(['/pag', 'usuario']);
       }
       this.config.novaPos = 1;
       if (!isNaN(this.config.pos)) {
         this.config.novaPos = this.config.pos + 1;
       } else {
         this.config.pos = 0;
+      }
+      if (!this.config.formulario) {
+        // construir o formulário
+        this.config.formulario = this._formBuilder.group({
+          id: [null, []],
+          nome: [null, [Validators.required, Validators.maxLength(255)]],
+          login: [null, [Validators.required, Validators.maxLength(255)]],
+          tipo: [null, [Validators.required, Validators.maxLength(255)]],
+          email: [null, [Validators.required, Validators.maxLength(255), Validators.email]],
+          ativo: [null, [Validators.required]],
+        });
+      }
+      
+      // carregar os dados do formulário
+      this.config.formulario.reset();
+      if (data.formulario) {
+        this.config.formulario.patchValue(data.formulario);
       }
     });
   }
@@ -61,19 +64,12 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
   }
 
   voltar() {
-    let url : string[] = this._urlPrincipal.slice(0);
-
-    this.getRoute().data.config = {
-      paginaAtual: this.config.paginaAtual, 
-      tamanhoPagina: this.config.tamanhoPagina, 
-      filtro: {}, 
-      lista: {ids: this.config.ids, pos: this.config.pos},
-    };
-    this._router.navigate(url);
+    this.getRoute().data.config = this.config;
+    this._router.navigate(this.config.urlPrincipal);
   }
 
   salvar() {
-    this._service.salvar(this.formulario.value).subscribe(f => this.formulario.patchValue(f));
+    this._service.salvar(this.config.formulario.value).subscribe(f => this.config.formulario.patchValue(f));
   }
 
   vaiParaPrimeiro() {

@@ -1,7 +1,7 @@
 <p *ngIf="config?.ids?.length">
   <button (click)="vaiParaPrimeiro()">Primeiro</button>
   <button (click)="vaiParaAnterior()">Anterior</button>
-  <input [(ngModel)]="config.novaPos"> de {{config?.ids?.length}}
+  <input [(ngModel)]="config.novaPos"> de {{config.ids?.length}}
   <button (click)="vaiPara(config.novaPos - 1)">Vai</button>
   <button (click)="vaiParaProximo()">Próximo</button>
   <button (click)="vaiParaUltimo()">Último</button>
@@ -10,9 +10,9 @@
   <button (click)="voltar()">Voltar</button>
 </p>
 
-<div>{{formulario.value | json}}</div>
+<div>{{config.formulario.value | json}}</div>
 
-<form [formGroup]="formulario" (submit)="salvar()">
+<form *ngIf="config.formulario" [formGroup]="config.formulario" (submit)="salvar()">
   <div class="container">
     <div class="row">
       <div class="form-group">
@@ -44,7 +44,7 @@
         <input class="form-control" formControlName="ativo">
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="formulario.invalid">
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="config.formulario.invalid">
       Salvar
     </button>
 

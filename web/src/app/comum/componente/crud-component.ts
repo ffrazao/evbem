@@ -1,13 +1,11 @@
 import { CrudConfig } from './crud-config';
+import { Route } from '@angular/router';
 
 export abstract class CrudComponent {
-  
-  constructor(
-    protected _config: CrudConfig,
-    protected _urlPrincipal: string[],
-  ) {
-    this._config.urlPrincipal = this._urlPrincipal;
-  }
+
+  protected _config: CrudConfig;
+
+  constructor() {}
 
   get config() : CrudConfig {
     return this._config;
@@ -16,5 +14,7 @@ export abstract class CrudComponent {
   set config(_config : CrudConfig) {
     this._config = _config;
   }
+
+  abstract getRoute(): Route;
 
 }

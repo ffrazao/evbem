@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
 import { Usuario } from 'src/app/entidade/usuario';
 import { UsuarioService } from './usuario.service';
 import { Observable } from 'rxjs';

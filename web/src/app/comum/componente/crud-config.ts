@@ -1,12 +1,10 @@
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class CrudConfig {
-
-    private _urlPrincipal: string[];
 
     // variáveis de apoio à tabela
     private _fonteDados: MatTableDataSource<any>;
@@ -15,19 +13,16 @@ export class CrudConfig {
     private _tamanhoPagina: number = 10;
     private _tamanhoPaginaOpcoes = [5, 10, 20, 100];
     private _selecaoRegistros: SelectionModel<any>;
-    private _selecaoInicial : [];
-    private _permitirMultiSelecao : boolean = true;
+    private _selecaoInicial: [];
+    private _permitirMultiSelecao: boolean = true;
     private _paginaAtual: number = 0;
 
     // variáveis de apoio ao formulario
-    // private _ids: number[];
+    private _formulario: FormGroup;
     private _pos: number;
     private _novaPos: number;
 
-    constructor(
-        private _router: Router
-    ) {
-    }
+    constructor(private _urlPrincipal: string[]) { }
 
     // métodos de apoio à tabela
     get fonteDados() {
@@ -103,10 +98,18 @@ export class CrudConfig {
     }
 
     // métodos de apoio ao formulario
+    public get formulario(): FormGroup {
+        return this._formulario;
+    }
+
+    public set formulario(_formulario: FormGroup) {
+        this._formulario = _formulario;
+    }
+
     get id(): number {
         return (!this.ids || !Array.isArray(this.ids) || isNaN(this.pos) || this.pos < 0 || this.pos >= this.ids.length) ?
             null :
-            this.ids[this.pos].id;
+            (this.ids[this.pos].id ? this.ids[this.pos].id : this.ids[this.pos]);
     }
 
     get novaPos(): number {
@@ -131,7 +134,7 @@ export class CrudConfig {
     }
 
     get ids(): any[] {
-        return this.selecaoRegistros && !this.selecaoRegistros.isEmpty ? this.selecaoRegistros.selected : this.fonteDados && this.fonteDados.data ? this.fonteDados.data : [];
+        return this.selecaoRegistros && !this.selecaoRegistros.isEmpty() ? this.selecaoRegistros.selected : this.fonteDados && this.fonteDados.data ? this.fonteDados.data : [];
     }
 
     get urlPrincipal(): string[] {
