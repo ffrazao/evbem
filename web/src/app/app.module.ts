@@ -36,6 +36,9 @@ import { LogoutComponent } from './logout/logout.component';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot() // ToastrModule added
   ],
+  exports: [
+    MatDialogModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

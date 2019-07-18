@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Route } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { UsuarioService } from './usuario.service';
 import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component';
 import { CrudConfig } from 'src/app/comum/componente/crud-config';
+import { UsuarioService } from '../servico/usuario.service';
+import { MatDialog } from '@angular/material';
+import { DialogoComponent } from 'src/app/comum/componente/dialogo/dialogo.component';
 
 @Component({
   selector: 'app-usuario-form',
@@ -18,6 +20,7 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
     private _actr: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private _service: UsuarioService,
+    public dialog: MatDialog,
   ) {
     super();
   }
@@ -48,7 +51,7 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
           ativo: [null, [Validators.required]],
         });
       }
-      
+
       // carregar os dados do formulário
       this.config.formulario.reset();
       if (data.formulario) {
@@ -58,12 +61,14 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
   }
 
   public getRoute(): Route {
-    return this._router.config.find(v=>v.path == 'pag')['_loadedConfig'].routes.find(v=>v.path == 'usuario');
+    return this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario');
   }
 
   voltar() {
-    this.getRoute().data.config = this.config; //Object.assign({}, this.config);
-    this._router.navigate(this.config.urlPrincipal);
+    if (!this.pendencia()) {
+      this.getRoute().data.config = this.config; //Object.assign({}, this.config);
+      this._router.navigate(this.config.urlPrincipal);
+    }
   }
 
   salvar() {
@@ -71,23 +76,51 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
   }
 
   vaiParaPrimeiro() {
-    this._router.navigate(this.config.vaiParaPrimeiro());
+    if (!this.pendencia()) {
+      this._router.navigate(this.config.vaiParaPrimeiro());
+    }
   }
 
   vaiParaAnterior() {
-    this._router.navigate(this.config.vaiParaAnterior());
+    if (!this.pendencia()) {
+      this._router.navigate(this.config.vaiParaAnterior());
+    }
   }
 
   vaiPara(_pos: number) {
-    this._router.navigate(this.config.vaiPara(_pos));
+    if (!this.pendencia()) {
+      this._router.navigate(this.config.vaiPara(_pos));
+    }
   }
 
   vaiParaProximo() {
-    this._router.navigate(this.config.vaiParaProximo());
+    if (!this.pendencia()) {
+      this._router.navigate(this.config.vaiParaProximo());
+    }
   }
 
   vaiParaUltimo() {
-    this._router.navigate(this.config.vaiParaUltimo());
+    if (!this.pendencia()) {
+      this._router.navigate(this.config.vaiParaUltimo());
+    }
   }
 
+  async pendencia() {
+    console.log(1);
+    if (!this.config.formulario.pristine) {
+      console.log(2);
+      let result = false;
+      let r2 = this.openDialog('Descartar as alterações');
+      console.log(5, r2);
+    }
+    return false;
+  }
+
+  openDialog(_mensagem: string) {
+    const dialogRef = this.dialog.open(DialogoComponent, {
+      width: '350px',
+      data: _mensagem
+    });
+    return dialogRef.afterClosed().toPromise();
+  }
 }

@@ -44,6 +44,8 @@ public class UsuarioCtrl {
 
 	@GetMapping(value = "/{id}")
 	private Usuario ver(@PathVariable Integer id) throws Exception {
-		return (Usuario) negocioFacade.executarSomenteLeitura("UsuarioListarCdSq", id);
+		Usuario result = (Usuario) negocioFacade.executarSomenteLeitura("UsuarioListarCdSq", id);
+		System.out.println(result);
+		return result;
 	}
 }

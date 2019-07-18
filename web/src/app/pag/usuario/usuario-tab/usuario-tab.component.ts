@@ -48,7 +48,9 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
   }
 
   public getRoute(): Route {
-    return this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario/:id');
+    return this._router.config.find(v => v.path == 'pag')
+      ['_loadedConfig'].routes.find(v => v.path == 'usuario')
+      ['_loadedConfig'].routes.find(v => v.path == ':id');
   }
 
   public ver(pos: number = 0) {

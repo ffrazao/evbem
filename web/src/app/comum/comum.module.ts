@@ -8,16 +8,19 @@ import { MirrorComponent } from './componente/mirror/mirror.component';
 import { AuthGuardService } from './guard/auth-guard.service';
 import { UsuarioLoginComponent } from './componente/usuario-login/usuario-login.component';
 import { RouterModule } from '@angular/router';
+import { DialogoComponent } from './componente/dialogo/dialogo.component';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
-  declarations: [ErrorDialogComponent, MirrorComponent, UsuarioLoginComponent],
+  declarations: [ErrorDialogComponent, MirrorComponent, UsuarioLoginComponent, DialogoComponent],
   imports: [
     CommonModule,
     NgxViacepModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ],
   exports: [UsuarioLoginComponent],
   providers: [DomService, ErrorDialogService, AuthGuardService],
-  entryComponents: [ErrorDialogComponent, MirrorComponent],
+  entryComponents: [ErrorDialogComponent, MirrorComponent, DialogoComponent],
 })
 export class ComumModule { }

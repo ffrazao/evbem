@@ -80,7 +80,7 @@ public class Usuario extends EntidadeBase implements Serializable {
 
 	// bi-directional many-to-one association to UsuarioPerfil
 	@ManyToOne
-	@JoinColumn(name = "ultimo_usuario_perfil_id")
+	@JoinColumn(name = "ultimo_perfil_id")
 	private UsuarioPerfil usuarioPerfil;
 
 	// bi-directional many-to-one association to UsuarioPerfil
