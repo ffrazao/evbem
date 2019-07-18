@@ -23,13 +23,11 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this._actr.data.subscribe((data: any) => {
       // carregar as configurações
       if (data.config) {
-        // console.log('Recuperar config form');
-        this.config = data.config;
-        delete this._actr.snapshot.data['config'];
+        this.config = data.config; //Object.assign({}, data.config);
+        delete data['config'];
       } else if (!this.config) {
         this.config = new CrudConfig(['/pag', 'usuario']);
       }
@@ -64,7 +62,7 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
   }
 
   voltar() {
-    this.getRoute().data.config = this.config;
+    this.getRoute().data.config = this.config; //Object.assign({}, this.config);
     this._router.navigate(this.config.urlPrincipal);
   }
 

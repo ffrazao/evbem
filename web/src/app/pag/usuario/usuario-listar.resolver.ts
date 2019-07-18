@@ -14,6 +14,7 @@ export class UsuarioListarResolver implements Resolve<Observable<Usuario[]>> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Usuario[]> {
+        console.log('resolve listar');
         return this._service.listar();
     }
 

@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 
 export abstract class CrudComponent {
 
-  protected _config: CrudConfig;
+  private _config: CrudConfig;
 
   constructor() {}
 

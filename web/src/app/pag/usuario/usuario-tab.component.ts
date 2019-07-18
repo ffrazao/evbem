@@ -29,8 +29,8 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
       // carregar as configurações
       if (data.config) {
         // console.log('Recuperar config tab');
-        this.config = data.config;
-        delete this._actr.snapshot.data['config'];
+        this.config = data.config; //Object.assign({}, data.config);
+        delete data['config'];
       } else if (!this.config) {
         this.config = new CrudConfig(['/pag', 'usuario']);
       }
@@ -55,7 +55,7 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
     this.config.pos = this.config.selecaoRegistros && this.config.selecaoRegistros.isEmpty() ? pos : 0;
     let url = this.config.urlPrincipal.slice(0);
     url.push(this.config.id.toString());
-    this.getRoute().data.config = this.config;
+    this.getRoute().data.config = this.config; //Object.assign({}, this.config);
     this._router.navigate(url);
   }
 

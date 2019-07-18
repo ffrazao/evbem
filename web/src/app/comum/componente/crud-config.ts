@@ -10,7 +10,7 @@ export class CrudConfig {
     private _fonteDados: MatTableDataSource<any>;
     private _colunasExibidas: string[];
     private _quantidadeRegistros: number = 0;
-    private _tamanhoPagina: number = 10;
+    private _tamanhoPagina: number = 5;
     private _tamanhoPaginaOpcoes = [5, 10, 20, 100];
     private _selecaoRegistros: SelectionModel<any>;
     private _selecaoInicial: [];
@@ -25,75 +25,75 @@ export class CrudConfig {
     constructor(private _urlPrincipal: string[]) { }
 
     // métodos de apoio à tabela
-    get fonteDados() {
+    public get fonteDados() {
         return this._fonteDados;
     }
 
-    set fonteDados(_fonteDados) {
+    public set fonteDados(_fonteDados) {
         this._fonteDados = _fonteDados;
     }
 
-    get colunasExibidas() {
+    public get colunasExibidas() {
         return this._colunasExibidas;
     }
 
-    set colunasExibidas(_colunasExibidas) {
+    public set colunasExibidas(_colunasExibidas) {
         this._colunasExibidas = _colunasExibidas;
     }
 
-    get quantidadeRegistros() {
+    public get quantidadeRegistros() {
         return this._quantidadeRegistros;
     }
 
-    set quantidadeRegistros(_quantidadeRegistros) {
+    public set quantidadeRegistros(_quantidadeRegistros) {
         this._quantidadeRegistros = _quantidadeRegistros;
     }
 
-    get tamanhoPagina() {
+    public get tamanhoPagina() {
         return this._tamanhoPagina;
     }
 
-    set tamanhoPagina(_tamanhoPagina) {
+    public set tamanhoPagina(_tamanhoPagina) {
         this._tamanhoPagina = _tamanhoPagina;
     }
 
-    get tamanhoPaginaOpcoes() {
+    public get tamanhoPaginaOpcoes() {
         return this._tamanhoPaginaOpcoes;
     }
 
-    set tamanhoPaginaOpcoes(_tamanhoPaginaOpcoes) {
+    public set tamanhoPaginaOpcoes(_tamanhoPaginaOpcoes) {
         this._tamanhoPaginaOpcoes = _tamanhoPaginaOpcoes;
     }
 
-    get selecaoRegistros() {
+    public get selecaoRegistros() {
         return this._selecaoRegistros;
     }
 
-    set selecaoRegistros(_selecaoRegistros) {
+    public set selecaoRegistros(_selecaoRegistros) {
         this._selecaoRegistros = _selecaoRegistros;
     }
 
-    get selecaoInicial() {
+    public get selecaoInicial() {
         return this._selecaoInicial;
     }
 
-    set selecaoInicial(_selecaoInicial) {
+    public set selecaoInicial(_selecaoInicial) {
         this._selecaoInicial = _selecaoInicial;
     }
 
-    get permitirMultiSelecao() {
+    public get permitirMultiSelecao() {
         return this._permitirMultiSelecao;
     }
 
-    set permitirMultiSelecao(_permitirMultiSelecao) {
+    public set permitirMultiSelecao(_permitirMultiSelecao) {
         this._permitirMultiSelecao = _permitirMultiSelecao;
     }
 
-    get paginaAtual() {
+    public get paginaAtual() {
         return this._paginaAtual;
     }
 
-    set paginaAtual(_paginaAtual) {
+    public set paginaAtual(_paginaAtual) {
         this._paginaAtual = _paginaAtual;
     }
 
@@ -106,25 +106,25 @@ export class CrudConfig {
         this._formulario = _formulario;
     }
 
-    get id(): number {
+    public get id(): number {
         return (!this.ids || !Array.isArray(this.ids) || isNaN(this.pos) || this.pos < 0 || this.pos >= this.ids.length) ?
             null :
             (this.ids[this.pos].id ? this.ids[this.pos].id : this.ids[this.pos]);
     }
 
-    get novaPos(): number {
+    public get novaPos(): number {
         return this._novaPos ? this._novaPos : 1;
     }
 
-    set novaPos(_novaPos: number) {
+    public set novaPos(_novaPos: number) {
         this._novaPos = _novaPos;
     }
 
-    get pos(): number {
+    public get pos(): number {
         return this._pos ? this._pos : 0;
     }
 
-    set pos(_pos: number) {
+    public set pos(_pos: number) {
         if (!_pos || isNaN(_pos) || _pos < 0) {
             _pos = 0;
         } else if (this.ids && this.ids.length && _pos >= this.ids.length) {
@@ -133,15 +133,15 @@ export class CrudConfig {
         this._pos = _pos;
     }
 
-    get ids(): any[] {
+    public get ids(): any[] {
         return this.selecaoRegistros && !this.selecaoRegistros.isEmpty() ? this.selecaoRegistros.selected : this.fonteDados && this.fonteDados.data ? this.fonteDados.data : [];
     }
 
-    get urlPrincipal(): string[] {
+    public get urlPrincipal(): string[] {
         return this._urlPrincipal;
     }
 
-    set urlPrincipal(_urlPrincipal: string[]) {
+    public set urlPrincipal(_urlPrincipal: string[]) {
         this._urlPrincipal = _urlPrincipal;
     }
 
