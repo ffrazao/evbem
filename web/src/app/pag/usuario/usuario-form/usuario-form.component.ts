@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Route } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Route } from '@angular/router';
+import { Validators } from '@angular/forms';
 
 import { CrudFormComponent } from 'src/app/comum/componente/crud-form-component';
 import { CrudConfig } from 'src/app/comum/componente/crud-config';
 import { UsuarioService } from '../servico/usuario.service';
-import { MatDialog } from '@angular/material';
-import { DialogoComponent } from 'src/app/comum/componente/dialogo/dialogo.component';
 
 @Component({
   selector: 'app-usuario-form',
@@ -16,11 +14,8 @@ import { DialogoComponent } from 'src/app/comum/componente/dialogo/dialogo.compo
 export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
 
   constructor(
-    private _router: Router,
     private _actr: ActivatedRoute,
-    private _formBuilder: FormBuilder,
     private _service: UsuarioService,
-    public dialog: MatDialog,
   ) {
     super();
   }
@@ -42,21 +37,28 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
       }
       if (!this.config.formulario) {
         // construir o formulário
-        this.config.formulario = this._formBuilder.group({
-          id: [null, []],
-          nome: [null, [Validators.required, Validators.maxLength(255)]],
-          login: [null, [Validators.required, Validators.maxLength(255)]],
-          tipo: [null, [Validators.required, Validators.maxLength(255)]],
-          email: [null, [Validators.required, Validators.maxLength(255), Validators.email]],
-          ativo: [null, [Validators.required]],
-        });
+        this.config.formulario = this.criarFormulario();
+        this.config.formularioOriginal = this.criarFormulario();
       }
 
       // carregar os dados do formulário
+      this.config.formularioOriginal.reset();
       this.config.formulario.reset();
       if (data.formulario) {
+        this.config.formularioOriginal.patchValue(data.formulario);
         this.config.formulario.patchValue(data.formulario);
       }
+    });
+  }
+
+  criarFormulario() {
+    return this._formBuilder.group({
+      id: [null, []],
+      nome: [null, [Validators.required, Validators.maxLength(255)]],
+      login: [null, [Validators.required, Validators.maxLength(255)]],
+      tipo: [null, [Validators.required, Validators.maxLength(255)]],
+      email: [null, [Validators.required, Validators.maxLength(255), Validators.email]],
+      ativo: [null, [Validators.required]],
     });
   }
 
@@ -64,63 +66,52 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
     return this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario');
   }
 
-  voltar() {
-    if (!this.pendencia()) {
-      this.getRoute().data.config = this.config; //Object.assign({}, this.config);
-      this._router.navigate(this.config.urlPrincipal);
-    }
-  }
-
   salvar() {
-    this._service.salvar(this.config.formulario.value).subscribe(f => this.config.formulario.patchValue(f));
-  }
-
-  vaiParaPrimeiro() {
-    if (!this.pendencia()) {
-      this._router.navigate(this.config.vaiParaPrimeiro());
-    }
-  }
-
-  vaiParaAnterior() {
-    if (!this.pendencia()) {
-      this._router.navigate(this.config.vaiParaAnterior());
-    }
-  }
-
-  vaiPara(_pos: number) {
-    if (!this.pendencia()) {
-      this._router.navigate(this.config.vaiPara(_pos));
-    }
-  }
-
-  vaiParaProximo() {
-    if (!this.pendencia()) {
-      this._router.navigate(this.config.vaiParaProximo());
-    }
-  }
-
-  vaiParaUltimo() {
-    if (!this.pendencia()) {
-      this._router.navigate(this.config.vaiParaUltimo());
-    }
-  }
-
-  async pendencia() {
-    console.log(1);
-    if (!this.config.formulario.pristine) {
-      console.log(2);
-      let result = false;
-      let r2 = this.openDialog('Descartar as alterações');
-      console.log(5, r2);
-    }
-    return false;
-  }
-
-  openDialog(_mensagem: string) {
-    const dialogRef = this.dialog.open(DialogoComponent, {
-      width: '350px',
-      data: _mensagem
+    this._service.salvar(this.config.formulario.value).subscribe(f => {
+      this.config.formularioOriginal.patchValue(f);
+      this.config.formulario.patchValue(f);
+      this.config.permitirEdicao = false;
+      this._toastr.success('Executado com sucesso!', 'Salvar');
+    }, e => {
+      console.log(e);
+      this._toastr.error('Erro no processamento!', 'Salvar');
     });
-    return dialogRef.afterClosed().toPromise();
   }
+
+  incluir() {
+    this._service.criar().subscribe(f => {
+      this.config.formularioOriginal.patchValue(f);
+      this.config.formulario.patchValue(f);
+      this.config.permitirEdicao = true;
+    }, e => {
+      console.log(e);
+      this._toastr.error('Erro no processamento!', 'Incluir');
+    });
+  }
+
+  excluir() {
+    this._service.excluir(this.config.formulario.value.id).subscribe(f => {
+      this.config.permitirEdicao = false;
+      this.config.formulario.reset(this.config.formularioOriginal.value);
+      this.voltar();
+      this._toastr.success('Executado com sucesso!', 'Excluir');
+    }, e => {
+      console.log(e);
+      this._toastr.error('Erro no processamento!', 'Excluir');
+    });
+  }
+
+  async editar() {
+    if (this.config.permitirEdicao) {
+      if (await this.semPendencia()) {
+        this.config.permitirEdicao = false;
+        this.config.formulario.reset(this.config.formularioOriginal.value);
+      } else {
+        this.config.permitirEdicao = true;
+      }
+    } else {
+      this.config.permitirEdicao = !this.config.permitirEdicao;
+    }
+  }
+
 }

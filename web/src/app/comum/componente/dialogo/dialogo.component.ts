@@ -19,13 +19,13 @@ export class DialogoComponent {
   onOkClick() {
     console.log('Ok...');
     this.acao = true;
-    this.dialogRef.close();
+    this.dialogRef.close(this.acao);
   }
 
   onCancelarClick() {
     console.log('cancelar...');
     this.acao = false;
-    this.dialogRef.close();
+    this.dialogRef.close(this.acao);
   }
 
 }

@@ -3,6 +3,7 @@ package br.gov.df.emater.rest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,5 +48,10 @@ public class UsuarioCtrl {
 		Usuario result = (Usuario) negocioFacade.executarSomenteLeitura("UsuarioListarCdSq", id);
 		System.out.println(result);
 		return result;
+	}
+
+	@DeleteMapping(value = "/{ids}")
+	private void excluir(@PathVariable List<Integer> ids) throws Exception {
+		negocioFacade.executarComEscrita("UsuarioExcluirCdSq", ids);
 	}
 }

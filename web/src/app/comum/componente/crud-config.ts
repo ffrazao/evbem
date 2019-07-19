@@ -19,8 +19,10 @@ export class CrudConfig {
 
     // variáveis de apoio ao formulario
     private _formulario: FormGroup;
+    private _formularioOriginal: FormGroup;
     private _pos: number;
     private _novaPos: number;
+    private _permitirEdicao = false;
 
     constructor(private _urlPrincipal: string[]) { }
 
@@ -106,6 +108,14 @@ export class CrudConfig {
         this._formulario = _formulario;
     }
 
+    public get formularioOriginal(): FormGroup {
+        return this._formularioOriginal;
+    }
+
+    public set formularioOriginal(_formularioOriginal: FormGroup) {
+        this._formularioOriginal = _formularioOriginal;
+    }
+
     public get id(): number {
         return (!this.ids || !Array.isArray(this.ids) || isNaN(this.pos) || this.pos < 0 || this.pos >= this.ids.length) ?
             null :
@@ -131,6 +141,13 @@ export class CrudConfig {
             _pos = this.ids.length - 1;
         }
         this._pos = _pos;
+    }
+
+    public get permitirEdicao(): boolean {
+        return this._permitirEdicao;
+    }
+    public set permitirEdicao(_permitirEdicao: boolean) {
+        this._permitirEdicao = _permitirEdicao;
     }
 
     public get ids(): any[] {
