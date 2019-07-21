@@ -8,15 +8,19 @@ import { UsuarioService } from './usuario.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioResListarService  implements Resolve<Observable<Usuario[]>> {
-    
+export class UsuarioResListarService implements Resolve<Observable<Usuario[]>> {
+
   constructor(
-      private _service: UsuarioService
+    private _service: UsuarioService
   ) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Usuario[]> {
+    if (route.data.config && route.data.config.fonteDados) {
+      return route.data.config.fonteDados.data;
+    } else {
       return this._service.listar();
+    }
   }
 
 }

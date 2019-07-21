@@ -1,5 +1,8 @@
 package br.gov.df.emater.negocio.sistema.usuario;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +17,15 @@ public class UsuarioSalvarCmd extends Comando {
 	@Autowired
 	private UsuarioDAO dao;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
-		ctx.setResposta(dao.saveAndFlush((Usuario) ctx.getRequisicao()));
+		if (ctx.getRequisicao() instanceof Usuario) {
+			ctx.setResposta(dao.saveAndFlush((Usuario) ctx.getRequisicao()));
+		} else {
+			ctx.setResposta(((List<Usuario>) ctx.getRequisicao()).stream().map(reg -> dao.saveAndFlush(reg))
+					.collect(Collectors.toList()));
+		}
 	}
 
 }

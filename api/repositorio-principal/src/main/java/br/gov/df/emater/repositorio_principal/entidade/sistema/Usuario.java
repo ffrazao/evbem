@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.UsuarioTipo;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
@@ -43,6 +45,7 @@ public class Usuario extends EntidadeBase implements Serializable {
 	private Timestamp atualizadoEm;
 
 	@Column(name = "criado_em", insertable = false, updatable = false)
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss.SSS")
 	private Timestamp criadoEm;
 
 	private String email;

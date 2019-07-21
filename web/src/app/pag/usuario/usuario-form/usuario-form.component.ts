@@ -44,9 +44,9 @@ export class UsuarioFormComponent extends CrudFormComponent implements OnInit {
       // carregar os dados do formulário
       this.config.formularioOriginal.reset();
       this.config.formulario.reset();
-      if (data.formulario) {
-        this.config.formularioOriginal.patchValue(data.formulario);
-        this.config.formulario.patchValue(data.formulario);
+      if (data.formulario && data.formulario[0]) {
+        this.config.formularioOriginal.patchValue(data.formulario[0]);
+        this.config.formulario.patchValue(data.formulario[0]);
       }
     });
   }
