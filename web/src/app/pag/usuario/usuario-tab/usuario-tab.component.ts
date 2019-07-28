@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, Route } from '@angular/router';
 import { Usuario } from 'src/app/entidade/usuario';
 import { CrudTabComponent } from 'src/app/comum/componente/crud-tab-component';
 import { CrudConfig } from 'src/app/comum/componente/crud-config';
+import { FormBuilder } from '@angular/forms';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -19,12 +20,23 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
 
   constructor(
     protected _router: Router,
-    protected _actr: ActivatedRoute
+    protected _actr: ActivatedRoute,
+    private _formBuilder: FormBuilder
   ) {
     super();
+    console.log('criando tab...');
   }
 
   ngOnInit(): void {
+    console.log('iniciando tab...');
+    if (!this.config) {
+      this.config = new CrudConfig(['/pag', 'usuario']);
+      this.config.filtro = this._formBuilder.group({
+        nome: ['Alice', []],
+        login: [null, []],
+        perfil: [null, []],
+      });
+    }
     this._actr.data.subscribe((data: any) => {
       // carregar as configurações
       if (data.config) {
@@ -49,8 +61,8 @@ export class UsuarioTabComponent extends CrudTabComponent implements OnInit {
 
   public getRoute(): Route {
     return this._router.config.find(v => v.path == 'pag')
-      ['_loadedConfig'].routes.find(v => v.path == 'usuario')
-      ['_loadedConfig'].routes.find(v => v.path == ':id');
+    ['_loadedConfig'].routes.find(v => v.path == 'usuario')
+    ['_loadedConfig'].routes.find(v => v.path == ':id');
   }
 
   public ver(pos: number = 0) {

@@ -16,4 +16,6 @@ public class UsuarioFiltroDTO extends FiltroDTO {
 
 	private String nome;
 
+	private String perfil;
+
 }

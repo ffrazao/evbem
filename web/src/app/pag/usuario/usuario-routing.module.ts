@@ -11,7 +11,8 @@ const routes: Routes = [
     path: '',
     component: UsuarioTabComponent,
     resolve: { tabela: UsuarioResListarService },
-    data: {}
+    data: {},
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'n',

@@ -24,6 +24,9 @@ export class CrudConfig {
     private _novaPos: number;
     private _permitirEdicao = false;
 
+    // variáveis de apoio ao filtro
+    private _filtro: FormGroup;
+
     constructor(private _urlPrincipal: string[]) { }
 
     // métodos de apoio à tabela
@@ -185,6 +188,15 @@ export class CrudConfig {
         result.push(this.id.toString());
 
         return result;
+    }
+
+    // métodos de apoio ao filtro
+    public get filtro(): FormGroup {
+        return this._filtro;
+    }
+
+    public set filtro(_filtro: FormGroup) {
+        this._filtro = _filtro;
     }
 
 }

@@ -16,11 +16,15 @@ export class UsuarioResListarService implements Resolve<Observable<Usuario[]>> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Usuario[]> {
-    if (route.data.config && route.data.config.fonteDados) {
-      return route.data.config.fonteDados.data;
-    } else {
-      return this._service.listar();
+    console.log('resolvendo tab');
+    if (route.data && route.data.config) {
+      if (route.data.config.fonteDados) {
+        return route.data.config.fonteDados.data;
+      } else if (route.data.config.filtro) {
+        return this._service.listar(route.data.config.filtro.value);
+      }
     }
+    return this._service.listar();
   }
 
 }

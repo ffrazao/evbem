@@ -1,6 +1,10 @@
 <div>
+
+  <label>Filtrar Usuário</label>
+  <app-usuario-filtro [(filtro)]="config.filtro"></app-usuario-filtro>
+
   <mat-form-field>
-    <input matInput (keyup)="aplicarFiltro($event.target.value)" placeholder="Filtro">
+    <input matInput (keyup)="aplicarFiltro($event.target.value)" placeholder="Selecione">
   </mat-form-field>
   <button [routerLink]="['/pag', 'usuario', 'n']">Incluir</button>
   <span *ngIf="config?.selecaoRegistros?.selected?.length">
@@ -18,7 +22,8 @@
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? config.selecaoRegistros.toggle(row.id) : null"
+        <mat-checkbox (click)="$event.stopPropagation()"
+          (change)="$event ? config.selecaoRegistros.toggle(row.id) : null"
           [checked]="config.selecaoRegistros.isSelected(row.id)">
         </mat-checkbox>
       </td>
