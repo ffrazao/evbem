@@ -10,16 +10,17 @@ import { UsuarioLoginComponent } from './componente/usuario-login/usuario-login.
 import { RouterModule } from '@angular/router';
 import { DialogoComponent } from './componente/dialogo/dialogo.component';
 import { MatDialogModule } from '@angular/material';
+import { CrudComponent } from './componente/crud/crud.component';
 
 @NgModule({
-  declarations: [ErrorDialogComponent, MirrorComponent, UsuarioLoginComponent, DialogoComponent],
+  declarations: [ErrorDialogComponent, MirrorComponent, UsuarioLoginComponent, DialogoComponent, CrudComponent],
   imports: [
     CommonModule,
     NgxViacepModule,
     RouterModule,
     MatDialogModule
   ],
-  exports: [UsuarioLoginComponent],
+  exports: [UsuarioLoginComponent, CrudComponent],
   providers: [DomService, ErrorDialogService, AuthGuardService],
   entryComponents: [ErrorDialogComponent, MirrorComponent, DialogoComponent],
 })

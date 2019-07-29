@@ -1,0 +1,63 @@
+<div class="form-group row" style="border: 3px">
+  <div class="pull-left">
+    <button class="btn btn-primary">Incluir</button>
+    <button class="btn btn-primary">Ver</button>
+    <button class="btn btn-primary">Excluir</button>
+  </div>
+  <div class="pull-right">
+    <button class="btn btn-primary" (click)="vaiPrimeiro()">|&#60;</button>
+    <button class="btn btn-primary" (click)="vaiAnterior()">&#60;</button>
+    <input class="" type="text" [(ngModel)]="paginaNova">
+    <button class="btn btn-primary" (click)="vai(paginaNova)">Vai</button>
+     de {{ paginasTotal() }} tamanho
+    <select [(ngModel)]="paginaTamanho" (change)="vai(paginaNova)">
+      <option value=5>5</option>
+      <option value=10>10</option>
+      <option value=20>20</option>
+      <option value=50>50</option>
+      <option value=100>100</option>
+    </select>
+    <button class="btn btn-primary" (click)="vaiProximo()">&#62;</button>
+    <button class="btn btn-primary" (click)="vaiUltimo()">&#62;|</button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover ">
+    <caption>Cadastro</caption>
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>
+          <input type="checkbox">
+        </th>
+        <th scope="col">Nome</th>
+        <th scope="col">Login</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Perfil</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i = index; let usuario of dados | slice: paginaPrimeiroRegistro(): paginaUltimoRegistro()" >
+        <th scope="row">{{1 + i + paginaPrimeiroRegistro()}}.</th>
+        <th scope="row">
+          <input type="checkbox">
+        </th>
+        <td (click)="config.ver(i + paginaPrimeiroRegistro())">{{usuario.nome}}</td>
+        <td (click)="config.ver(i + paginaPrimeiroRegistro())">{{usuario.login}}</td>
+        <td (click)="config.ver(i + paginaPrimeiroRegistro())">{{usuario.email}}</td>
+        <td (click)="config.ver(i + paginaPrimeiroRegistro())">
+          <ul>
+            <li *ngFor="let usuarioPerfil of usuario.usuarioPerfilList">{{usuarioPerfil.perfil.nome}}</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6">
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

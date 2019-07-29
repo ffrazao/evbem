@@ -1,0 +1,29 @@
+<div>{{dados?.value | json}}</div>
+
+<form [formGroup]="dados" (submit)="filtrar()">
+  <fieldset>
+    <div class="container">
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Nome</label>
+          <input class="form-control" formControlName="nome">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Login</label>
+          <input class="form-control" formControlName="login">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Perfil</label>
+          <input class="form-control" formControlName="perfil">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="dados.invalid">
+        Filtrar
+      </button>
+    </div>
+  </fieldset>
+</form>

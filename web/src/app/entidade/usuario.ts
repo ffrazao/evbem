@@ -1,3 +1,5 @@
+import { UsuarioPerfil } from './usuario-perfil';
+import { Confirmacao } from './confirmacao';
 
 export interface Usuario {
     id: number;
@@ -5,5 +7,6 @@ export interface Usuario {
     login: string;
     email: string;
     tipo: string;
-    ativo: string;
+    ativo: Confirmacao;
+    usuarioPerfilList: UsuarioPerfil[];
 }

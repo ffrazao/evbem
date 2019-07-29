@@ -1,0 +1,11 @@
+<!-- <div>
+  <p>Filtro: [ {{config.filtro.value | json}} ]</p>
+  <p>Tab: [ {{config.tab | json}} ]</p>
+  <p>Form: [ {{config.form.value | json}} ]</p>
+</div> -->
+
+<app-crud>
+    <usuario-filtro [(dados)]="config.filtro"></usuario-filtro>
+    <usuario-tab [(dados)]="config.tab"></usuario-tab>
+    <usuario-form [(dados)]="config.form"></usuario-form>
+</app-crud>
