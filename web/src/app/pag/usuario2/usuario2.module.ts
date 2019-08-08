@@ -8,6 +8,7 @@ import { FiltroComponent } from './usuario/comp/filtro/filtro.component';
 import { FormComponent } from './usuario/comp/form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComumModule } from 'src/app/comum/comum.module';
+import { MaquinaEstadoModule } from 'src/app/comum/componente/maquina-estado/maquina-estado.module';
 
 @NgModule({
   declarations: [UsuarioComponent, TabComponent, FiltroComponent, FormComponent],
@@ -16,7 +17,8 @@ import { ComumModule } from 'src/app/comum/comum.module';
     FormsModule,
     ReactiveFormsModule,
     ComumModule,
-    Usuario2RoutingModule
+    Usuario2RoutingModule,
+    MaquinaEstadoModule
   ]
 })
 export class Usuario2Module { }
