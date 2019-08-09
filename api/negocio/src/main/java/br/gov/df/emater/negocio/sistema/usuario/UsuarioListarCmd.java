@@ -27,7 +27,7 @@ public class UsuarioListarCmd extends Comando {
 				ctx.setResposta(((List<Integer>) ctx.getRequisicao()).stream().map(id -> dao.findById(id).orElse(null)).collect(Collectors.toList()));
 			} else {
 				UsuarioFiltroDTO filtro = (UsuarioFiltroDTO) ctx.getRequisicao();
-				ctx.setResposta(dao.findAll());
+				ctx.setResposta(dao.findByFiltro(filtro));
 			}
 		} else {
 			ctx.setResposta(dao.findAll());

@@ -1,6 +1,6 @@
-<div>{{filtro.value | json}}</div>
+<div>{{config?.filtro?.value | json}}</div>
 
-<form [formGroup]="filtro" (submit)="filtrar()">
+<form [formGroup]="config.filtro" (submit)="filtrar()">
   <fieldset>
     <div class="container">
       <div class="row">
@@ -21,7 +21,7 @@
           <input class="form-control" formControlName="perfil">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block" [disabled]="filtro.invalid">
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="config?.filtro?.invalid">
         Filtrar
       </button>
     </div>

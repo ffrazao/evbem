@@ -57,8 +57,18 @@
 			<version>${spring-boot.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
 			<groupId>br.gov.df.emater</groupId>
 			<artifactId>comum</artifactId>
+			<version>${br-gov-df-emater.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.df.emater</groupId>
+			<artifactId>transporte-dados</artifactId>
 			<version>${br-gov-df-emater.version}</version>
 		</dependency>
 	</dependencies>

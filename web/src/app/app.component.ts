@@ -21,13 +21,13 @@ export class AppComponent {
 
   public abreUsuario() {
     console.log('ahhh');
-    let r = this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario');
-    r.data.config = new CrudConfig(['/pag', 'usuario']);
-    r.data.config.filtro = this._formBuilder.group({
-      nome: [null, []],
-      login: ['agata', []],
-      perfil: [null, []],
-    }); 
+    // let r = this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario');
+    // r.data.config = new CrudConfig(['/pag', 'usuario']);
+    // r.data.config.filtro = this._formBuilder.group({
+    //   nome: [null, []],
+    //   login: ['agata', []],
+    //   perfil: [null, []],
+    // }); 
     this._router.navigate(['/pag', 'usuario']);
   }
 }

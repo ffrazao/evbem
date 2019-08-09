@@ -1,7 +1,7 @@
 <div>
 
   <label>Filtrar Usuário</label>
-  <app-usuario-filtro [(filtro)]="config.filtro"></app-usuario-filtro>
+  <app-usuario-filtro [(config)]="config"></app-usuario-filtro>
 
   <mat-form-field>
     <input matInput (keyup)="aplicarFiltro($event.target.value)" placeholder="Selecione">

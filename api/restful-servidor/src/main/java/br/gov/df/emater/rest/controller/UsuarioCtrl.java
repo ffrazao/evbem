@@ -56,7 +56,7 @@ public class UsuarioCtrl {
 
 	@GetMapping(value = "")
 	protected List<Usuario> listar(@RequestParam(name = "filtro", required = false) String filtroStr) throws Exception {
-		UsuarioFiltroDTO filtro = new UsuarioFiltroDTO();
+		UsuarioFiltroDTO filtro = null;
 		if (filtroStr != null) {
 			ObjectMapper om = new ObjectMapper();
 			filtro = om.readValue(URLDecoder.decode(filtroStr.replace("+", "%2B"), "UTF-8").replace("%2B", "+"),

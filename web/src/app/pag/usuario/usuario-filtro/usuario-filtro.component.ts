@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, Route } from '@angular/router';
+import { CrudConfig } from 'src/app/comum/componente/crud-config';
 
 @Component({
   selector: 'app-usuario-filtro',
@@ -11,7 +12,7 @@ export class UsuarioFiltroComponent implements OnInit {
 
   @Input()
   @Output()
-  private filtro: FormGroup;
+  private config: CrudConfig;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -19,8 +20,8 @@ export class UsuarioFiltroComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    if (!this.filtro) {
-      this.filtro = this.criarFormulario();
+    if (this.config && !this.config.filtro) {
+      this.config.filtro = this.criarFormulario();
     }
   }
 
@@ -33,9 +34,14 @@ export class UsuarioFiltroComponent implements OnInit {
   }
 
   filtrar() {
-    this.filtro.get('perfil').setValue('COMUM');
-    alert('Filtrando...' + JSON.stringify(this.filtro.value));
+    this.config.fonteDados = null;
+    this.getRoute().data.config = this.config;
     this._router.navigate(['/pag', 'usuario'], {skipLocationChange: true});
+  }
+
+  public getRoute(): Route {
+    return this._router.config.find(v => v.path == 'pag')
+    ['_loadedConfig'].routes.find(v => v.path == 'usuario');
   }
 
 }
