@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: './usuario/usuario.module#UsuarioModule',
     data: {}
   },
+  {
+    path: 'produto',
+    loadChildren: './produto/produto.module#ProdutoModule',
+    data: {}
+  },
 ];
 
 @NgModule({

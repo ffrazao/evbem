@@ -20,7 +20,6 @@ export class AppComponent {
   ) { }
 
   public abreUsuario() {
-    console.log('ahhh');
     // let r = this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario');
     // r.data.config = new CrudConfig(['/pag', 'usuario']);
     // r.data.config.filtro = this._formBuilder.group({
@@ -29,5 +28,10 @@ export class AppComponent {
     //   perfil: [null, []],
     // }); 
     this._router.navigate(['/pag', 'usuario']);
+  }
+
+  public abreProduto() {
+    console.log('ahhh');
+    this._router.navigate(['/pag', 'produto']);
   }
 }

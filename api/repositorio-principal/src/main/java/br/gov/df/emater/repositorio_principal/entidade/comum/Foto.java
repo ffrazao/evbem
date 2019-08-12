@@ -16,6 +16,8 @@ import javax.persistence.TemporalType;
 import org.springframework.data.geo.Point;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,11 +31,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Foto extends EntidadeBase implements Serializable {
+public class Foto extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
+
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "altura_pixel")
-	private int alturaPixel;
+	private Integer alturaPixel;
 
 	private String autores;
 
@@ -50,10 +53,10 @@ public class Foto extends EntidadeBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(name = "largura_pixel")
-	private int larguraPixel;
+	private Integer larguraPixel;
 
 	private Point local;
 
@@ -62,12 +65,12 @@ public class Foto extends EntidadeBase implements Serializable {
 	private String nome;
 
 	@Column(name = "resolucao_horizontal_dpi")
-	private int resolucaoHorizontalDpi;
+	private Integer resolucaoHorizontalDpi;
 
 	@Column(name = "resolucao_vertical_dpi")
-	private int resolucaoVerticalDpi;
+	private Integer resolucaoVerticalDpi;
 
 	@Column(name = "tamanho_bytes")
-	private int tamanhoBytes;
+	private Integer tamanhoBytes;
 
 }

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,7 +27,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Modelo extends EntidadeBase implements Serializable {
+public class Modelo extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
+
 	private static final long serialVersionUID = 1L;
 
 	@Lob
@@ -33,15 +36,14 @@ public class Modelo extends EntidadeBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	// bi-directional many-to-one association to Marca
 	@ManyToOne
+	@JoinColumn(name = "marca_id")
 	private Marca marca;
 
 	private String nome;
 
-	// bi-directional many-to-one association to ProdutoTipo
 	@ManyToOne
 	@JoinColumn(name = "produto_tipo_id")
 	private ProdutoTipo produtoTipo;

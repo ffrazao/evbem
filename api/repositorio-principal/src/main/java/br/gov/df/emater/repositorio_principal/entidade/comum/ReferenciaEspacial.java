@@ -2,14 +2,19 @@ package br.gov.df.emater.repositorio_principal.entidade.comum;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
+import org.springframework.data.geo.Polygon;
+
+import br.gov.df.emater.repositorio_principal.dominio.ReferenciaEspacialTipo;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,28 +23,22 @@ import lombok.NoArgsConstructor;
  * The persistent class for the referencia_espacial database table.
  * 
  */
-@Entity
+@MappedSuperclass
 @Table(catalog = "comum", name = "referencia_espacial")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ReferenciaEspacial extends EntidadeBase implements Serializable {
+public class ReferenciaEspacial extends EntidadeBase implements Serializable, Identificavel {
+	
 	private static final long serialVersionUID = 1L;
 
-	private String area;
-
-	// bi-directional one-to-one association to Endereco
-	@OneToOne(mappedBy = "referenciaEspacial")
-	private Endereco endereco;
+	private Polygon area;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	// bi-directional one-to-one association to Localizacao
-	@OneToOne(mappedBy = "referenciaEspacial")
-	private Localizacao localizacao;
-
-	private String tipo;
+	@Enumerated(EnumType.STRING)
+	private ReferenciaEspacialTipo tipo;
 
 }

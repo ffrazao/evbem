@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Ordenavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,15 +31,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializable {
+public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializable, Identificavel, Ativavel, Ordenavel {
+
 	private static final long serialVersionUID = 1L;
 
-	private String ativo;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao ativo;
 
 	@Column(name = "exibir_menu_principal")
-	private String exibirMenuPrincipal;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao exibirMenuPrincipal;
 
-	// bi-directional many-to-one association to FuncionalidadeAcao
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_acao_id")
 	private FuncionalidadeAcao funcionalidadeAcao;
@@ -43,12 +51,12 @@ public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializab
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	// bi-directional many-to-one association to Modulo
 	@ManyToOne
+	@JoinColumn(name = "modulo_id")
 	private Modulo modulo;
 
-	private int ordem;
+	private Integer ordem;
 
 }

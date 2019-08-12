@@ -16,15 +16,23 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.UsuarioTipo;
+import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
+import br.gov.df.emater.repositorio_principal.entidade.Auditavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * The persistent class for the usuario database table.
@@ -35,18 +43,34 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Usuario extends EntidadeBase implements Serializable {
+public class Usuario extends EntidadeBase implements Serializable, Identificavel, Ativavel, Nomeavel, Auditavel {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
 
 	@Column(name = "atualizado_em", insertable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Setter(value = AccessLevel.PRIVATE)
 	private Timestamp atualizadoEm;
 
+	@Transient
+	private Usuario atualizadoUsuario;
+
+	@Column(name = "atualizado_usuario_id")
+	private Integer atualizadoUsuarioId;
+
 	@Column(name = "criado_em", insertable = false, updatable = false)
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss.SSS")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Setter(value = AccessLevel.PRIVATE)
 	private Timestamp criadoEm;
+
+	@Transient
+	private Usuario criadoUsuario;
+
+	@Column(name = "criado_usuario_id", updatable = false)
+	private Integer criadoUsuarioId;
 
 	private String email;
 
@@ -61,32 +85,20 @@ public class Usuario extends EntidadeBase implements Serializable {
 
 	private String nome;
 
-	@Column(name = "pessoa_id")
-	private Integer pessoaId;
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
+	private Pessoa pessoa;
 
 	@Enumerated(EnumType.STRING)
 	private UsuarioTipo tipo;
 
-	// bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name = "criado_usuario_id", updatable = false)
-	private Usuario criadoUsuario;
-
-	// bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name = "atualizado_usuario_id")
-	private Usuario atualizadoUsuario;
-
-	// bi-directional many-to-one association to UsuarioFormaAutenticacao
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaoList;
 
-	// bi-directional many-to-one association to UsuarioPerfil
 	@ManyToOne
 	@JoinColumn(name = "ultimo_perfil_id")
-	private UsuarioPerfil usuarioPerfil;
+	private Perfil ultimoPerfil;
 
-	// bi-directional many-to-one association to UsuarioPerfil
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPerfil> usuarioPerfilList;
 

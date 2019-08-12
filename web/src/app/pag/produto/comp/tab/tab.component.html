@@ -1,0 +1,69 @@
+<div>
+
+  <label>Filtrar Produto</label>
+  <app-produto-filtro [(config)]="config"></app-produto-filtro>
+
+  <mat-form-field>
+    <input matInput (keyup)="aplicarFiltro($event.target.value)" placeholder="Selecione">
+  </mat-form-field>
+  <button [routerLink]="['/pag', 'produto', 'n']">Incluir</button>
+  <span *ngIf="config?.selecaoRegistros?.selected?.length">
+    [{{config?.selecaoRegistros?.selected?.length}}] registro(s) selecionado(s)
+    <button (click)="ver()">Ver</button>
+    <button>Excluir</button>
+  </span>
+
+  <table mat-table [dataSource]="config.fonteDados" class="mat-elevation-z8">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? comutadorMestre() : null"
+          [checked]="config.selecaoRegistros.hasValue() && estaTudoSelecionado()"
+          [indeterminate]="config.selecaoRegistros.hasValue() && !estaTudoSelecionado()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+          (change)="$event ? config.selecaoRegistros.toggle(row.id) : null"
+          [checked]="config.selecaoRegistros.isSelected(row.id)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="indice">
+      <th mat-header-cell *matHeaderCellDef> Num. </th>
+      <td mat-cell *matCellDef="let i = index">{{(config.paginaAtual * config.tamanhoPagina) + i + 1}}.</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> Nome. </th>
+      <td mat-cell *matCellDef="let e; let i = index" (click)="ver((config.paginaAtual * config.tamanhoPagina) + i)">
+        {{e.nome}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="login">
+      <th mat-header-cell *matHeaderCellDef> Login </th>
+      <td mat-cell *matCellDef="let e"> {{e.login}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+      <td mat-cell *matCellDef="let e"> {{e.email}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="tipo">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let e"> {{e.tipo}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="config.colunasExibidas"></tr>
+    <tr mat-row *matRowDef="let row; columns: config.colunasExibidas;"></tr>
+  </table>
+
+  <mat-paginator [length]="config.quantidadeRegistros" [pageSize]="config.tamanhoPagina"
+    [pageSizeOptions]="config.tamanhoPaginaOpcoes" (page)="onPaginateChange($event)" showFirstLastButtons>
+  </mat-paginator>
+
+</div>

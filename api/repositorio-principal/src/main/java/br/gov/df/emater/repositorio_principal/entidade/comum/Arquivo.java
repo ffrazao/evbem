@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +16,8 @@ import javax.persistence.TemporalType;
 import org.springframework.data.geo.Point;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,7 +31,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Arquivo extends EntidadeBase implements Serializable {
+public class Arquivo extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
+	
 	private static final long serialVersionUID = 1L;
 
 	private String autores;
@@ -38,7 +41,7 @@ public class Arquivo extends EntidadeBase implements Serializable {
 	private byte[] conteudo;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date data;
+	private Timestamp data;
 
 	@Lob
 	private String descricao;
@@ -47,7 +50,7 @@ public class Arquivo extends EntidadeBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private Point local;
 

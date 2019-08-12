@@ -2,19 +2,25 @@ package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
+import br.gov.df.emater.repositorio_principal.dominio.TokenTipo;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,35 +34,35 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Token extends EntidadeBase implements Serializable {
+public class Token extends EntidadeBase implements Serializable, Identificavel {
+
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "criado_em")
 	private Timestamp criadoEm;
 
-	private String detalhe;
+	@Lob
+	@Convert(converter = JsonHashMapConverter.class)
+	private Map<String, Object> detalhe;
 
 	@Column(name = "expira_em")
-	private int expiraEm;
-
-	// bi-directional many-to-one association to HistoricoAtividade
-	@OneToMany(mappedBy = "token")
-	private List<HistoricoAtividade> historicoAtividades;
+	private Integer expiraEm;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(name = "invalidado_em")
 	private Timestamp invalidadoEm;
 
-	private String tipo;
+	@Enumerated(EnumType.STRING)
+	private TokenTipo tipo;
 
 	@Lob
 	private String token;
 
-	// bi-directional many-to-one association to Usuario
 	@ManyToOne
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
 }

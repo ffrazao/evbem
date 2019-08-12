@@ -1,0 +1,56 @@
+<p *ngIf="config?.ids?.length">
+  <button (click)="vaiParaPrimeiro()">Primeiro</button>
+  <button (click)="vaiParaAnterior()">Anterior</button>
+  <input [(ngModel)]="config.novaPos"> de {{config.ids?.length}}
+  <button (click)="vaiPara(config.novaPos - 1)">Vai</button>
+  <button (click)="vaiParaProximo()">Próximo</button>
+  <button (click)="vaiParaUltimo()">Último</button>
+</p>
+<p>
+  <button (click)="incluir()">Incluir</button>
+  <button (click)="editar()">Editar</button>
+  <button (click)="excluir()">Excluir</button>
+  <button (click)="voltar()">Voltar</button>
+</p>
+
+<div>{{config.formulario.value | json}}</div>
+
+<form *ngIf="config.formulario" [formGroup]="config.formulario" (submit)="salvar()">
+  <fieldset [(disabled)]="!config.permitirEdicao">
+    <div class="container">
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Nome</label>
+          <input class="form-control" formControlName="nome">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Login</label>
+          <input class="form-control" formControlName="login">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Tipo</label>
+          <input class="form-control" formControlName="tipo">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-control" formControlName="email">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Ativo</label>
+          <input class="form-control" formControlName="ativo">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="config.formulario.invalid">
+        Salvar
+      </button>
+    </div>
+  </fieldset>
+</form>

@@ -2,17 +2,22 @@ package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Map;
 
-import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Temporalizavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,39 +31,47 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class HistoricoAtividade extends EntidadeBase implements Serializable {
+public class HistoricoAtividade extends EntidadeBase implements Serializable, Identificavel, Temporalizavel {
+
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "acao_id")
-	private int acaoId;
+	@ManyToOne
+	@JoinColumn(name = "acao_id")
+	private Acao acao;
 
-	private int duracao;
+	private Integer duracao;
 
-	@Column(name = "funcionalidade_id")
-	private int funcionalidadeId;
+	@ManyToOne
+	@JoinColumn(name = "funcionalidade_id")
+	private Funcionalidade funcionalidade;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private Timestamp inicio;
 
 	@Lob
 	private String mensagem;
 
-	@Column(name = "modulo_id")
-	private int moduloId;
+	@ManyToOne
+	@JoinColumn(name = "modulo_id")
+	private Modulo modulo;
 
-	private String requisicao;
+	@Lob
+	@Convert(converter = JsonHashMapConverter.class)
+	private Map<String, Object> requisicao;
 
-	private String resposta;
+	@Lob
+	@Convert(converter = JsonHashMapConverter.class)
+	private Map<String, Object> resposta;
 
-	private int status;
+	private Integer status;
 
 	private Timestamp termino;
 
-	// bi-directional many-to-one association to Token
 	@ManyToOne
+	@JoinColumn(name = "token_id")
 	private Token token;
 
 }

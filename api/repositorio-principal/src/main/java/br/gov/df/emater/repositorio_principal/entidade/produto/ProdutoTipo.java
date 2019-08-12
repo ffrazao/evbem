@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,9 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * The persistent class for the produto_tipo database table.
@@ -26,26 +32,25 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ProdutoTipo extends EntidadeBase implements Serializable {
+public class ProdutoTipo extends EntidadeBase implements Serializable, Identificavel, Pai<ProdutoTipo>, Nomeavel {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-
-	// bi-directional many-to-one association to Modelo
-	@OneToMany(mappedBy = "produtoTipo")
-	private List<Modelo> modelos;
+	private Integer id;
 
 	private String nome;
 
-	// bi-directional many-to-one association to ProdutoTipo
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	private ProdutoTipo produtoTipo;
+	private ProdutoTipo pai;
 
-	// bi-directional many-to-one association to ProdutoTipo
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<ProdutoTipo> filhos;
+
 	@OneToMany(mappedBy = "produtoTipo")
-	private List<ProdutoTipo> produtoTipos;
+	private List<ProdutoTipoMarca> produtoTipoMarcaList;
 
 }

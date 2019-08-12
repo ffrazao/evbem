@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,17 +24,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class BemPatrimonial extends EntidadeBase implements Serializable {
+public class BemPatrimonial extends Produto implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Lob
-	private String descricao;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private String observacao;
 
 	@Column(name = "identificacao_patrimonial")
 	private String identificacaoPatrimonial;
+	
+	@ManyToOne
+	@JoinColumn(name = "pessoa_responsavel_id")
+	private Pessoa pessoaResponsavel;
 
 }

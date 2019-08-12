@@ -1,17 +1,18 @@
 package br.gov.df.emater.repositorio_principal.entidade.principal;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.produto.Composicao;
+import br.gov.df.emater.repositorio_principal.entidade.produto.Modelo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,22 +26,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Produto extends EntidadeBase implements Serializable {
+public class Produto extends Item implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-
-	// bi-directional one-to-one association to Item
-	@OneToOne
-	@JoinColumn(name = "id")
-	private Item item;
-
-	@Column(name = "modelo_id")
-	private int modeloId;
+	@ManyToOne
+	@JoinColumn(name = "modelo_id")
+	private Modelo modelo;
 
 	@Column(name = "numero_serie")
 	private String numeroSerie;
+	
+	@OneToMany(mappedBy = "principal", fetch = FetchType.LAZY)
+	private List<Composicao> composicaoList;
 
 }

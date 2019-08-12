@@ -1,18 +1,19 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.entidade.Temporalizavel;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,24 +27,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class GrupoSocial extends EntidadeBase implements Serializable {
+public class GrupoSocial extends Pessoa implements Serializable, Temporalizavel {
+	
 	private static final long serialVersionUID = 1L;
 
-	private String administrado;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao administrado;
 
-	private String dinamico;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao dinamico;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date inicio;
+	private Timestamp inicio;
 
 	@Lob
 	private String sql;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date termino;
+	private Timestamp termino;
 
 }

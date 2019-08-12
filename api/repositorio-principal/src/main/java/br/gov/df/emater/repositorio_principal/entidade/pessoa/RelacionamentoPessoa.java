@@ -2,7 +2,6 @@ package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,21 +26,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class RelacionamentoPessoa extends EntidadeBase implements Serializable {
+public class RelacionamentoPessoa extends EntidadeBase implements Serializable, Identificavel {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	@Column(name = "pessoa_id")
-	private int pessoaId;
-
-	// bi-directional many-to-one association to Relacionamento
 	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
+	private Pessoa pessoa;
+
+	@ManyToOne
+	@JoinColumn(name = "relacionamento_id")
 	private Relacionamento relacionamento;
 
-	// bi-directional many-to-one association to RelacionamentoFuncao
 	@ManyToOne
 	@JoinColumn(name = "relacionamento_funcao_id")
 	private RelacionamentoFuncao relacionamentoFuncao;

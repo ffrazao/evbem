@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.dominio.PessoaFisicaSexo;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PessoaFisica extends EntidadeBase implements Serializable {
+public class PessoaFisica extends Pessoa implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private String cpf;
@@ -33,13 +34,10 @@ public class PessoaFisica extends EntidadeBase implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date falecimento;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-
 	@Temporal(TemporalType.DATE)
 	private Date nascimento;
 
-	private String sexo;
+	@Enumerated(EnumType.STRING)
+	private PessoaFisicaSexo sexo;
 
 }

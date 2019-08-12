@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +13,11 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.NomeavelCodificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,27 +31,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Modulo extends EntidadeBase implements Serializable {
+public class Modulo extends EntidadeBase implements Serializable, Identificavel, NomeavelCodificavel, Ativavel {
+
 	private static final long serialVersionUID = 1L;
 
-	private String ativo;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao ativo;
 
 	private String codigo;
-
-	// bi-directional many-to-one association to Configuracao
-	@OneToMany(mappedBy = "modulo")
-	private List<Configuracao> configuracaos;
 
 	@Lob
 	private String descricao;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	// bi-directional many-to-one association to ModuloFuncionalidadeAcao
 	@OneToMany(mappedBy = "modulo")
-	private List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaos;
+	private List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaoList;
 
 	private String nome;
 

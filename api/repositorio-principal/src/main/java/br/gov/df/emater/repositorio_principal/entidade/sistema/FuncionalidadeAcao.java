@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,59 +17,60 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.dominio.FuncionalidadeAcaoConcedeAcessoA;
+import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 /**
  * The persistent class for the funcionalidade_acao database table.
  * 
  */
 @Entity
-@Table(catalog = "sistema", name="funcionalidade_acao")
+@Table(catalog = "sistema", name = "funcionalidade_acao")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class FuncionalidadeAcao extends EntidadeBase implements Serializable {
+public class FuncionalidadeAcao extends EntidadeBase
+		implements Serializable, Identificavel, Ativavel, Pai<FuncionalidadeAcao> {
+	
 	private static final long serialVersionUID = 1L;
 
-	//bi-directional many-to-one association to Acao
 	@ManyToOne
+	@JoinColumn(name = "acao_id")
 	private Acao acao;
 
-	private String ativo;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao ativo;
 
-	@Column(name="concede_acesso_a")
-	private String concedeAcessoA;
+	@Column(name = "concede_acesso_a")
+	@Enumerated(EnumType.STRING)
+	private FuncionalidadeAcaoConcedeAcessoA concedeAcessoA;
 
 	@Lob
 	private String descricao;
 
-	//bi-directional many-to-one association to Funcionalidade
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<FuncionalidadeAcao> filhos;
+
 	@ManyToOne
+	@JoinColumn(name = "funcionalidade_id")
 	private Funcionalidade funcionalidade;
 
-	//bi-directional many-to-one association to FuncionalidadeAcao
-	@ManyToOne
-	@JoinColumn(name="pai_id")
-	private FuncionalidadeAcao funcionalidadeAcao;
-
-	//bi-directional many-to-one association to FuncionalidadeAcao
-	@OneToMany(mappedBy="funcionalidadeAcao")
-	private List<FuncionalidadeAcao> funcionalidadeAcaos;
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
-	//bi-directional many-to-one association to ModuloFuncionalidadeAcao
-	@OneToMany(mappedBy="funcionalidadeAcao")
-	private List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaos;
-
-	//bi-directional many-to-one association to Privilegio
-	@OneToMany(mappedBy="funcionalidadeAcao")
-	private List<Privilegio> privilegios;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pai_id")
+	private FuncionalidadeAcao pai;
 
 }

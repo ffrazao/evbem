@@ -10,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,7 +26,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Endereco extends EntidadeBase implements Serializable {
+public class Endereco extends ReferenciaEspacial implements Serializable, Identificavel {
+
 	private static final long serialVersionUID = 1L;
 
 	private String cep;
@@ -36,10 +36,10 @@ public class Endereco extends EntidadeBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	// bi-directional many-to-one association to Localizacao
 	@ManyToOne
+	@JoinColumn(name = "localizacao_id")
 	private Localizacao localizacao;
 
 	private String logradouro;
@@ -49,10 +49,5 @@ public class Endereco extends EntidadeBase implements Serializable {
 	@Lob
 	@Column(name = "ponto_referencia")
 	private String pontoReferencia;
-
-	// bi-directional one-to-one association to ReferenciaEspacial
-	@OneToOne
-	@JoinColumn(name = "id")
-	private ReferenciaEspacial referenciaEspacial;
 
 }

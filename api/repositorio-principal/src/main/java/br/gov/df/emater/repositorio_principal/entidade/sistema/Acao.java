@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,10 +16,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.gov.df.emater.repositorio_principal.dominio.AcaoTipo;
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.NomeavelCodificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Ordenavel;
+import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * The persistent class for the acao database table.
@@ -27,37 +39,36 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Acao extends EntidadeBase implements Serializable {
+public class Acao extends EntidadeBase
+		implements Serializable, Identificavel, NomeavelCodificavel, Pai<Acao>, Ativavel, Ordenavel {
+
 	private static final long serialVersionUID = 1L;
 
-	// bi-directional many-to-one association to Acao
-	@ManyToOne
-	@JoinColumn(name = "pai_id")
-	private Acao acao;
-
-	// bi-directional many-to-one association to Acao
-	@OneToMany(mappedBy = "acao")
-	private List<Acao> acaos;
-
-	private String ativo;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao ativo;
 
 	private String codigo;
 
 	@Lob
 	private String descricao;
 
-	// bi-directional many-to-one association to FuncionalidadeAcao
-	@OneToMany(mappedBy = "acao")
-	private List<FuncionalidadeAcao> funcionalidadeAcaos;
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<Acao> filhos;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	private String nome;
 
-	private int ordem;
+	private Integer ordem;
 
-	private String tipo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pai_id")
+	private Acao pai;
+
+	@Enumerated(EnumType.STRING)
+	private AcaoTipo tipo;
 
 }

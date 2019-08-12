@@ -4,19 +4,23 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * The persistent class for the localizacao database table.
@@ -27,36 +31,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Localizacao extends EntidadeBase implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Localizacao extends ReferenciaEspacial implements Serializable, Identificavel, Pai<Localizacao>, Nomeavel {
 
-	// bi-directional many-to-one association to Endereco
-	@OneToMany(mappedBy = "localizacao")
-	private List<Endereco> enderecos;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	// bi-directional many-to-one association to Localizacao
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	private Localizacao localizacao;
+	private Localizacao pai;
 
-	// bi-directional many-to-one association to Localizacao
-	@OneToMany(mappedBy = "localizacao")
-	private List<Localizacao> localizacaos;
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<Localizacao> filhos;
 
-	// bi-directional many-to-one association to LocalizacaoTipo
 	@ManyToOne
 	@JoinColumn(name = "localizacao_tipo_id")
 	private LocalizacaoTipo localizacaoTipo;
 
 	private String nome;
-
-	// bi-directional one-to-one association to ReferenciaEspacial
-	@OneToOne
-	@JoinColumn(name = "id")
-	private ReferenciaEspacial referenciaEspacial;
 
 }
