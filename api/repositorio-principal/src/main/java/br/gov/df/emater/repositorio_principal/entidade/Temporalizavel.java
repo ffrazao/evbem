@@ -1,15 +1,15 @@
 package br.gov.df.emater.repositorio_principal.entidade;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public interface Temporalizavel {
 	
-	public Timestamp getInicio();
+	public Calendar getInicio();
 	
-	public Timestamp getTermino();
+	public Calendar getTermino();
 	
-	public void setInicio(Timestamp inicio);
+	public void setInicio(Calendar inicio);
 	
-	public void setTermino(Timestamp termino);
+	public void setTermino(Calendar termino);
 
 }

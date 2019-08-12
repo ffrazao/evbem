@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -38,12 +38,12 @@ public class GrupoSocial extends Pessoa implements Serializable, Temporalizavel 
 	private Confirmacao dinamico;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp inicio;
+	private Calendar inicio;
 
 	@Lob
 	private String sql;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp termino;
+	private Calendar termino;
 
 }

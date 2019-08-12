@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,23 +38,18 @@ public class Pessoa extends Item implements Serializable, Nomeavel {
 	private String nome;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_arquivo")
 	private List<PessoaArquivo> pessoaArquivoList;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_email")
 	private List<PessoaEmail> pessoaEmailList;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_endereco")
 	private List<PessoaEndereco> pessoaEnderecoList;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_foto")
 	private List<PessoaFoto> pessoaFotoList;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_telefone")
 	private List<PessoaTelefone> pessoaTelefoneList;
 
 	@Enumerated(EnumType.STRING)

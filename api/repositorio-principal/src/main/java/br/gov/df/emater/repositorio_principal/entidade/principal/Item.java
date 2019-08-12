@@ -1,16 +1,18 @@
 package br.gov.df.emater.repositorio_principal.entidade.principal;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +35,8 @@ import lombok.Setter;
  * The persistent class for the item database table.
  * 
  */
-@MappedSuperclass // @Entity
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(catalog = "principal")
 @Data
 @NoArgsConstructor
@@ -48,7 +51,7 @@ public class Item extends EntidadeBase implements Serializable, Identificavel, A
 	@Column(name = "atualizado_em", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Timestamp atualizadoEm;
+	private Calendar atualizadoEm;
 
 	@Transient
 	private Usuario atualizadoUsuario;
@@ -59,7 +62,7 @@ public class Item extends EntidadeBase implements Serializable, Identificavel, A
 	@Column(name = "criado_em", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Timestamp criadoEm;
+	private Calendar criadoEm;
 
 	@Transient
 	private Usuario criadoUsuario;

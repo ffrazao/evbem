@@ -1,18 +1,18 @@
 package br.gov.df.emater.repositorio_principal.entidade;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 
 public interface Auditavel {
 
-	public Timestamp getAtualizadoEm();
+	public Calendar getAtualizadoEm();
 
 	public Usuario getAtualizadoUsuario();
 
 	public Integer getAtualizadoUsuarioId();
 
-	public Timestamp getCriadoEm();
+	public Calendar getCriadoEm();
 
 	public Usuario getCriadoUsuario();
 

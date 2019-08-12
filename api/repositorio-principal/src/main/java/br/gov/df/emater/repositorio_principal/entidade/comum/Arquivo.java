@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +41,7 @@ public class Arquivo extends EntidadeBase implements Serializable, Identificavel
 	private byte[] conteudo;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp data;
+	private Calendar data;
 
 	@Lob
 	private String descricao;

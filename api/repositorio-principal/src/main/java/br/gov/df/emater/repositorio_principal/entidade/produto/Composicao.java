@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +44,7 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 	@Column(name = "atualizado_em", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Timestamp atualizadoEm;
+	private Calendar atualizadoEm;
 
 	@Transient
 	private Usuario atualizadoUsuario;
@@ -55,7 +55,7 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 	@Column(name = "criado_em", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Timestamp criadoEm;
+	private Calendar criadoEm;
 	
 	@Transient
 	private Usuario criadoUsuario;
@@ -68,7 +68,7 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp inicio;
+	private Calendar inicio;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "principal_id")
@@ -79,6 +79,6 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 	private Produto produto;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp termino;
+	private Calendar termino;
 
 }

@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Map;
 
 import javax.persistence.Convert;
@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
@@ -49,7 +51,8 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	private Timestamp inicio;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar inicio;
 
 	@Lob
 	private String mensagem;
@@ -68,7 +71,8 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 
 	private Integer status;
 
-	private Timestamp termino;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar termino;
 
 	@ManyToOne
 	@JoinColumn(name = "token_id")

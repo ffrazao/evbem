@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -53,7 +53,7 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 	@Column(name = "atualizado_em", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Timestamp atualizadoEm;
+	private Calendar atualizadoEm;
 
 	@Transient
 	private Usuario atualizadoUsuario;
@@ -64,7 +64,7 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 	@Column(name = "criado_em", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Timestamp criadoEm;
+	private Calendar criadoEm;
 
 	@Transient
 	private Usuario criadoUsuario;

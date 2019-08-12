@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,13 +45,13 @@ public class Relacionamento extends EntidadeBase implements Serializable, Identi
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp inicio;
+	private Calendar inicio;
 
 	@ManyToOne
 	@JoinColumn(name = "relacionamento_tipo_id")
 	private RelacionamentoTipo relacionamentoTipo;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp termino;
+	private Calendar termino;
 
 }

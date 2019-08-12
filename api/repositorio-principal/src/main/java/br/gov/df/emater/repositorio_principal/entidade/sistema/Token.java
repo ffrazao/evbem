@@ -1,7 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.dominio.TokenTipo;
@@ -39,7 +41,8 @@ public class Token extends EntidadeBase implements Serializable, Identificavel {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "criado_em")
-	private Timestamp criadoEm;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar criadoEm;
 
 	@Lob
 	@Convert(converter = JsonHashMapConverter.class)
@@ -53,7 +56,8 @@ public class Token extends EntidadeBase implements Serializable, Identificavel {
 	private Integer id;
 
 	@Column(name = "invalidado_em")
-	private Timestamp invalidadoEm;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar invalidadoEm;
 
 	@Enumerated(EnumType.STRING)
 	private TokenTipo tipo;
