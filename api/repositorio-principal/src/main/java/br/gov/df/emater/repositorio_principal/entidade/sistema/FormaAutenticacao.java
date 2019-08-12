@@ -1,7 +1,6 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Convert;
@@ -12,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;

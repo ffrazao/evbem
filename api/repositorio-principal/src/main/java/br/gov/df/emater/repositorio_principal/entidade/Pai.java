@@ -4,10 +4,10 @@ import java.util.Collection;
 
 public interface Pai<T> {
 
-	public T getPai();
-		
-	public void setPai(T pai);
-	
 	public Collection<T> getFilhos();
+		
+	public T getPai();
+	
+	public void setPai(T pai);
 			
 }

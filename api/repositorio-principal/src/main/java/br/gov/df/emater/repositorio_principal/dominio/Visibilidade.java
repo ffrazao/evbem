@@ -2,7 +2,7 @@ package br.gov.df.emater.repositorio_principal.dominio;
 
 public enum Visibilidade {
 	
-	PUBLICO("Público"), PARTICULAR("Particular");
+	PARTICULAR("Particular"), PUBLICO("Público");
 
 	private String descricao;
 

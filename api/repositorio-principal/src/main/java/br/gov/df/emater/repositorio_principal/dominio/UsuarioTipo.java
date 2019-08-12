@@ -2,9 +2,9 @@ package br.gov.df.emater.repositorio_principal.dominio;
 
 public enum UsuarioTipo {
 	
+	ADMIN("Administrador do Sistema"),
 	COMUM("Usuário Comum"),
-	SISTEMA("Sistema Externo"),
-	ADMIN("Administrador do Sistema");
+	SISTEMA("Sistema Externo");
 
 	private String descricao;
 

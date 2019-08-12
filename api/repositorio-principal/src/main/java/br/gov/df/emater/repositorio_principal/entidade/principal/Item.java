@@ -35,8 +35,8 @@ import lombok.Setter;
  * The persistent class for the item database table.
  * 
  */
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(catalog = "principal")
 @Data
 @NoArgsConstructor

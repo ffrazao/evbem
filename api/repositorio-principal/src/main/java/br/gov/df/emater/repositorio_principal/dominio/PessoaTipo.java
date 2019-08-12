@@ -2,7 +2,7 @@ package br.gov.df.emater.repositorio_principal.dominio;
 
 public enum PessoaTipo {
 	
-	PF("Pessoa Física"), PJ("Pessoa Jurídica") , GS("Grupo Social");
+	GS("Grupo Social"), PF("Pessoa Física") , PJ("Pessoa Jurídica");
 
 	private String descricao;
 

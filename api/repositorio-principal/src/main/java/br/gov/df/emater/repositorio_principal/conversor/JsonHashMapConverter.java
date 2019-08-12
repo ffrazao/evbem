@@ -39,7 +39,7 @@ public class JsonHashMapConverter implements AttributeConverter<Map<String, Obje
 
 		Map<String, Object> objeto = null;
 		try {
-			objeto = (Map<String, Object>) objectMapper.readValue(json, Map.class);
+			objeto = objectMapper.readValue(json, Map.class);
 		} catch (final IOException e) {
 			logger.error("JSON reading error", e);
 		}

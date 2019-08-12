@@ -2,7 +2,7 @@ package br.gov.df.emater.repositorio_principal.dominio;
 
 public enum Confirmacao {
 	
-	S("Sim"), N("Não");
+	N("Não"), S("Sim");
 
 	private String descricao;
 
