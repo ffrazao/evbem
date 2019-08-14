@@ -1,57 +1,24 @@
-// @formatter:off
- 
-//# logging app
-//logging:
-//  level:
-//    org:
-//      springframework:
-//        jdbc:
-//          core:
-//            JdbcTemplate: DEBUG
-//            StatementCreatorUtils: TRACE
-//          datasource: TRACE
-//      hibernate:
-//        SQL:
-//          TRACE
-//        type:
-//          descriptor:
-//            sql:
-//              BasicBinder:
-//                TRACE
-//
-//# org.springframework.jdbc.datasource
-//## datasource
-//spring:
-//  jpa:
-//    hibernate:
-//      ddl-auto: none
-//    properties:
-//      hibernate:
-//        show_sql: true
-//        format_sql: true
-//        use_sql_comments: true
-//  datasource:
-//    url: jdbc:mysql://localhost:3306?useSSL=false&useTimezone=true&serverTimezone=UTC
-//    username: root
-//    password: root
-//    initialization-mode: never
-//    continue-on-error: false
-
-// @formatter:on
-
 package br.gov.df.emater.repositorio_principal;
 
 import java.io.IOException;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.gov.df.emater.repositorio_principal.dao.produto.ProdutoTipoDAO;
+import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
+
 @SpringBootApplication(scanBasePackages = "br.gov.df.emater")
 @EntityScan("br.gov.df.emater.repositorio_principal.entidade")
 @EnableJpaRepositories("br.gov.df.emater.repositorio_principal.dao")
-public class RepositorioPrincipalApplication {
+public class RepositorioPrincipalApplication implements CommandLineRunner {
 
 	public static void main(String[] args) throws IOException {
 
@@ -113,30 +80,14 @@ public class RepositorioPrincipalApplication {
 	}
 
 	// @formatter:off
-	/*
 	@Autowired
-	private LocalizacaoTipoDAO dao;
-
-	@Autowired
-	private UsuarioDAO uDao;
+	private ProdutoTipoDAO dao;
 
 	@Override
 	public void run(String... args) throws Exception {
-		uDao.count();
-		//dao.deleteAll();
-		if (dao.existsById(1)) {
-			System.out.println("apagando");
-			dao.deleteById(1);
-		} else {
-			System.out.println("incluindo");
-			LocalizacaoTipo t = new LocalizacaoTipo();
-			t.setId(1);
-			t.setNome("Teste");
-			dao.save(t);
-		}
-		Optional<LocalizacaoTipo> t = dao.findById(1);
-		System.out.println(t);
-	}*/
-	// @formatter:on
+		System.out.println(dao.count());
+		Optional<ProdutoTipo> t = dao.findById(1);
+		System.out.println(new ObjectMapper().writeValueAsString(t.orElse(null)));
+	} // @formatter:on 
 
 }
