@@ -3,6 +3,8 @@ package br.gov.df.emater.repositorio_principal;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -84,8 +86,9 @@ public class RepositorioPrincipalApplication implements CommandLineRunner {
 	private ProdutoTipoDAO dao;
 
 	@Override
+	@Transactional()
 	public void run(String... args) throws Exception {
-		System.out.println(dao.count());
+		//System.out.println(dao.count());
 		Optional<ProdutoTipo> t = dao.findById(1);
 		System.out.println(new ObjectMapper().writeValueAsString(t.orElse(null)));
 	} // @formatter:on 

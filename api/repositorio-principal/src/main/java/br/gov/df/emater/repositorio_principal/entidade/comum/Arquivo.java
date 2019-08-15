@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Arquivo extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private String autores;

@@ -20,11 +20,13 @@ public class ProdutoListarCmd extends Comando {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+
 		if (ctx.getRequisicao() != null) {
 			if (ctx.getRequisicao() instanceof Integer) {
 				ctx.setResposta(dao.findById((Integer) ctx.getRequisicao()).orElse(null));
 			} else if (ctx.getRequisicao() instanceof List) {
-				ctx.setResposta(((List<Integer>) ctx.getRequisicao()).stream().map(id -> dao.findById(id).orElse(null)).collect(Collectors.toList()));
+				ctx.setResposta(((List<Integer>) ctx.getRequisicao()).stream().map(id -> dao.findById(id).orElse(null))
+						.collect(Collectors.toList()));
 			} else {
 				ProdutoFiltroDTO filtro = (ProdutoFiltroDTO) ctx.getRequisicao();
 				ctx.setResposta(dao.findByFiltro(filtro));

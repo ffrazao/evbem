@@ -36,6 +36,10 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 
 	private static final long serialVersionUID = 1L;
 
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<ProdutoTipo> filhos;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -45,10 +49,6 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
 	private ProdutoTipo pai;
-
-	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
-	@Setter(AccessLevel.PRIVATE)
-	private List<ProdutoTipo> filhos;
 
 	@OneToMany(mappedBy = "produtoTipo")
 	private List<ProdutoTipoMarca> produtoTipoMarcaList;
