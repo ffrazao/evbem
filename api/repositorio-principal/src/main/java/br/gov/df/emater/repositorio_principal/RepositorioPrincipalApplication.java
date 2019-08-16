@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -20,12 +19,12 @@ import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
 @SpringBootApplication(scanBasePackages = "br.gov.df.emater")
 @EntityScan("br.gov.df.emater.repositorio_principal.entidade")
 @EnableJpaRepositories("br.gov.df.emater.repositorio_principal.dao")
-public class RepositorioPrincipalApplication implements CommandLineRunner {
+public class RepositorioPrincipalApplication /* implements CommandLineRunner */ {
 
 	public static void main(String[] args) throws IOException {
-
 		// @formatter:off
 		/*
+
 		Map<String, Object> applicationYml = null;
 		try (InputStream inputStream = RepositorioPrincipalApplication.class.getClassLoader()
 				.getResourceAsStream("application.yml")) {
@@ -75,22 +74,20 @@ public class RepositorioPrincipalApplication implements CommandLineRunner {
 			}
 			System.out.println(yaml.dump(applicationYml));
 		}
+		 */
 		// @formatter:on
-		*/
 
 		SpringApplication.run(RepositorioPrincipalApplication.class, args);
 	}
 
-	// @formatter:off
 	@Autowired
 	private ProdutoTipoDAO dao;
 
-	@Override
+	//@Override
 	@Transactional()
 	public void run(String... args) throws Exception {
-		//System.out.println(dao.count());
 		Optional<ProdutoTipo> t = dao.findById(1);
 		System.out.println(new ObjectMapper().writeValueAsString(t.orElse(null)));
-	} // @formatter:on 
+	}
 
 }

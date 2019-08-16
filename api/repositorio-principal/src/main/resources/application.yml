@@ -32,3 +32,5 @@ spring:
     password: root
     initialization-mode: never
     continue-on-error: false
+
+  jackson:    serialization:      fail-on-empty-beans: false
