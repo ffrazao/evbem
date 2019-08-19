@@ -9,6 +9,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
@@ -36,6 +40,8 @@ public class BemPatrimonial extends Produto implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "pessoa_responsavel_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoaResponsavel;
 
 }

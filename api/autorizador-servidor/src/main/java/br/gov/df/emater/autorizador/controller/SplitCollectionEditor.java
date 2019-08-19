@@ -7,9 +7,10 @@ import java.util.Collection;
 /**
  * Created by ahmed on 21.5.18.
  */
+@SuppressWarnings("rawtypes")
 public class SplitCollectionEditor extends CustomCollectionEditor{
 
-    private final Class<? extends Collection> collectionType;
+	private final Class<? extends Collection> collectionType;
     private final String splitRegex;
 
     public SplitCollectionEditor(Class<? extends Collection> collectionType, String splitRegex) {

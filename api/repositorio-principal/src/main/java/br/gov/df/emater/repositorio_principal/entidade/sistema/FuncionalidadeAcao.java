@@ -17,6 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.FuncionalidadeAcaoConcedeAcessoA;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
@@ -45,6 +49,8 @@ public class FuncionalidadeAcao extends EntidadeBase
 
 	@ManyToOne
 	@JoinColumn(name = "acao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Acao acao;
 
 	@Enumerated(EnumType.STRING)
@@ -63,6 +69,8 @@ public class FuncionalidadeAcao extends EntidadeBase
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Funcionalidade funcionalidade;
 
 	@Id
@@ -71,6 +79,8 @@ public class FuncionalidadeAcao extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private FuncionalidadeAcao pai;
 
 }

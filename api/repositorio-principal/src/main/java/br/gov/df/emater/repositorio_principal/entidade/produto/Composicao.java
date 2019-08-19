@@ -16,6 +16,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.Auditavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
@@ -72,10 +76,14 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "principal_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Produto principal;
 
 	@ManyToOne
 	@JoinColumn(name = "produto_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Produto produto;
 
 	@Temporal(TemporalType.TIMESTAMP)

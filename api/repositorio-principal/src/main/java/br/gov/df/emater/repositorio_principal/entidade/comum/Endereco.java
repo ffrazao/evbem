@@ -12,6 +12,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,6 +44,8 @@ public class Endereco extends ReferenciaEspacial implements Serializable, Identi
 
 	@ManyToOne
 	@JoinColumn(name = "localizacao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Localizacao localizacao;
 
 	private String logradouro;

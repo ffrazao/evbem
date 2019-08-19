@@ -16,6 +16,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
@@ -39,12 +43,16 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 
 	@ManyToOne
 	@JoinColumn(name = "acao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Acao acao;
 
 	private Integer duracao;
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Funcionalidade funcionalidade;
 
 	@Id
@@ -59,6 +67,8 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 
 	@ManyToOne
 	@JoinColumn(name = "modulo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Modulo modulo;
 
 	@Lob
@@ -76,6 +86,8 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 
 	@ManyToOne
 	@JoinColumn(name = "token_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Token token;
 
 }

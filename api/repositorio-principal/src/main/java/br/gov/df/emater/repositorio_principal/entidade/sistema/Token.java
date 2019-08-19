@@ -19,6 +19,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.dominio.TokenTipo;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
@@ -67,6 +71,8 @@ public class Token extends EntidadeBase implements Serializable, Identificavel {
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Usuario usuario;
 
 }

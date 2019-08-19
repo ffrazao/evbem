@@ -13,10 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
-import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavel;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +35,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class LocalizacaoTipo extends EntidadeBase implements Serializable, Identificavel, Pai<LocalizacaoTipo>, Nomeavel {
+public class LocalizacaoTipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavel<LocalizacaoTipo> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,6 +51,8 @@ public class LocalizacaoTipo extends EntidadeBase implements Serializable, Ident
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private LocalizacaoTipo pai;
 
 }

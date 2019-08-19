@@ -10,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
@@ -36,14 +40,20 @@ public class RelacionamentoPessoa extends EntidadeBase implements Serializable, 
 
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoa;
 
 	@ManyToOne
 	@JoinColumn(name = "relacionamento_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Relacionamento relacionamento;
 
 	@ManyToOne
 	@JoinColumn(name = "relacionamento_funcao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private RelacionamentoFuncao relacionamentoFuncao;
 
 }

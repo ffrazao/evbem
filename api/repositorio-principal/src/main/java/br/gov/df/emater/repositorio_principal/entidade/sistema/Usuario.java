@@ -20,6 +20,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.UsuarioTipo;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
@@ -87,6 +91,8 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoa;
 
 	@Enumerated(EnumType.STRING)
@@ -97,6 +103,8 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 
 	@ManyToOne
 	@JoinColumn(name = "ultimo_perfil_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Perfil ultimoPerfil;
 
 	@OneToMany(mappedBy = "usuario")

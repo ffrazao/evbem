@@ -11,6 +11,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
@@ -40,12 +44,16 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 
 	@ManyToOne
 	@JoinColumn(name = "marca_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Marca marca;
 
 	private String nome;
 
 	@ManyToOne
 	@JoinColumn(name = "produto_tipo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;
 
 }

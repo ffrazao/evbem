@@ -23,14 +23,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.Auditavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.NomeavelCodificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,7 +50,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Configuracao extends EntidadeBase
-		implements Serializable, Identificavel, NomeavelCodificavel, Ativavel, Auditavel, Pai<Configuracao> {
+		implements Serializable, Identificavel, Ativavel, Auditavel, PaiNomeavelCodificavel<Configuracao> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -91,16 +94,22 @@ public class Configuracao extends EntidadeBase
 
 	@ManyToOne
 	@JoinColumn(name = "modulo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Modulo modulo;
 
 	private String nome;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Configuracao pai;
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Usuario usuario;
 
 	@Lob

@@ -15,6 +15,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
@@ -42,6 +46,8 @@ public class UsuarioFormaAutenticacao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "forma_autenticacao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private FormaAutenticacao formaAutenticacao;
 
 	@Id
@@ -50,6 +56,8 @@ public class UsuarioFormaAutenticacao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Usuario usuario;
 
 	@Lob

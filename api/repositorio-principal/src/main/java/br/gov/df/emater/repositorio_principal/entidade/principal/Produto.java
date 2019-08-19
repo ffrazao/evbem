@@ -11,6 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.produto.Composicao;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Modelo;
 import lombok.Data;
@@ -32,6 +36,8 @@ public class Produto extends Item implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "modelo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Modelo modelo;
 
 	@Column(name = "numero_serie")

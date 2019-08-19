@@ -16,12 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.NomeavelCodificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +41,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Funcionalidade extends EntidadeBase
-		implements Serializable, Identificavel, NomeavelCodificavel, Ativavel, Pai<Funcionalidade> {
+		implements Serializable, Identificavel, Ativavel, PaiNomeavelCodificavel<Funcionalidade> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +65,8 @@ public class Funcionalidade extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Funcionalidade pai;
 
 }

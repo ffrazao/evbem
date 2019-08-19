@@ -16,11 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
-import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavel;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,28 +39,30 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Marca extends EntidadeBase implements Serializable, Identificavel, Pai<Marca>, Nomeavel {
+public class Marca extends EntidadeBase implements Serializable, Identificavel, PaiNomeavel<Marca> {
 
 	private static final long serialVersionUID = 1L;
+
+	@Enumerated(EnumType.STRING)
+	private Confirmacao fabricante;
+
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<Marca> filhos;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	private String nome;
-
-	@Enumerated(EnumType.STRING)
-	private Confirmacao fabricante;
-
 	@Lob
 	private byte[] logotipo;
 
+	private String nome;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Marca pai;
-
-	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
-	@Setter(AccessLevel.PRIVATE)
-	private List<Marca> filhos;
 
 }

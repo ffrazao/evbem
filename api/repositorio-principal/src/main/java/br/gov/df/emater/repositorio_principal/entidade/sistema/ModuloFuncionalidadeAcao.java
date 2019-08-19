@@ -13,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
@@ -44,6 +48,8 @@ public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_acao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private FuncionalidadeAcao funcionalidadeAcao;
 
 	@Column(name = "grupo_menu")
@@ -55,6 +61,8 @@ public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "modulo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Modulo modulo;
 
 	private Integer ordem;

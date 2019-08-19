@@ -13,9 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
-import br.gov.df.emater.repositorio_principal.entidade.Pai;
+import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavel;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,26 +34,30 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Localizacao extends ReferenciaEspacial implements Serializable, Identificavel, Pai<Localizacao>, Nomeavel {
+public class Localizacao extends ReferenciaEspacial implements Serializable, Identificavel, PaiNomeavel<Localizacao> {
 
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pai_id")
-	private Localizacao pai;
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
 	private List<Localizacao> filhos;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
 	@ManyToOne
 	@JoinColumn(name = "localizacao_tipo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private LocalizacaoTipo localizacaoTipo;
 
 	private String nome;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private Localizacao pai;
 
 }

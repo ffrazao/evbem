@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
@@ -37,6 +41,8 @@ public class Privilegio extends EntidadeBase implements Serializable, Identifica
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_acao_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private FuncionalidadeAcao funcionalidadeAcao;
 
 	@Id
@@ -45,6 +51,8 @@ public class Privilegio extends EntidadeBase implements Serializable, Identifica
 
 	@ManyToOne
 	@JoinColumn(name = "perfil_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Perfil perfil;
 
 }
