@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -38,6 +40,7 @@ import lombok.Setter;
  * The persistent class for the Evento database table.
  * 
  */
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(catalog = "evento")
 @Data
