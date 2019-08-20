@@ -5,11 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,27 +21,58 @@ public class ProdutoDAOImpl implements ProdutoDAOExtra {
 
 	@Override
 	public Collection<Produto> findByFiltro(ProdutoFiltroDTO filtro) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Produto> criteria = builder.createQuery(Produto.class);
-		Root<Produto> root = criteria.from(Produto.class);
-		List<Predicate> criteriaList = new ArrayList<>();
-		if (StringUtils.isNotBlank(filtro.getEmail())) {
-			criteriaList.add(builder.like(root.get("email"), String.format("%%%s%%", filtro.getEmail().replace(" ", "%"))));
+		Collection<Produto> result = new ArrayList<>();
+		
+		List<Object> param = new ArrayList<>();
+		StringBuilder sql = new StringBuilder();
+		sql.append("select    a.id as produto_id,").append("\n");
+		sql.append("          a.numero_serie,").append("\n");
+		sql.append("          b.id as modelo_id,").append("\n");
+		sql.append("          b.nome as modelo_nome,").append("\n");
+		sql.append("          b.descricao as modelo_descricao,").append("\n");
+		sql.append("          c.id as produto_tipo_id,").append("\n");
+		sql.append("          c.nome as produto_tipo_nome,").append("\n");
+		sql.append("          c.pai_id as produto_tipo_pai_id,").append("\n");
+		sql.append("          d.id as marca_id,").append("\n");
+		sql.append("          d.nome as marca_nome,").append("\n");
+		sql.append("          d.fabricante as marca_fabricante,").append("\n");
+		sql.append("          d.pai_id as marca_pai_id").append("\n");
+		sql.append("from      principal.produto a").append("\n");
+		sql.append("join      produto.modelo b").append("\n");
+		sql.append("on        b.id = a.modelo_id").append("\n");
+		sql.append("join      produto.produto_tipo c").append("\n");
+		sql.append("on        c.id = b.produto_tipo_id").append("\n");
+		sql.append("left join produto.marca d").append("\n");
+		sql.append("on        d.id = b.marca_id").append("\n");
+		sql.append("where 1 = 1").append("\n");
+		if (StringUtils.isNotBlank(filtro.getProdutoTipo())) {
+			sql.append("and   c.nome like ?").append("\n");
+			param.add(String.format("%%%s%%", filtro.getProdutoTipo()));
 		}
-		if (StringUtils.isNotBlank(filtro.getLogin())) {
-			criteriaList.add(builder.like(root.get("login"), String.format("%%%s%%", filtro.getLogin().replace(" ", "%"))));
+		if (StringUtils.isNotBlank(filtro.getMarca())) {
+			sql.append("and   d.nome like ?").append("\n");
+			param.add(String.format("%%%s%%", filtro.getMarca()));
 		}
-		if (StringUtils.isNotBlank(filtro.getNome())) {
-			criteriaList.add(builder.like(root.get("nome"), String.format("%%%s%%", filtro.getNome().replace(" ", "%"))));
+		if (StringUtils.isNotBlank(filtro.getModelo())) {
+			sql.append("and   b.nome like ?").append("\n");
+			param.add(String.format("%%%s%%", filtro.getModelo()));
 		}
-		if (StringUtils.isNotBlank(filtro.getPerfil())) {
-			criteriaList.add(builder.like(root.get("perfil"), String.format("%%%s%%", filtro.getPerfil().replace(" ", "%"))));
+		if (StringUtils.isNotBlank(filtro.getNumeroSerie())) {
+			sql.append("and   a.numero_serie like ?").append("\n");
+			param.add(String.format("%%%s%%", filtro.getNumeroSerie()));
 		}
-		if (!criteriaList.isEmpty()) {
-			criteria.where(builder.and(criteriaList.toArray(new Predicate[0])));
+		Query query = em.createNativeQuery(sql.toString());
+		int posicao = 0;
+		for (Object p: param) {
+			query.setParameter(++posicao, p);
 		}
-		final TypedQuery<Produto> query = em.createQuery(criteria);
-		return query.getResultList();
+		for (Object linha: query.getResultList()) {
+			
+			Produto p = new Produto();
+			p.setId((Integer) linha);
+		}
+		
+		return result;		
 	}
 
 }

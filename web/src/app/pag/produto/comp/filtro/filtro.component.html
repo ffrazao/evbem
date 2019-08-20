@@ -5,20 +5,26 @@
     <div class="container">
       <div class="row">
         <div class="form-group">
-          <label class="form-label">Nome</label>
-          <input class="form-control" formControlName="nome">
+          <label class="form-label">Tipo Produto</label>
+          <input class="form-control" formControlName="produtoTipo">
         </div>
       </div>
       <div class="row">
         <div class="form-group">
-          <label class="form-label">Login</label>
-          <input class="form-control" formControlName="login">
+          <label class="form-label">Marca</label>
+          <input class="form-control" formControlName="marca">
         </div>
       </div>
       <div class="row">
         <div class="form-group">
-          <label class="form-label">Perfil</label>
-          <input class="form-control" formControlName="perfil">
+          <label class="form-label">Modelo</label>
+          <input class="form-control" formControlName="modelo">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="form-label">Número de Série</label>
+          <input class="form-control" formControlName="numeroSerie">
         </div>
       </div>
       <button type="submit" class="btn btn-primary btn-block" [disabled]="config?.filtro?.invalid">

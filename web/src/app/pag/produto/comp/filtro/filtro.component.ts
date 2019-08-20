@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, Route } from '@angular/router';
 
 import { CrudConfig } from 'src/app/comum/componente/crud-config';
@@ -28,9 +28,10 @@ export class FiltroComponent implements OnInit {
 
   criarFormulario() {
     return this._formBuilder.group({
-      nome: [null, []],
-      login: [null, []],
-      perfil: [null, []],
+      produtoTipo: [null, []],
+      marca: [null, []],
+      modelo: [null, []],
+      numeroSerie: [null, []],
     });
   }
 

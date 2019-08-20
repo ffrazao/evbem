@@ -32,9 +32,10 @@ export class TabComponent extends CrudTabComponent implements OnInit {
     if (!this.config) {
       this.config = new CrudConfig(['/pag', 'produto']);
       this.config.filtro = this._formBuilder.group({
-        nome: ['Alice', []],
-        login: [null, []],
-        perfil: [null, []],
+        produtoTipo: [null, []],
+        marca: [null, []],
+        modelo: [null, []],
+        numeroSerie: [null, []],
       });
     }
     this._actr.data.subscribe((data: any) => {
