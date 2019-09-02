@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class ProdutoFiltroDTO extends FiltroDTO {
 
-	private String email;
+	private String produtoTipo;
 
-	private String login;
+	private String marca;
 
-	private String nome;
+	private String modelo;
 
-	private String perfil;
+	private String numeroSerie;
 
 }
