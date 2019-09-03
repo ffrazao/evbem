@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
-import { CrudConfig } from './comum/componente/crud-config';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -15,23 +12,6 @@ export class AppComponent {
   envName = environment.envName;
 
   constructor(
-    private _router: Router,
-    private _formBuilder: FormBuilder
   ) { }
 
-  public abreUsuario() {
-    // let r = this._router.config.find(v => v.path == 'pag')['_loadedConfig'].routes.find(v => v.path == 'usuario');
-    // r.data.config = new CrudConfig(['/pag', 'usuario']);
-    // r.data.config.filtro = this._formBuilder.group({
-    //   nome: [null, []],
-    //   login: ['agata', []],
-    //   perfil: [null, []],
-    // }); 
-    this._router.navigate(['/pag', 'usuario']);
-  }
-
-  public abreProduto() {
-    console.log('ahhh');
-    this._router.navigate(['/pag', 'produto']);
-  }
 }
