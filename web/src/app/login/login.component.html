@@ -25,7 +25,7 @@
         <label class="col-md-12 control-label" for="senha">Senha</label>
         <div class="col-md-12">
           <input id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md"
-            required="" formControlName="senha">
+            formControlName="senha">
           <span class="help-block">Informe a senha do usuário de acesso ao sistema</span>
         </div>
         <div *ngIf="senha.invalid && (senha.dirty || senha.touched)" class="alert alert-danger">
@@ -35,7 +35,7 @@
       <!-- Button -->
       <div class="form-group">
         <div class="col-md-12">
-          <button class="btn btn-primary" mat-button [mat-dialog-close]="loginForm.value" cdkFocusInitial>Login</button>
+          <button class="btn btn-primary" mat-button [mat-dialog-close]="loginForm.value">Login</button>
           <button class="btn btn-default" (click)="cancelar()">Cancelar</button>
         </div>
       </div>

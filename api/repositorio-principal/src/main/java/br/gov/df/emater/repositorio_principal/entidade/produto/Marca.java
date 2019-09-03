@@ -65,4 +65,15 @@ public class Marca extends EntidadeBase implements Serializable, Identificavel, 
 	@JsonIdentityReference(alwaysAsId = false)
 	private Marca pai;
 
+	public Marca(Integer id) {
+		setId(id);
+	}
+
+	public Marca(Integer id, String nome, Confirmacao fabricante, Integer pai) {
+		this(id);
+		setNome(nome);
+		setFabricante(fabricante);
+		setPai(new Marca(pai));
+	}
+
 }

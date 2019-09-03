@@ -56,4 +56,16 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 	@JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;
 
+	public Modelo(Integer id, String nome, String descricao, ProdutoTipo produtoTipo) {
+		setId(id);
+		setNome(nome);
+		setDescricao(descricao);
+		setProdutoTipo(produtoTipo);
+	}
+
+	public Modelo(Integer id, String nome, String descricao, ProdutoTipo produtoTipo, Marca marca) {
+		this(id, nome, descricao, produtoTipo);
+		setMarca(marca);
+	}
+
 }

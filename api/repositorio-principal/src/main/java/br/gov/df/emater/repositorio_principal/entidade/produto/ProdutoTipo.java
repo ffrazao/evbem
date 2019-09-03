@@ -58,4 +58,14 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 	@OneToMany(mappedBy = "produtoTipo")
 	private List<ProdutoTipoMarca> produtoTipoMarcaList;
 
+	public ProdutoTipo(Integer id) {
+		setId(id);
+	}
+
+	public ProdutoTipo(Integer id, String nome, Integer pai) {
+		this(id);
+		setNome(nome);
+		setPai(new ProdutoTipo(pai));
+	}
+
 }

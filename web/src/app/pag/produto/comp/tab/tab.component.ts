@@ -52,7 +52,7 @@ export class TabComponent extends CrudTabComponent implements OnInit {
       this.config.fonteDados.paginator = this.paginator;
       // configurar o componente
       if (!this.config.colunasExibidas) {
-        this.config.colunasExibidas = ['select', 'indice', 'nome', 'login', 'email', 'tipo'];
+        this.config.colunasExibidas = ['select', 'tipoProduto', 'marca', 'modelo', 'numeroSerie'];
       }
       if (!this.config.selecaoRegistros) {
         this.config.selecaoRegistros = new SelectionModel<Produto>(this.config.permitirMultiSelecao, this.config.selecaoInicial);
