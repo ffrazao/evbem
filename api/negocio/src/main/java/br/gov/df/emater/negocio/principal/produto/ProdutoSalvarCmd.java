@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.repositorio_principal.dao.principal.ProdutoDAO;
+import br.gov.df.emater.repositorio_principal.dominio.ItemTipo;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;;
 
 @Component
@@ -21,11 +22,16 @@ public class ProdutoSalvarCmd extends Comando {
 	@Override
 	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
 		if (ctx.getRequisicao() instanceof Produto) {
-			ctx.setResposta(dao.saveAndFlush((Produto) ctx.getRequisicao()));
+			ctx.setResposta(dao.saveAndFlush(prepara((Produto) ctx.getRequisicao())));
 		} else {
-			ctx.setResposta(((List<Produto>) ctx.getRequisicao()).stream().map(reg -> dao.saveAndFlush(reg))
+			ctx.setResposta(((List<Produto>) ctx.getRequisicao()).stream().map(reg -> dao.saveAndFlush(prepara(reg)))
 					.collect(Collectors.toList()));
 		}
+	}
+
+	private Produto prepara(Produto produto) {
+		produto.setItemTipo(ItemTipo.PRODUTO);
+		return produto;
 	}
 
 }
