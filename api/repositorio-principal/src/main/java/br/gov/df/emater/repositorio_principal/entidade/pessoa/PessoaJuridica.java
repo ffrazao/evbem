@@ -3,7 +3,9 @@ package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +21,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "pessoa", name = "pessoa_juridica")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("PessoaJuridica")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

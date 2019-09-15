@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.dominio.PessoaTipo;
@@ -28,6 +30,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "principal")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("Pessoa")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

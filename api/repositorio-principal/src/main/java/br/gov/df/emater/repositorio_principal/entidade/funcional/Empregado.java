@@ -2,7 +2,9 @@ package br.gov.df.emater.repositorio_principal.entidade.funcional;
 
 import java.io.Serializable;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaFisica;
@@ -16,6 +18,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "funcional")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("Empregado")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

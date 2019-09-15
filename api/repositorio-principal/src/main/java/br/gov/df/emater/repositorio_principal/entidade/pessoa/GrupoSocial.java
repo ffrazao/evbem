@@ -3,10 +3,12 @@ package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,6 +26,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "pessoa", name = "grupo_social")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("GrupoSocial")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
