@@ -3,10 +3,12 @@ package br.gov.df.emater.repositorio_principal.entidade.produto;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -25,6 +27,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "produto", name = "bem_patrimonial")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("BemPatrimonial")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

@@ -7,7 +7,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +26,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "veiculo")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("Veiculo")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

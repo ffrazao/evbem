@@ -71,7 +71,7 @@ public class Item extends EntidadeBase implements Serializable, Identificavel, A
 	private Integer criadoUsuarioId;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)

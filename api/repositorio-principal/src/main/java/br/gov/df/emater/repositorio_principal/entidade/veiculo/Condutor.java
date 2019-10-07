@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,6 +23,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "veiculo")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+@DiscriminatorValue("Condutor")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

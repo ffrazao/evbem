@@ -13,6 +13,8 @@ import { ProdutoService } from '../../servico/produto.service';
 })
 export class FormComponent extends CrudFormComponent implements OnInit {
 
+  modeloList = [{ id: 1, nome: 'Passeio' }, { id: 2, nome: 'Carga' },];
+
   constructor(
     private _actr: ActivatedRoute,
     private _service: ProdutoService,
@@ -54,11 +56,10 @@ export class FormComponent extends CrudFormComponent implements OnInit {
   criarFormulario() {
     return this._formBuilder.group({
       id: [null, []],
-      nome: [null, [Validators.required, Validators.maxLength(255)]],
-      login: [null, [Validators.required, Validators.maxLength(255)]],
-      tipo: [null, [Validators.required, Validators.maxLength(255)]],
-      email: [null, [Validators.required, Validators.maxLength(255), Validators.email]],
-      ativo: [null, [Validators.required]],
+      ativo: [null, []],
+      observacao: [null, []],
+      modelo: [null, []],
+      numeroSerie: [null, []],
     });
   }
 
@@ -79,6 +80,7 @@ export class FormComponent extends CrudFormComponent implements OnInit {
   }
 
   incluir() {
+    console.log('Incluir');
     this._service.criar().subscribe(f => {
       this.config.formularioOriginal.patchValue(f);
       this.config.formulario.patchValue(f);
