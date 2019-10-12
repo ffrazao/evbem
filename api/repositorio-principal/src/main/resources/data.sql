@@ -107,7 +107,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sistema`;
-INSERT INTO `sistema`.`usuario` (`id`, `nome`, `login`, `email`, `senha`, `foto`, `pessoa_id`, `ultimo_usuario_perfil_id`, `tipo`, `ativo`, `criado_em`, `criado_usuario_id`, `atualizado_em`, `atualizado_usuario_id`) VALUES (1, 'Administrador do Sistema', 'admin', NULL, NULL, NULL, NULL, NULL, 'ADMIN', DEFAULT, DEFAULT, NULL, DEFAULT, NULL);
+INSERT INTO `sistema`.`usuario` (`id`, `tipo`, `nome`, `login`, `senha`, `email`, `foto`, `pessoa_id`, `permitir_heranca_perfis`, `ultimo_perfil_id`, `observacao`, `ativo`) VALUES (1, 'ADMIN', 'Administrador do Sistema', 'a', '$2a$10$6wmY1GHEbHclJYBVpDwDdOIxuH3GAko0jZUY9nfdlubSP/rsEraW6', NULL, NULL, NULL, DEFAULT, NULL, NULL, DEFAULT);
 
 COMMIT;
 
@@ -132,7 +132,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `sistema`;
-INSERT INTO `sistema`.`configuracao` (`id`, `codigo`, `nome`, `descricao`, `valor`, `usuario_id`, `modulo_id`, `pai_id`, `ativo`, `criado_em`, `criado_usuario_id`, `atualizado_em`, `atualizado_usuario_id`) VALUES (DEFAULT, 'HISTORICO_ATIVIDADE_TEMPO', 'Tempo de guarda do histórico de Atividades', 'Tempo em dias para manter a guarda do histórico de atividades', '{\"tempo\": 30}', NULL, NULL, NULL, DEFAULT, DEFAULT, 1, DEFAULT, 1);
+INSERT INTO `sistema`.`configuracao` (`id`, `codigo`, `nome`, `descricao`, `valor`, `usuario_id`, `modulo_id`, `pai_id`, `ativo`) VALUES (DEFAULT, 'HISTORICO_ATIVIDADE_TEMPO', 'Tempo de guarda do histórico de Atividades', 'Tempo em dias para manter a guarda do histórico de atividades', '{\"tempo\": 30}', NULL, NULL, NULL, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `oauth2`.`oauth_client_details`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `oauth2`;
+INSERT INTO `oauth2`.`oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('evbem_web', 'evbem_api', '$2a$10$baIMTOjCRNfIstXitcX3uuQuv0AWx8s4GOBqCppdFzslA5bveO5Da', 'read,write', 'password', 'localhost', NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
