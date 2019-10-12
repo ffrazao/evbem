@@ -6,10 +6,6 @@
 .DS_Store
 Thumbs.db
 
-#modelo ignore
-modelo/*.bak
-modelo/*.sql
-
 # compiled output
 web/dist
 web/tmp
@@ -35,6 +31,7 @@ web/.idea
 *.sublime-workspace
 
 # IDE - VSCode
+**/*/.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

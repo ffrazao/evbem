@@ -1,0 +1,5 @@
+#api java
+**/*/.classpath
+**/*/.settings
+**/*/.project
+**/*/target
