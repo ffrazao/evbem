@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Pessoa extends Item implements Serializable, Nomeavel {
+public class Pessoa extends Recurso implements Serializable, Nomeavel {
 
 	private static final long serialVersionUID = 1L;
 

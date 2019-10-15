@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Servico extends Item implements Serializable {
+public class Servico extends Recurso implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.principal.Item;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Recurso;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -54,6 +54,6 @@ public class Participacao extends EntidadeBase implements Serializable, Identifi
 	@JoinColumn(name = "item_id ")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Item item;
+	private Recurso item;
 
 }

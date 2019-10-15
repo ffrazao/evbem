@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Produto extends Item implements Serializable {
+public class Produto extends Recurso implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
