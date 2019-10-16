@@ -2,19 +2,22 @@ package br.gov.df.emater.repositorio_principal.entidade.produto;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
@@ -27,25 +30,36 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "produto", name = "bem_patrimonial")
-@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-@DiscriminatorValue("BemPatrimonial")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class BemPatrimonial extends Produto implements Serializable {
-	
+public class BemPatrimonial extends EntidadeBase implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	private Integer id;
 
 	@Lob
 	private String observacao;
 
+	@Column(name = "sigla_proprietario")
+	private String siglaProprietario;
+
 	@Column(name = "identificacao_patrimonial")
 	private String identificacaoPatrimonial;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "pessoa_responsavel_id")
+	@JoinColumn(name = "pessoa_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Pessoa pessoaResponsavel;
+	private Pessoa responsavel;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	@MapsId
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private Produto produto;
 
 }

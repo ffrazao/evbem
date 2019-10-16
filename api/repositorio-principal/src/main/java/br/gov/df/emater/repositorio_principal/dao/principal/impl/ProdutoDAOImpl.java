@@ -27,7 +27,12 @@ public class ProdutoDAOImpl implements ProdutoDAOExtra {
 	@Override
 	public Collection<Produto> findByFiltro(ProdutoFiltroDTO filtro) {
 		Collection<Produto> result = new ArrayList<>();
+		
+		result = em.createNamedQuery("Produto", Produto.class).getResultList();
+		
+		return result;
 
+		/* @formatter:off
 		List<Object> param = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append("select    a.id as produto_id,").append("\n");
@@ -81,8 +86,9 @@ public class ProdutoDAOImpl implements ProdutoDAOExtra {
 					new Marca((Integer) linha[8], (String) linha[9], Confirmacao.valueOf(((Character) linha[10]).toString()) , (Integer) linha[11])));
 			result.add(p);
 		}
-
-		return result;
+		
+		@formatter:on
+		*/
 	}
 
 }

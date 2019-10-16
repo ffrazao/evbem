@@ -1,18 +1,14 @@
-package br.gov.df.emater.repositorio_principal.entidade.produto;
+package br.gov.df.emater.repositorio_principal.entidade.comum;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -20,45 +16,38 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Temporalizavel;
-import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
+import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the composicao database table.
+ * The persistent class for the modelo database table.
  * 
  */
 @Entity
-@Table(catalog = "produto")
+@Table(catalog = "comum", name = "tipo_unidade_medida")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Composicao extends EntidadeBase implements Serializable, Identificavel, Temporalizavel {
+public class ProdutoTipoUnidadeMedida extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar inicio;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "principal_produto_id")
+	@ManyToOne
+	@JoinColumn(name = "unidade_medida_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Produto principal;
+	private UnidadeMedida unidadeMedida;
 
 	@ManyToOne
-	@JoinColumn(name = "produto_id")
+	@JoinColumn(name = "tipo_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Produto produto;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar termino;
+	private ProdutoTipo produtoTipo;
 
 }

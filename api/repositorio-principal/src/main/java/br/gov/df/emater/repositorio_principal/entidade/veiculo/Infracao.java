@@ -35,11 +35,6 @@ public class Infracao extends Evento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
-	@JoinColumn(name = "condutor_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Condutor condutor;
 
 	@ManyToOne
 	@JoinColumn(name = "lotacao_id")

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,11 +32,11 @@ import lombok.Setter;
  * 
  */
 @Entity
-@Table(catalog = "produto", name = "produto_tipo")
+@Table(catalog = "produto", name = "tipo")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ProdutoTipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavel<ProdutoTipo> {
+public class ProdutoTipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavelCodificavel<ProdutoTipo> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,15 +49,14 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 	private Integer id;
 
 	private String nome;
+	
+	private String codigo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo pai;
-
-	@OneToMany(mappedBy = "produtoTipo")
-	private List<ProdutoTipoMarca> produtoTipoMarcaList;
 
 	public ProdutoTipo(Integer id) {
 		setId(id);

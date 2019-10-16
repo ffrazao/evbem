@@ -6,15 +6,19 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 
 import br.gov.df.emater.repositorio_principal.dominio.Combustivel;
+import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,16 +30,22 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(catalog = "veiculo")
-@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-@DiscriminatorValue("Veiculo")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Veiculo extends Produto implements Serializable {
+public class Veiculo extends EntidadeBase implements Serializable {
 
 	private static final String JUNCAO = ",";
 
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	private Integer id;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	@MapsId
+	private Produto produto;
 
 	@Column(name = "ano_fabricacao")
 	private Integer anoFabricacao;
@@ -43,7 +53,7 @@ public class Veiculo extends Produto implements Serializable {
 	@Column(name = "ano_modelo")
 	private Integer anoModelo;
 
-	private String combustivel; // set('GASOLINA','ETANOL','DIESEL')
+	private String combustivel;
 
 	@Column(name = "cor")
 	private String cor;

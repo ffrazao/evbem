@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.NomeavelCodificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Modelo extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
+public class Modelo extends EntidadeBase implements Serializable, Identificavel, NomeavelCodificavel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,30 +43,14 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "marca_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Marca marca;
-
+	private String codigo;
+	
 	private String nome;
 
 	@ManyToOne
-	@JoinColumn(name = "produto_tipo_id")
+	@JoinColumn(name = "tipo_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;
-
-	public Modelo(Integer id, String nome, String descricao, ProdutoTipo produtoTipo) {
-		setId(id);
-		setNome(nome);
-		setDescricao(descricao);
-		setProdutoTipo(produtoTipo);
-	}
-
-	public Modelo(Integer id, String nome, String descricao, ProdutoTipo produtoTipo, Marca marca) {
-		this(id, nome, descricao, produtoTipo);
-		setMarca(marca);
-	}
 
 }

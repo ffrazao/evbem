@@ -1,15 +1,15 @@
-package br.gov.df.emater.negocio.principal.produto;
+package br.gov.df.emater.negocio.veiculo.veiculo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.CadeiaSequenciada;
 
-@Component("ProdutoSalvarCdSq")
-public class ProdutoSalvarCdSq extends CadeiaSequenciada {
+@Component("VeiculoListarCdSq")
+public class VeiculoListarCdSq extends CadeiaSequenciada {
 
 	@Autowired
-	ProdutoSalvarCdSq(ProdutoSalvarCmd c1) {
+	VeiculoListarCdSq(VeiculoListarCmd c1) {
 		super(c1);
 	}
 
