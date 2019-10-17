@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class VeiculoFiltroDTO extends FiltroDTO {
+	
+	private String pesq;
 
 	private String produtoTipo;
 

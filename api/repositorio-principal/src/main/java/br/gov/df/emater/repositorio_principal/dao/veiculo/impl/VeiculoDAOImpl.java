@@ -20,7 +20,7 @@ public class VeiculoDAOImpl implements VeiculoDAOExtra {
 	public Collection<Veiculo> findByFiltro(VeiculoFiltroDTO filtro) {
 		Collection<Veiculo> result = new ArrayList<>();
 
-		result = em.createNamedQuery("Veiculo", Veiculo.class).getResultList();
+		result = em.createQuery("from Veiculo", Veiculo.class).getResultList();
 
 		return result;
 

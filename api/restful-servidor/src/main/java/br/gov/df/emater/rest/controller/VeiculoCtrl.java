@@ -58,16 +58,21 @@ public class VeiculoCtrl {
 			throws Exception {
 		return (List<Veiculo>) negocioFacade.executarComEscrita("VeiculoSalvarCdSq", registros, usuario);
 	}
+//
+//	@GetMapping()
+//	protected List<Veiculo> listar(@RequestParam(name = "filtro", required = false) String filtroStr, Principal usuario)
+//			throws Exception {
+//		VeiculoFiltroDTO filtro = null;
+//		if (filtroStr != null) {
+//			ObjectMapper om = new ObjectMapper();
+//			filtro = om.readValue(URLDecoder.decode(filtroStr.replace("+", "%2B"), "UTF-8").replace("%2B", "+"),
+//					VeiculoFiltroDTO.class);
+//		}
+//		return (List<Veiculo>) negocioFacade.executarSomenteLeitura("VeiculoListarCdSq", filtro, usuario);
+//	}
 
-	@GetMapping(value = "")
-	protected List<Veiculo> listar(@RequestParam(name = "filtro", required = false) String filtroStr, Principal usuario)
-			throws Exception {
-		VeiculoFiltroDTO filtro = null;
-		if (filtroStr != null) {
-			ObjectMapper om = new ObjectMapper();
-			filtro = om.readValue(URLDecoder.decode(filtroStr.replace("+", "%2B"), "UTF-8").replace("%2B", "+"),
-					VeiculoFiltroDTO.class);
-		}
+	@GetMapping()
+	protected List<Veiculo> listar(VeiculoFiltroDTO filtro, Principal usuario) throws Exception {
 		return (List<Veiculo>) negocioFacade.executarSomenteLeitura("VeiculoListarCdSq", filtro, usuario);
 	}
 
