@@ -1,0 +1,33 @@
+Rotas anotações (https://www.youtube.com/user/Loianeg/videos, aula 49)
+
+AULA 54
+A maneira correta de captar o parâmetro de rota é assim:
+
+import { ActivatedRoute } from '@angular/route';
+import { Subscription } from 'rxjs/Rx';
+
+explort class PaginaComponent implements OnInit {
+
+	private id: number;
+	private inscricao: Subscription;
+
+	constructor(
+		private route: ActivatedRoute
+	) {
+	}
+
+	ngOnInit() {
+		this.inscricao = this.route.params.subscribe((params) => {
+	    	// registrar inscrição
+			this.id = params.id;
+		});
+	}
+
+
+	ngOnDestroy() {
+	    // liberar inscrição
+		this.inscricao.unsubscribe();
+	}
+
+}
+
