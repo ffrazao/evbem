@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SQLite } from '@ionic-native/sqlite/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 import { SqliteService } from './comum/servico/local/sqlite.service';
 
 @NgModule({
@@ -26,6 +28,7 @@ import { SqliteService } from './comum/servico/local/sqlite.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
     SqliteService,
+    BarcodeScanner,
   ],
   bootstrap: [AppComponent]
 })

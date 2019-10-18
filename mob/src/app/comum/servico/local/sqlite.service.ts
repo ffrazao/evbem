@@ -4,21 +4,42 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 @Injectable({ providedIn: 'root' })
 export class SqliteService {
 
+    private db: SQLiteObject;
+
     constructor(private sqlite: SQLite) {
     }
 
     getDb() {
-        return this.sqlite.create({ name: 'data.db', location: 'default' });
+        console.log(0);
+        if (this.db == null) {
+            console.log(1);
+            (async () => {
+                console.log(2);
+                this.db = await this.sqlite.create({ name: 'data.db', location: 'default' });
+                console.log(3);
+            })();
+            console.log(4);
+        }
+        console.log(5);
+        return this.db;
     }
 
-    public createDatabase() {
-        return this.getDb().then((db: SQLiteObject) => {
-            this.preparaTabelas(db);
-        }).catch(e => alert(`Erro ao preparar tabelas locais ${JSON.stringify(e)}`));
+    public preparaDatabase(): void {
+        try {
+            this.preparaTabelas(this.getDb());
+            console.log('Tabelas locais preparadas');
+            this.inserePadrao(this.getDb());
+            console.log('Tabelas locais iniciadas');
+        } catch (e) {
+            alert(`Erro ao preparar tabelas locais ${JSON.stringify(e)}`);
+        }
     }
 
-    private preparaTabelas(db: SQLiteObject) {
-        db.sqlBatch([
+    private async preparaTabelas(db: SQLiteObject) {
+        console.log('db criado?', db);
+        await db.sqlBatch([
+            [`DROP TABLE IF EXISTS veiculo`],
+            [`DROP TABLE IF EXISTS evento`],
             [`CREATE TABLE IF NOT EXISTS veiculo (
                 id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                 placa TEXT,
@@ -27,36 +48,29 @@ export class SqliteService {
                 id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                 nome TEXT,
             )`],
-        ])
-            .then(() => {
-                console.log('Tabelas locais preparadas');
-                this.inserePadrao(db);
-            })
-            .catch(e => alert(`Erro ao preparar tabelas locais [${JSON.stringify(e)}]`));
+        ]);
     }
 
-    private inserePadrao(db: SQLiteObject) {
-        db.executeSql(`SELECT COUNT(*) AS qtd FROM veiculo`)
-            .then((data: any) => {
+    private async inserePadrao(db: SQLiteObject) {
+        await db.executeSql(`SELECT COUNT(*) AS qtd FROM veiculo`)
+            .then(async (data: any) => {
                 if (data.rows.item(0).qtd === 0) {
-                    this.insereBatch(db, [
+                    await this.insereBatch(db, [
                         [`INSERT INTO veiculo (placa) VALUES (?)`, [`JKO-5353`]],
                         [`INSERT INTO veiculo (placa) VALUES (?)`, [`JFR-8989`]],
                     ], 'Veiculos padrão inseridos', 'Erro ao inserir Veiculos padrão');
                 }
-            })
-            .catch(e => alert(`Erro ao inserir valores padrão [${JSON.stringify(e)}]`));
-        db.executeSql(`SELECT COUNT(*) AS qtd FROM evento`)
-            .then((data: any) => {
+            });
+
+        await db.executeSql(`SELECT COUNT(*) AS qtd FROM evento`)
+            .then(async (data: any) => {
                 if (data.rows.item(0).qtd === 0) {
-                    this.insereBatch(db, [
+                    await this.insereBatch(db, [
                         [`INSERT INTO evento (nome) VALUES (?)`, [`Primeiro Evento`]],
                         [`INSERT INTO evento (nome) VALUES (?)`, [`Segundo Evento`]],
                     ], 'Eventos padrão inseridos', 'Erro ao inserir Eventos padrão');
                 }
-
-            })
-            .catch(e => alert(`Erro ao inserir valores padrão [${JSON.stringify(e)}]`));
+            });
     }
 
     private insereBatch(db: SQLiteObject, instrucoes: any[], msgSucesso, msgErro) {

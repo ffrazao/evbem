@@ -34,17 +34,11 @@ export class AppComponent {
   }
 
   initializeApp() {
+    console.log(3342);
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-
-      this.sqliteService.createDatabase()
-        .then(() => {
-          this.splashScreen.hide();
-        })
-        .catch((e) => {
-          alert(JSON.stringify(e));
-          this.splashScreen.hide();
-        });
+      this.sqliteService.preparaDatabase();
+      this.splashScreen.hide();
     });
   }
 }
