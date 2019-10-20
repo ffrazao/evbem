@@ -1,0 +1,43 @@
+{
+ "crud1": [
+    {
+     "id": 1,
+     "idade": 16,
+     "nome":"Andy"
+    },
+    {
+     "id": 2,
+     "idade": 22,
+     "nome":"Lisa"
+    }
+  ],
+ "crud2": [
+    {
+     "id": 1,
+     "data":"18/03/2016",
+     "message":"Legal!"
+    },
+    {
+     "id": 2,
+     "data":"21-06-2017",
+     "message":"Excelente vista!"
+    }
+  ],
+ "crud3": [
+    {
+     "id": 1,
+     "autor":"Lisa",
+     "description":"Uma vista maravilhosa da natureza",
+     "img":"https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/8V46UZCS0V.jpg",
+     "title":"Uma visão natural"
+    },
+    {
+     "id": 2,
+     "autor":"Andy",
+     "description":"Sunset à beira-mar",
+     "img":"https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/8V46UZCS0V.jpg",
+     "title":"Vista em paisagem"
+    }
+  ],
+  "dominio": []
+}

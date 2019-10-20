@@ -1,0 +1,12 @@
+<p>
+  <a routerLink="home">Home</a> |
+  <a routerLink="login" *ngIf="!usuario">Login</a>
+  <a (click)="logout()" *ngIf="usuario">Logout</a> |
+  <a routerLink="crud-1">Crud 1</a> |
+  <a routerLink="crud-2">Crud 2</a> |
+  <a routerLink="crud-3">Crud 3</a> |
+  <a routerLink="crud-4">Crud 4</a>
+  <label *ngIf="usuario">Usuário logado: <b>{{usuario?.login}}</b></label>
+</p>
+
+<router-outlet></router-outlet>
