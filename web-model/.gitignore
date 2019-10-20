@@ -9,6 +9,11 @@
 
 # dependencies
 /node_modules
+/coverage
+/dist
+/platforms
+/plugins
+/www
 
 # profiling files
 chrome-profiler-events.json
@@ -40,7 +45,15 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+*.log
+log.txt
+npm-debug.log*
 
 # System Files
 .DS_Store
 Thumbs.db
+
+/.ionic
+/.sass-cache
+/.sourcemaps
+/.versions
