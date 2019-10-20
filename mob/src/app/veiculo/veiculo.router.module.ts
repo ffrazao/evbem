@@ -39,20 +39,15 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/veiculo/registro',
+        redirectTo: 'registro',
         pathMatch: 'full'
       }
     ]
   },
-  {
-    path: '',
-    redirectTo: '/veiculo/registro',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class VeiculoPageRoutingModule {}
+export class VeiculoPageRoutingModule { }

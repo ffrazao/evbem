@@ -1,16 +1,16 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RegistroPage } from './registro.page';
+import { RegistroPageRoutingModule } from './registro.router.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: RegistroPage }])
+    RegistroPageRoutingModule,
   ],
   declarations: [RegistroPage]
 })
