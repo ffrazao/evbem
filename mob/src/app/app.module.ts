@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { HttpClientModule } from '@angular/common/http';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SqliteService } from './comum/servico/local/sqlite.service';
-import { AuthGuard } from './comum/servico/guard/auth-guard.service';
+import { AuthGuard } from './comum/servico/guard-route/auth-guard.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,8 +20,8 @@ import { AuthGuard } from './comum/servico/guard/auth-guard.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [
     StatusBar,

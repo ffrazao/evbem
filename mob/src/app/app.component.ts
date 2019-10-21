@@ -12,28 +12,6 @@ import { SqliteService } from './comum/servico/local/sqlite.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Login',
-      url: '/login',
-      icon: 'key'
-    },
-    {
-      title: 'Veículo',
-      url: '/s/veiculo',
-      icon: 'car'
-    },
-    {
-      title: 'Home',
-      url: '/s/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/s/list',
-      icon: 'list'
-    }
-  ];
 
   constructor(
     private platform: Platform,

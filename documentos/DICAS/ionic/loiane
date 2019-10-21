@@ -1,6 +1,9 @@
 Rotas anotações (https://www.youtube.com/user/Loianeg/videos, aula 49)
 
+========
 AULA 54
+========
+
 A maneira correta de captar o parâmetro de rota é assim:
 
 import { ActivatedRoute } from '@angular/route';
@@ -23,7 +26,6 @@ explort class PaginaComponent implements OnInit {
 		});
 	}
 
-
 	ngOnDestroy() {
 	    // liberar inscrição
 		this.inscricao.unsubscribe();
@@ -31,3 +33,12 @@ explort class PaginaComponent implements OnInit {
 
 }
 
+Dica legal - deixar o modulo de routing por último em cada importação de módulo
+
+========
+AULA 58 e 59 - Organização em módulos
+========
+
+========
+AULA 60 - Rotas filhas
+========

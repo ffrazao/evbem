@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { VeiculoPageRoutingModule } from './veiculo.router.module';
+import { VeiculoPageRoutingModule } from './veiculo-routing.module';
 
 import { VeiculoPage } from './veiculo.page';
 

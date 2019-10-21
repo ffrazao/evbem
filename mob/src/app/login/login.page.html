@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>
       Login
     </ion-title>
@@ -17,8 +14,9 @@
     </ion-item>
     <ion-item>
       <ion-label>Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="senha" name="senh"></ion-input>
+      <ion-input type="password" [(ngModel)]="senha" name="senha"></ion-input>
     </ion-item>
     <ion-button type="submit" block>Entrar</ion-button>
+    <ion-button block [routerLink]="['/m/home']">Cancelar</ion-button>
   </form>
 </ion-content>
