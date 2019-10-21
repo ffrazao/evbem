@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { SqliteService } from './comum/servico/local/sqlite.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -12,18 +14,23 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public appPages = [
     {
+      title: 'Login',
+      url: '/login',
+      icon: 'key'
+    },
+    {
       title: 'Veículo',
-      url: '/veiculo',
+      url: '/s/veiculo',
       icon: 'car'
     },
     {
       title: 'Home',
-      url: '/home',
+      url: '/s/home',
       icon: 'home'
     },
     {
       title: 'List',
-      url: '/list',
+      url: '/s/list',
       icon: 'list'
     }
   ];
@@ -31,7 +38,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private sqliteService: SqliteService<any, any>
   ) {
     this.initializeApp();
   }
@@ -39,7 +47,11 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.sqliteService.preparaDatabase().then(() => {
+        this.splashScreen.hide();
+      }).catch(e => {
+        this.splashScreen.hide();
+      });
     });
   }
 }

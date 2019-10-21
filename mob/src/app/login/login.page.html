@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-label>Login</ion-label>
+      <ion-input [(ngModel)]="login" name="login"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="senha" name="senh"></ion-input>
+    </ion-item>
+    <ion-button type="submit" block>Entrar</ion-button>
+  </form>
+</ion-content>
