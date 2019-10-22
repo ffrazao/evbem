@@ -5,7 +5,10 @@ export abstract class ApiService {
 
     private url1 = environment.apiUrl;
 
-    get url() {
+    constructor(protected http: HttpClient) {
+    }
+
+    public get url() {
         return this.url1;
     }
 

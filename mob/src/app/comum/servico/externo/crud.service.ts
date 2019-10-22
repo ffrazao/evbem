@@ -4,8 +4,8 @@ import { Filtro } from '../../entidade/filtro';
 
 export abstract class CrudService<T, F extends Filtro> extends ApiService {
 
-    constructor(private http: HttpClient) {
-        super();
+    constructor(protected http: HttpClient) {
+        super(http);
     }
 
     public abstract funcionalidade(): string;

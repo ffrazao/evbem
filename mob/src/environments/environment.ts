@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  autorizadorUrl: `http://localhost:3000`,
-  apiUrl: `http://localhost:3000`,
+  autorizadorUrl: `http://localhost:8081`,
+  apiUrl: `http://localhost:8080`,
+  CLIENT_ID: 'evbem_web',
+  CLIENT_SECRET: 'evbem_web',
 };
 
 /*
