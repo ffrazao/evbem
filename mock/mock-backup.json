@@ -1,4 +1,15 @@
 {
+ "oauth": {
+    "token": {
+        "access_token": "920bf62b-2a8d-41b0-9f89-98d027877a31",
+        "token_type": "bearer",
+        "expires_in": 33396,
+        "scope": "read write",
+        "grant_type": "password",
+        "username": "a",
+        "Teste": "Valor"
+    } 
+  },
  "crud1": [
     {
      "id": 1,

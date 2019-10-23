@@ -54,3 +54,4 @@ api/**/.classpath
 api/**/.settings
 api/**/.project
 api/**/target
+*/.attach_*
