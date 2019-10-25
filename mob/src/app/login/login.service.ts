@@ -7,6 +7,8 @@ import { ApiService } from '../comum/servico/externo/api.service';
 import { Login } from './login';
 import { environment } from 'src/environments/environment';
 
+const func = "/oauth";
+
 @Injectable({ providedIn: 'root' })
 export class LoginService extends ApiService {
 
@@ -16,20 +18,17 @@ export class LoginService extends ApiService {
 
     public login(login: Login) {
         const credentials = `Basic ${btoa(`${environment.CLIENT_ID}:${environment.CLIENT_SECRET}`)}`;
-        console.log('credentials', credentials);
-
         return this.http.post(
-            `${environment.autorizadorUrl}/oauth/token`, {},
+            `${environment.autorizadorUrl}${func}/token`, {},
             {
                 observe: 'response',
                 headers: new HttpHeaders({
-                    'Content-Type': 'application/json; charset=utf-8',
                     Authorization: credentials
                 }),
                 params: {
-                    grant_type: 'password',
                     username: login.usuario,
                     password: login.senha,
+                    grant_type: 'password',
                 }
             }
         ).pipe(tap(resposta => {

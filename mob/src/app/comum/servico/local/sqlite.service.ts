@@ -24,9 +24,9 @@ export class SqliteService<T, F extends Filtro > {
             try {
                 const database = await this.getDb();
                 await this.preparaTabelas(database);
-                console.log('Tabelas locais preparadas');
+                // console.log('Tabelas locais preparadas');
                 await this.inserePadrao(database);
-                console.log('Tabelas locais iniciadas');
+                // console.log('Tabelas locais iniciadas');
                 resolve();
             } catch (e) {
                 alert(`Erro ao preparar tabelas locais ${JSON.stringify(e)}`);
@@ -76,7 +76,7 @@ export class SqliteService<T, F extends Filtro > {
 
     private insereBatch(db: SQLiteObject, instrucoes: any[], msgSucesso, msgErro) {
         db.sqlBatch(instrucoes)
-            .then(() => console.log(msgSucesso))
+            .then(() => /*console.log(msgSucesso)*/{})
             .catch(e => alert(`${msgErro} [${JSON.stringify(e)}]`));
     }
 

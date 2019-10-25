@@ -21,10 +21,10 @@ import { AuthGuard } from './comum/servico/guard-route/auth-guard.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   exports: [
     FormsModule,
