@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>
       Login
     </ion-title>
@@ -29,7 +32,6 @@
     </ion-label>
     <div class="ion-text-center">
       <ion-button type="submit" block [disabled]="form?.invalid">Entrar</ion-button>
-      <ion-button block [routerLink]="['/m/home']">Cancelar</ion-button>
     </div>
     <div>
       <p style="text-align: center;">

@@ -13,7 +13,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SqliteService } from './comum/servico/local/sqlite.service';
-import { AuthGuard } from './comum/servico/guard-route/auth-guard.service';
+import { AuthGuard } from './comum/seguranca/guard-route/auth-guard.service';
+import { IonicStorageModule } from '@ionic/storage';
+import { AutInterceptorProvider } from './comum/seguranca/interceptor/aut-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,7 @@ import { AuthGuard } from './comum/servico/guard-route/auth-guard.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    IonicStorageModule.forRoot(),
   ],
   exports: [
     FormsModule,
@@ -37,6 +40,7 @@ import { AuthGuard } from './comum/servico/guard-route/auth-guard.service';
     SQLite,
     SqliteService,
     BarcodeScanner,
+    AutInterceptorProvider,
     AuthGuard,
   ],
   bootstrap: [AppComponent]
