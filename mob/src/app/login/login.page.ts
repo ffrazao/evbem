@@ -3,8 +3,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { LoginService } from './login.service';
 import { Login } from './login';
-import { Router } from '@angular/router';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
   templateUrl: 'login.page.html',
@@ -17,15 +17,19 @@ export class LoginPage implements OnInit {
   @ViewChild('focaliza', { static: false })
   private focaliza;
 
+  private urlRetorno = '/';
+
   private passwordType = 'password';
 
   private passwordIcon = 'eye-off';
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private service: LoginService,
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
   ) {
   }
@@ -38,6 +42,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.form = this.createForm(new Login());
+    this.urlRetorno = this.route.snapshot.queryParams.urlRetorno || this.urlRetorno;
   }
 
   private createForm(login: Login): FormGroup {
@@ -61,7 +66,7 @@ export class LoginPage implements OnInit {
       res.onDidDismiss().then((dis) => {
       });
       this.service.login(this.form.value as Login).subscribe((r) => {
-        this.router.navigate(['/', 'm', 'home']);
+        this.router.navigateByUrl(this.urlRetorno);
         this.sucesso();
         res.dismiss();
       }, (e) => {
@@ -70,31 +75,34 @@ export class LoginPage implements OnInit {
         res.dismiss();
       });
     });
-    
+
   }
 
   private async sucesso() {
-    const toast = await this.toastCtrl.create({
+    const result = await this.toastCtrl.create({
       message: 'Login efetuado!',
       duration: 2000,
       color: 'success',
     });
-    toast.present();
+    result.present();
   }
 
   private async falha(erro) {
-    const toast = await this.toastCtrl.create({
+    const result = await this.alertCtrl.create({
       header: 'Erro ao efetuar Login!',
       message: erro,
-      color: 'danger',
+      cssClass: 'danger',
       buttons: [
         {
-          side: 'start',
           text: 'Ok',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
         }
       ]
     });
-    toast.present();
+    result.present();
   }
 
   private async exibirCarregando() {

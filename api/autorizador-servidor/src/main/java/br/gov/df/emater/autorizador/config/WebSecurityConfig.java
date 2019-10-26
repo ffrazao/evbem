@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 								.anyRequest().authenticated().and()
 //			.formLogin().loginProcessingUrl("/login.do").usernameParameter("username").passwordParameter("password").loginPage("/login").and()
 			//.formLogin().usernameParameter("username").passwordParameter("password").loginPage("/login").and()
-			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout.do"))
+			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout.do")).permitAll()
 			//.and().userDetailsService(userDetailsServiceBean())
 			;
 	}

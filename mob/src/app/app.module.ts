@@ -14,8 +14,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SqliteService } from './comum/servico/local/sqlite.service';
 import { AuthGuard } from './comum/seguranca/guard-route/auth-guard.service';
-import { IonicStorageModule } from '@ionic/storage';
 import { AutInterceptorProvider } from './comum/seguranca/interceptor/aut-interceptor';
+import { LoginService } from './login/login.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +27,6 @@ import { AutInterceptorProvider } from './comum/seguranca/interceptor/aut-interc
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    IonicStorageModule.forRoot(),
   ],
   exports: [
     FormsModule,
@@ -40,6 +39,7 @@ import { AutInterceptorProvider } from './comum/seguranca/interceptor/aut-interc
     SQLite,
     SqliteService,
     BarcodeScanner,
+    LoginService,
     AutInterceptorProvider,
     AuthGuard,
   ],

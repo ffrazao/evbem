@@ -1,0 +1,9 @@
+<ion-item *ngIf="(usuarioLogado$ | async) as usuarioLogado; else efetueLogin">
+    <i class="fa fa-user-circle"></i>
+    <span class="navbar-text">{{usuarioLogado.username}}, <a (click)="logout()">sair</a></span>
+</ion-item>
+<ng-template #efetueLogin>
+    <span class="navbar-text">
+        Efetue o <a [routerLink]="['/', 'login']">Login</a>!
+    </span>
+</ng-template>

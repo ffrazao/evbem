@@ -6,22 +6,26 @@ import { tap } from 'rxjs/operators';
 import { ApiService } from '../comum/servico/externo/api.service';
 import { Login } from './login';
 import { environment } from 'src/environments/environment';
-import { Storage } from '@ionic/storage';
 
 import { StaticInjectorService } from '../comum/ferramenta/static-injector-service';
 import { UsuarioLocal } from './usuario-local';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
-const func = "/oauth";
-const tokenAutenticacao = "tokenAutenticacao";
+const func = '/oauth';
+const tokenAutenticacao = 'tokenAutenticacao';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService extends ApiService {
 
-    private storage: Storage;
+    private router: Router;
+
+    private usuarioLogadoP = new BehaviorSubject<UsuarioLocal>(null);
 
     constructor(protected http: HttpClient) {
         super(http);
-        this.storage = StaticInjectorService.injector.get<Storage>(Storage as Type<Storage>);
+        this.router = StaticInjectorService.injector.get<Router>(Router as Type<Router>);
+        this.atualizaENotifica();
     }
 
     public login(login: Login) {
@@ -39,35 +43,46 @@ export class LoginService extends ApiService {
                     grant_type: 'password',
                 }
             }
-        ).pipe(tap(resposta => {
-            // captar o token de autenticação e armazenar
-            console.log('resposta', resposta);
-            const resp: UsuarioLocal = resposta.body as UsuarioLocal;
-            if (!resp) {
-                throw new Error('Problemas ao autenticar o usuário!');
-            }
-            this.storage.set(tokenAutenticacao, JSON.stringify(resp));
-        }));
+        ).pipe(
+            tap((res) => {
+                const usuarioLocal = res.body as UsuarioLocal;
+                if (!usuarioLocal) {
+                    throw new Error('Problemas ao autenticar o usuário!');
+                }
+                localStorage.setItem(tokenAutenticacao, JSON.stringify(usuarioLocal));
+                this.atualizaENotifica();
+            }));
     }
 
-    public logout(): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            return this.http.post(`${environment.autorizadorUrl}/logout`, null).subscribe(() => {
-                this.storage.remove(tokenAutenticacao);
-                resolve(true);
-            }, (e) => {
-                reject(e);
-            });
+    public logout() {
+        localStorage.removeItem(tokenAutenticacao);
+        this.atualizaENotifica();
+        this.router.navigate(['/']);
+
+        this.http.post(`${environment.autorizadorUrl}/logout.do`, null).subscribe(() => {
+            localStorage.removeItem(tokenAutenticacao);
+            this.atualizaENotifica();
+            this.router.navigate(['/']);
+        }, (e) => {
+            console.log(e);
         });
     }
 
-    public async usuarioLocal(): Promise<UsuarioLocal> {
-        // return new Promise<UsuarioLocal>(async (resolve, reject) => {
-            let result: UsuarioLocal = null;
-            result = JSON.parse(await this.storage.get(tokenAutenticacao)) as UsuarioLocal;
-            // resolve(result);
-        // });
-        return result;
+    public get temToken() {
+        return localStorage.getItem(tokenAutenticacao) != null;
+    }
+
+    public get token(): UsuarioLocal {
+        return JSON.parse(localStorage.getItem(tokenAutenticacao)) as UsuarioLocal;
+    }
+
+    public get usuarioLogado() {
+        return this.usuarioLogadoP.asObservable();
+    }
+
+    private atualizaENotifica() {
+        const usuarioLocal = JSON.parse(localStorage.getItem(tokenAutenticacao)) as UsuarioLocal;
+        this.usuarioLogadoP.next(usuarioLocal);
     }
 
 }

@@ -1,26 +1,33 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
 import { LoginService } from 'src/app/login/login.service';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
 
     constructor(
         private service: LoginService,
-        private router: Router
+        private router: Router,
+        private toastCtrl: ToastController,
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let usuarioLocal = null;
-        (async () => {
-            usuarioLocal = await this.service.usuarioLocal();
-        })();
-        console.log('usuarioLocal && usuarioLocal.access_token', usuarioLocal && usuarioLocal.access_token);
-        let usuarioLocalLogado = usuarioLocal && usuarioLocal.access_token;
-        if (!usuarioLocalLogado) {
-            this.router.navigate(['/', 'login']);
+        if (!this.service.temToken) {
+            this.efetueLogin();
+            console.log('Redirecionando', state.url);
+            this.router.navigate(['/', 'login'], { queryParams: { urlRetorno: state.url }});
+            return false;
         }
-        return usuarioLocalLogado;
+        return true;
+    }
+
+    private async efetueLogin() {
+        const toast = await this.toastCtrl.create({
+            message: 'Para acessar este recurso, primeiro efetue o seu login!',
+            duration: 4000,
+        });
+        toast.present();
     }
 
 }
