@@ -1,9 +1,10 @@
-import { NgModule } from "@angular/core";
-import { InicioComponent } from './inicio.component';
-import { InicioComponentRoutingModule } from './inicio-routing.module';
+import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { InicioComponent } from './inicio.component';
+import { InicioComponentRoutingModule } from './inicio-routing.module';
 
 @NgModule({
     declarations: [InicioComponent],
@@ -11,7 +12,7 @@ import { FormsModule } from '@angular/forms';
         IonicModule,
         CommonModule,
         FormsModule,
-        InicioComponentRoutingModule
+        InicioComponentRoutingModule,
     ],
 })
 export class InicioComponentModule {

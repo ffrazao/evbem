@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { LoginService } from '../login/login.service';
+import { MensagemService } from '../../servico/mensagem/mensagem.service';
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +17,8 @@ export class MenuPage implements OnInit, OnDestroy {
 
   constructor(
     private service: LoginService,
-    private router: Router
+    private router: Router,
+    private mensagem: MensagemService,
   ) {
     this.paginas = [
       new Pagina('Home', '/m/home', 'home'),
@@ -24,7 +27,12 @@ export class MenuPage implements OnInit, OnDestroy {
       new Pagina('List (Não Seguro)', '/list', 'list'),
       new Pagina('List (Seguro)', '/s/list', 'list'),
       new Pagina('', '', ''),
-      new Pagina('Sair', () => this.service.logout(), 'key', true),
+      new Pagina('Sair', () => this.mensagem.atencaoConfirme('Deseja sair?').then((r) => {
+        if (r) {
+          this.service.logout();
+          this.mensagem.sucesso('Logout executado com sucesso');
+        }
+      }), 'key', true),
     ];
   }
 

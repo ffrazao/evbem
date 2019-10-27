@@ -8,15 +8,15 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { File } from '@ionic-native/file/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SqliteService } from './comum/servico/local/sqlite.service';
-import { AuthGuard } from './comum/seguranca/guard-route/auth-guard.service';
-import { AutInterceptorProvider } from './comum/seguranca/interceptor/aut-interceptor';
-import { LoginService } from './login/login.service';
+import { LoginService } from './comum/componente/login/login.service';
+import { MensagemService } from './comum/servico/mensagem/mensagem.service';
+import { AutInterceptorProvider } from './comum/servico/seguranca/interceptor/aut-interceptor';
+import { AuthGuard } from './comum/servico/seguranca/guard-route/auth-guard.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,10 +24,10 @@ import { LoginService } from './login/login.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
   exports: [
     FormsModule,
@@ -38,12 +38,12 @@ import { LoginService } from './login/login.service';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
+    File,
     SqliteService,
-    BarcodeScanner,
+    MensagemService,
     LoginService,
     AutInterceptorProvider,
     AuthGuard,
-    File,
   ],
   bootstrap: [AppComponent]
 })

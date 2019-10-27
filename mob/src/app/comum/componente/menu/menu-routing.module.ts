@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../comum/seguranca/guard-route/auth-guard.service';
 import { MenuPage } from './menu.page';
+import { AuthGuard } from '../../servico/seguranca/guard-route/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
         children: [
           {
             path: 'veiculo',
-            loadChildren: () => import('../veiculo/veiculo.module').then(m => m.VeiculoPageModule)
+            loadChildren: () => import('../../../veiculo/veiculo.module').then(m => m.VeiculoPageModule)
           },
           {
             path: '',
@@ -30,7 +30,7 @@ const routes: Routes = [
       /* relacionar aqui todos os links que mostram o menu mas não são protegidos pelo login */
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('../../../home/home.module').then(m => m.HomePageModule)
       },
       {
         path: '',

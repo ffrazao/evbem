@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginService } from 'src/app/login/login.service';
 import { environment } from 'src/environments/environment';
-import { iniciaCom } from '../../ferramenta/funcao';
+
+import { LoginService } from '../../../componente/login/login.service';
+import { iniciaCom } from '../../../ferramenta/funcao';
 
 @Injectable()
 export class AutInterceptor implements HttpInterceptor {

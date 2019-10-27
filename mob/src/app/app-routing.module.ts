@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './comum/seguranca/guard-route/auth-guard.service';
+import { AuthGuard } from './comum/servico/seguranca/guard-route/auth-guard.service';
 
 const routes: Routes = [
   /* rotas que não apresentam o menu de opções nem são protegidas por login */
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./comum/componente/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'list',
@@ -15,7 +15,7 @@ const routes: Routes = [
   /* rotas que apresentam o menu de opções */
   {
     path: 'm',
-    loadChildren: () => import('./menu/menu.module').then(m => m.MenuPageModule)
+    loadChildren: () => import('./comum/componente/menu/menu.module').then(m => m.MenuPageModule)
   },
   /* rotas que não apresentam o menu de opções mas são protegidos pelo login */
   {

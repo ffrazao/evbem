@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
-import { LoginService } from 'src/app/login/login.service';
 import { ToastController } from '@ionic/angular';
+import { LoginService } from '../../../componente/login/login.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

@@ -1,17 +1,12 @@
-<ion-item *ngIf="(usuarioLogado$ | async) as usuarioLogado; else efetueLogin">
-    <ion-avatar (click)="logout()">
-        <img [src]="usuarioLogado?.fotoSafe" *ngIf="usuarioLogado && usuarioLogado.fotoSafe; else avatar"
-            alt="{{usuarioLogado.nome}}">
-        <ng-template #avatar>
-            <img src="/assets/icon/avatar.svg">
-        </ng-template>
-    </ion-avatar>
-</ion-item>
+<ion-avatar *ngIf="(usuarioLogado$ | async) as usuarioLogado; else efetueLogin">
+    <img [src]="usuarioLogado?.fotoSafe" *ngIf="usuarioLogado && usuarioLogado.fotoSafe; else avatar"
+        alt="{{usuarioLogado.nome}}">
+    <ng-template #avatar>
+        <img src="/assets/img/avatar.svg">
+    </ng-template>
+</ion-avatar>
 <ng-template #efetueLogin>
-    <ion-chip [routerLink]="['/', 'login']">
-        <ion-avatar>
-            <img src="/assets/icon/avatar.svg">
-        </ion-avatar>
-        <ion-label>Efetue o Login!</ion-label>
-    </ion-chip>
+    <ion-avatar [routerLink]="['/', 'login']">
+        <img src="/assets/img/avatar.svg">
+    </ion-avatar>
 </ng-template>

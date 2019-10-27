@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
+import { MensagemService } from '../../servico/mensagem/mensagem.service';
 import { LoginService } from './login.service';
 import { Login } from './login';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
   templateUrl: 'login.page.html',
@@ -28,9 +28,7 @@ export class LoginPage implements OnInit {
     private route: ActivatedRoute,
     private service: LoginService,
     private formBuilder: FormBuilder,
-    private toastCtrl: ToastController,
-    private alertCtrl: AlertController,
-    public loadingCtrl: LoadingController,
+    private mensagem: MensagemService,
   ) {
   }
 
@@ -61,53 +59,17 @@ export class LoginPage implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    this.exibirCarregando().then((res) => {
+    this.mensagem.aguarde().then((res) => {
       res.present();
-      res.onDidDismiss().then((dis) => {
-      });
       this.service.login(this.form.value as Login).subscribe((r) => {
         this.router.navigateByUrl(this.urlRetorno);
-        this.sucesso();
+        this.mensagem.sucesso('Login efetuado!');
         res.dismiss();
       }, (e) => {
         console.log(e);
-        this.falha('Erro no servidor de autenticação!');
+        this.mensagem.erro('Erro no servidor de autenticação!');
         res.dismiss();
       });
-    });
-
-  }
-
-  private async sucesso() {
-    const result = await this.toastCtrl.create({
-      message: 'Login efetuado!',
-      duration: 2000,
-      color: 'success',
-    });
-    result.present();
-  }
-
-  private async falha(erro) {
-    const result = await this.alertCtrl.create({
-      header: 'Erro ao efetuar Login!',
-      message: erro,
-      cssClass: 'danger',
-      buttons: [
-        {
-          text: 'Ok',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    result.present();
-  }
-
-  private async exibirCarregando() {
-    return await this.loadingCtrl.create({
-      message: 'Aguarde...'
     });
   }
 

@@ -3,11 +3,11 @@ import { Injectable, Type } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
-import { ApiService } from '../comum/servico/externo/api.service';
+import { ApiService } from '../../servico/externo/api.service';
 import { Login } from './login';
 import { environment } from 'src/environments/environment';
 
-import { StaticInjectorService } from '../comum/ferramenta/static-injector-service';
+import { StaticInjectorService } from '../../ferramenta/static-injector-service';
 import { UsuarioLocal } from './usuario-local';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PararComponent } from './parar.component';
+
+import { Tab3Page } from './tab3.page';
 
 const routes: Routes = [
     {
         path: '',
-        component: PararComponent,
+        component: Tab3Page,
     }
 ];
 
@@ -13,4 +14,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class PararComponentRoutingModule { }
+export class Tab3PageRoutingModule { }

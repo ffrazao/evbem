@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/login/login.service';
-import { UsuarioLocal } from 'src/app/login/usuario-local';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { LoginService } from '../login/login.service';
+import { UsuarioLocal } from '../login/usuario-local';
 
 @Component({
   selector: 'app-menu-usuario',
@@ -14,13 +15,8 @@ export class MenuUsuarioComponent {
 
   constructor(
     private service: LoginService,
-
   ) {
     this.usuarioLogado$ = this.service.usuarioLogado;
-  }
-
-  public logout() {
-    this.service.logout();
   }
 
 }
