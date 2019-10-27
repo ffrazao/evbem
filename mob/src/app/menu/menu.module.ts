@@ -5,8 +5,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { MenuPage } from './menu.page';
 import { MenuRoutingModule } from './menu-routing.module';
-import { MenuUsuarioComponentModule } from '../comum/componente/menu-usuario/menu-usuario.module';
-import { MenuUsuarioComponent } from '../comum/componente/menu-usuario/menu-usuario.component';
 
 @NgModule({
   imports: [
@@ -14,7 +12,6 @@ import { MenuUsuarioComponent } from '../comum/componente/menu-usuario/menu-usua
     FormsModule,
     IonicModule,
     MenuRoutingModule,
-    MenuUsuarioComponentModule,
   ],
   declarations: [MenuPage]
 })

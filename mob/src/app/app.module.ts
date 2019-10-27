@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -42,6 +43,7 @@ import { LoginService } from './login/login.service';
     LoginService,
     AutInterceptorProvider,
     AuthGuard,
+    File,
   ],
   bootstrap: [AppComponent]
 })

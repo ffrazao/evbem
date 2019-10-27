@@ -11,6 +11,8 @@ import { StaticInjectorService } from '../comum/ferramenta/static-injector-servi
 import { UsuarioLocal } from './usuario-local';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { File } from '@ionic-native/file/ngx';
 
 const func = '/oauth';
 const tokenAutenticacao = 'tokenAutenticacao';
@@ -19,12 +21,16 @@ const tokenAutenticacao = 'tokenAutenticacao';
 export class LoginService extends ApiService {
 
     private router: Router;
+    private sanitizer: DomSanitizer;
+    private file: File;
 
     private usuarioLogadoP = new BehaviorSubject<UsuarioLocal>(null);
 
     constructor(protected http: HttpClient) {
         super(http);
         this.router = StaticInjectorService.injector.get<Router>(Router as Type<Router>);
+        this.sanitizer = StaticInjectorService.injector.get<DomSanitizer>(DomSanitizer as Type<DomSanitizer>);
+        this.file = StaticInjectorService.injector.get<File>(File as Type<File>);
         this.atualizaENotifica();
     }
 
@@ -80,8 +86,13 @@ export class LoginService extends ApiService {
         return this.usuarioLogadoP.asObservable();
     }
 
-    private atualizaENotifica() {
+    private async atualizaENotifica() {
         const usuarioLocal = JSON.parse(localStorage.getItem(tokenAutenticacao)) as UsuarioLocal;
+        if (usuarioLocal) {
+            if (usuarioLocal.foto && usuarioLocal.foto.length) {
+                usuarioLocal.fotoSafe = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64, ' + usuarioLocal.foto);
+            }
+        }
         this.usuarioLogadoP.next(usuarioLocal);
     }
 
