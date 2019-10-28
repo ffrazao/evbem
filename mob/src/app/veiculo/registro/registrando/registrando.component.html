@@ -1,18 +1,24 @@
 <ion-header>
     <ion-toolbar>
-        <ion-buttons slot="start">
+        <!-- <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
-        </ion-buttons>
+        </ion-buttons> -->
         <ion-title>
             REGISTRANDO
         </ion-title>
-        <ion-buttons slot="end">
+        <!-- <ion-buttons slot="end">
             <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-button [routerLink]="['/s/veiculo/registro/registro']">Voltar</ion-button>
-    <ion-button [routerLink]="['/s/veiculo/registro/parar']">Avancar</ion-button>
+    <ion-item>
+        <label>Tempo</label>
+        <label>99:99:99</label>
+    </ion-item>
+    <ion-item>
+        <ion-button [routerLink]="['/s/veiculo-registro']">Voltar</ion-button>
+        <ion-button [routerLink]="['/s/veiculo-parar']">Avancar</ion-button>
+    </ion-item>
 </ion-content>

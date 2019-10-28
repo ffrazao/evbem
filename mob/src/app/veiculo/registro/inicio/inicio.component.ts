@@ -14,7 +14,7 @@ export class InicioComponent {
     }
 
     iniciar() {
-        this.router.navigate(['/', 'm', 's', 'veiculo', 'registro', 'registro'], {relativeTo: this.route});
+        this.router.navigate(['/', 's', 'veiculo-registro'], {relativeTo: this.route});
     }
 
 }

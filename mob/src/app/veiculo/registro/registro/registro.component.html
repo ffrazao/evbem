@@ -1,3 +1,109 @@
-REGISTRO
-<ion-button [routerLink]="['/s/veiculo/registro/inicio']">Voltar</ion-button>
-<ion-button [routerLink]="['/s/veiculo/registro/registrando']">Avancar</ion-button>
+<ion-header>
+    <ion-toolbar>
+        <!-- <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons> -->
+        <ion-title>
+            REGISTRO
+        </ion-title>
+        <!-- <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons> -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label position="floating">Identificação</ion-label>
+        <ion-input></ion-input>
+        <ion-buttons>
+            <ion-button size="small" (click)="pesquisar()">
+                <ion-icon name="search"></ion-icon>
+            </ion-button>
+            <ion-button size="small" (click)="pesquisarPorQRCode()">
+                <ion-icon slot="start" name="qr-scanner"></ion-icon>
+                QRCode
+            </ion-button>
+        </ion-buttons>
+    </ion-item>
+
+    <ion-grid *ngIf="veiculo">
+        <ion-row>
+            <ion-col>Mês/Ano</ion-col>
+            <ion-col>99/9999</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Responsável</ion-col>
+            <ion-col>XXXX XXXX</ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col>Veículo</ion-col>
+            <ion-col>XXXX XXXX</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Marca/ Modelo</ion-col>
+            <ion-col>XXXX XXXX</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Patrimônio</ion-col>
+            <ion-col>XXX 9999999</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Ano Fabricação / Modelo</ion-col>
+            <ion-col>9999/9999</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Combustível</ion-col>
+            <ion-col>XXXX XXXX</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Lotação</ion-col>
+            <ion-col>XXXX XXXX</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>Placa</ion-col>
+            <ion-col>XXX 9999</ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-item-group *ngIf="veiculo">
+        <ion-item>
+            <ion-label position="floating">Dia</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Matrícula / Nome</ion-label>
+            <ion-input></ion-input>
+            <ion-buttons>
+                <ion-button size="small" (click)="pesquisar()">
+                    <ion-icon name="search"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Local Saída</ion-label>
+            <ion-img src="/assets/img/mapa.jpg"></ion-img>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Hora</ion-label>
+            <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Odômetro</ion-label>
+            <ion-input></ion-input>
+            <ion-segment (ionChange)="segmentChanged($event)">
+                <ion-segment-button value="friends">
+                    <ion-label>-</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="enemies">
+                    <ion-label>+</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-item>
+    </ion-item-group>
+
+    <ion-item>
+        <ion-button [routerLink]="['/m/s/veiculo/registro/inicio']">Voltar</ion-button>
+        <ion-button [routerLink]="['/s/veiculo-registrando']">Avancar</ion-button>
+    </ion-item>
+</ion-content>

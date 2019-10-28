@@ -1,0 +1,22 @@
+Registro de evento de veículos
+usuario abre a tela
+sistema ver se identificacao do veiculo foi informada
+se nao informada abre tela de qrcode pra pesquisa visual
+usuario informa identificacao do veiculo pelo qr code
+sistema tenta identificar veiculo 
+se encontrou exibe dados do veiculo
+se nao volta para 
+
+
+a pesquisa é 
+procura na base local
+se houver internet busca no servidor
+senao houver internet informa e permite a inclusão manual do veículo
+
+quando houver internet, nao havendo o veículo perguntar o que vai fazer se vai permitir incluir ou se vai negar
+
+a tela de cadastro de veículos tem que existir
+tem que ter localizador gps , preferencia q leia rotas
+tem que ter leitor qrcode
+
+báscico é tudo no servidor, sem possibilidade de novas inclusões

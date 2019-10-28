@@ -24,7 +24,19 @@ const routes: Routes = [
       {
         path: 'list',
         loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-      }
+      },
+      {
+        path: 'veiculo-registro',
+        loadChildren: () => import('./veiculo/registro/registro/registro.module').then(m => m.RegistroComponentModule)
+      },
+      {
+        path: 'veiculo-registrando',
+        loadChildren: () => import('./veiculo/registro/registrando/registrando.module').then(m => m.RegistrandoComponentModule)
+      },
+      {
+        path: 'veiculo-parar',
+        loadChildren: () => import('./veiculo/registro/parar/parar.module').then(m => m.PararComponentModule)
+      },
     ],
     canActivate: [AuthGuard],
     canLoad: [AuthGuard],

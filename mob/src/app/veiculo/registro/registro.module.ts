@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-
 import { RegistroPage } from './registro.page';
 import { RegistroPageRoutingModule } from './registro-routing.module';
 
@@ -16,6 +14,6 @@ import { RegistroPageRoutingModule } from './registro-routing.module';
     RegistroPageRoutingModule,
   ],
   declarations: [RegistroPage],
-  providers: [Geolocation],
+  providers: [],
 })
 export class RegistroPageModule {}

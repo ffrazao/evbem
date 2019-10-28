@@ -1,3 +1,5 @@
+VERSÁO WEB
+
 Gestão de Ambientes (ver https://medium.com/@balramchavan/configure-and-build-angular-application-for-different-environments-7e94a3c0af23)
 * para gerar => na pasta web/src/environments gravar um novo arquivo do ambiente, lembrando que todas 
 as variáveis devem ser preservadas em todos os ambientes. Dentro do arquivo angular.json replicar a 
@@ -22,5 +24,11 @@ Para tal o componente comum/componente/mirror e o servico comum/servico/dom fora
 
 Componente para exibir de mensagens tipo toast. (ver https://www.npmjs.com/package/ngx-toastr)
 Instalação no próprio site
+
+VERSÁO MOBILE
+Capturar a posição atual do dispositivo
+site: https://ionicframework.com/docs/native/geolocation
+ionic cordova plugin add cordova-plugin-geolocation
+npm install @ionic-native/geolocation
 
 

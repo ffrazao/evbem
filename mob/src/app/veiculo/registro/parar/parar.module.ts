@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { PararComponent } from './parar.component';
 import { PararComponentRoutingModule } from './parar-routing.module';
 import { IonicModule } from '@ionic/angular';
