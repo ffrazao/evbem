@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +15,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
-
-import javassist.bytecode.ByteArray;
 
 @Component
 public class TokenEnhancerConfig implements TokenEnhancer {
@@ -42,7 +39,7 @@ public class TokenEnhancerConfig implements TokenEnhancer {
 		try (Connection con = dataSource.getConnection()) {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT DISTINCT").append("\n");
-			sql.append("    id, nome, login, email, foto").append("\n");
+			sql.append("    id, nome, email, foto").append("\n");
 			sql.append("FROM").append("\n");
 			sql.append("    sistema.usuario").append("\n");
 			sql.append("WHERE").append("\n");
@@ -53,7 +50,6 @@ public class TokenEnhancerConfig implements TokenEnhancer {
 					if (rs.next()) {
 						details.put("id", rs.getInt("id"));
 						details.put("nome", rs.getString("nome"));
-						details.put("login", rs.getString("login"));
 						details.put("email", rs.getString("email"));
 						details.put("foto", rs.getBytes("foto"));
 					}

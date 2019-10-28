@@ -31,4 +31,9 @@ site: https://ionicframework.com/docs/native/geolocation
 ionic cordova plugin add cordova-plugin-geolocation
 npm install @ionic-native/geolocation
 
-
+Apresentar mapas
+site: https://leafletjs.com
+instalação: 
+=> npm i leaflet 
+=> npm i @types/leaflet
+tutorial acessado em 28/10/2019: https://www.javascripttuts.com/using-leaflet-open-street-map-in-an-ionic-application-in-one-go/

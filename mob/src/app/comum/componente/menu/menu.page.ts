@@ -21,7 +21,7 @@ export class MenuPage implements OnInit, OnDestroy {
     private mensagem: MensagemService,
   ) {
     this.paginas = [
-      new Pagina('Home', '/m/home', 'home'),
+      new Pagina('Bem-vindo', '/m/home', 'home'),
       new Pagina('Login', '/login', 'key', false),
       new Pagina('Veículo', '/m/s/veiculo', 'car'),
       new Pagina('List (Não Seguro)', '/list', 'list'),

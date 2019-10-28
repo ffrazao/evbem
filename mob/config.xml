@@ -107,4 +107,5 @@
     <allow-navigation href="https://localhost:8101" sessionid="67b22770" />
     <allow-navigation href="https://localhost:8100" sessionid="2b03b22a" />
     <allow-navigation href="*" />
+    <allow-navigation href="http://localhost:8100" sessionid="d0c38541" />
 </widget>
