@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LongPressModule } from 'ionic-long-press';
 
 @NgModule({
     declarations: [RegistroComponent],
@@ -14,6 +15,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        LongPressModule,
         RegistroComponentRoutingModule
     ],
     providers: [

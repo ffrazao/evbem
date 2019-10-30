@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import { LoginService } from './comum/componente/login/login.service';
 import { MensagemService } from './comum/servico/mensagem/mensagem.service';
 import { AutInterceptorProvider } from './comum/servico/seguranca/interceptor/aut-interceptor';
 import { AuthGuard } from './comum/servico/seguranca/guard-route/auth-guard.service';
+import { IonicGestureConfig } from './IonicGestureConfig';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +41,7 @@ import { AuthGuard } from './comum/servico/seguranca/guard-route/auth-guard.serv
     SQLite,
     File,
     SqliteService,
+    {provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig},
     MensagemService,
     LoginService,
     AutInterceptorProvider,

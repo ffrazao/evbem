@@ -6,6 +6,8 @@ import { environment } from './environments/environment';
 
 import { StaticInjectorService } from './app/comum/ferramenta/static-injector-service';
 
+import { } from 'hammerjs';
+
 if (environment.production) {
   enableProdMode();
 }
