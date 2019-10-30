@@ -32,15 +32,16 @@ export class LoginPage implements OnInit {
   ) {
   }
 
-  ionViewDidEnter() {
-    setTimeout(() => {
-      this.focaliza.setFocus();
-    }, 500);
-  }
 
   ngOnInit() {
     this.form = this.createForm(new Login());
     this.urlRetorno = this.route.snapshot.queryParams.urlRetorno || this.urlRetorno;
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.focaliza.setFocus();
+    }, 500);
   }
 
   private createForm(login: Login): FormGroup {

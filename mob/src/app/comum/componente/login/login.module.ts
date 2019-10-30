@@ -9,8 +9,8 @@ import { LoginRoutingModule } from './login-routing.module';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
+    FormsModule,
     ReactiveFormsModule,
     LoginRoutingModule,
   ],
