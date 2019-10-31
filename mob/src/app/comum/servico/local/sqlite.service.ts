@@ -30,8 +30,10 @@ export class SqliteService<T, F> {
 
     private carregarBancoDadosLocal(db: SQLiteObject) {
         this.mensagem.aguarde('Abrindo conexão local').then((res) => {
+            console.log('Carregando banco de dados local...');
             res.present();
             this.http.get(localScriptInicializacao, { responseType: 'text' }).subscribe(sql => {
+                console.log('Script localizado...');
                 this.sqlitePorter.importSqlToDb(db, sql)
                     .then(() => {
                         console.log('Banco de dados local carregado.');
@@ -42,6 +44,10 @@ export class SqliteService<T, F> {
                         this.mensagem.erro(e);
                         res.dismiss();
                     });
+            }, (e) => {
+                console.error(e);
+                this.mensagem.erro(e);
+                res.dismiss();
             });
         });
     }

@@ -8,6 +8,7 @@ import { MensagemService } from 'src/app/comum/servico/mensagem/mensagem.service
 import { RegistroService } from './registro.service';
 import { ViagemInicio } from './viagem-inicio';
 import { posicaoEmater } from 'src/app/comum/ferramenta/funcao';
+import { SqliteService } from 'src/app/comum/servico/local/sqlite.service';
 
 @Component({
     templateUrl: './registro.component.html',
@@ -34,6 +35,7 @@ export class RegistroComponent implements OnInit {
         private mensagem: MensagemService,
         private geo: Geolocation,
         private barcodeScanner: BarcodeScanner,
+        private servicoLocal: SqliteService<any, any>
     ) {
     }
 
