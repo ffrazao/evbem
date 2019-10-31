@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MensagemService } from 'src/app/comum/servico/mensagem/mensagem.service';
 import { RegistroService } from './registro.service';
 import { ViagemInicio } from './viagem-inicio';
+import { posicaoEmater } from 'src/app/comum/ferramenta/funcao';
 
 @Component({
     templateUrl: './registro.component.html',
@@ -19,13 +20,11 @@ export class RegistroComponent implements OnInit {
     @ViewChild('focaliza', { static: false })
     private focaliza;
 
-    private veiculo = null;
-
     private map = null;
 
     private customMarkerIcon = null;
 
-    private posicao: Geoposition = this.posicaoEmater();
+    private posicao: Geoposition = posicaoEmater();
 
     constructor(
         private router: Router,
@@ -65,7 +64,7 @@ export class RegistroComponent implements OnInit {
             condutor: [viagem.condutor, [Validators.required]],
             localSaida: [viagem.localSaida, [Validators.required]],
             hora: [viagem.hora, [Validators.required]],
-            odometro: [viagem.odometro, [Validators.required]],
+            odometro: [viagem.odometro, [Validators.required, Validators.min(1)]],
             responsavelVeiculo: [viagem.responsavelVeiculo, [Validators.required]],
             lotacaoVeiculo: [viagem.lotacaoVeiculo, [Validators.required]],
         });
@@ -76,25 +75,23 @@ export class RegistroComponent implements OnInit {
             return;
         }
 
-        // [routerLink]="['/s/veiculo-registrando']"
-
-        // this.mensagem.aguarde().then((res) => {
-        //     res.present();
-        //     this.service.login(this.form.value as Login).subscribe((r) => {
-        //         this.router.navigateByUrl(this.urlRetorno);
-        //         this.mensagem.sucesso('Login efetuado!');
-        //         res.dismiss();
-        //     }, (e) => {
-        //         console.log(e);
-        //         this.mensagem.erro('Erro no servidor de autenticação!');
-        //         res.dismiss();
-        //     });
-        // });
+        this.mensagem.aguarde().then((res) => {
+            res.present();
+            this.service.salvar(this.form.value as ViagemInicio).subscribe((r) => {
+                this.router.navigate(['/', 's', 'veiculo-registrando'], { relativeTo: this.route });
+                this.mensagem.sucesso('Viagem iniciada!');
+                res.dismiss();
+            }, (e) => {
+                console.log(e);
+                this.mensagem.erro(e);
+                res.dismiss();
+            });
+        });
     }
 
     initMap() {
         if (!this.posicao || !this.posicao.coords) {
-            this.posicao = this.posicaoEmater();
+            this.posicao = posicaoEmater();
         }
 
         if (!this.map) {
@@ -119,47 +116,26 @@ export class RegistroComponent implements OnInit {
     }
 
     public pesquisar() {
-        this.veiculo = { id: 1 };
     }
 
     public qrCode() {
         this.barcodeScanner.scan().then((r) => {
             console.log('Barcode data', r);
             if (r && r.text && r.text.trim().length) {
-                // this.router.navigate(['/', 'veiculo', 'registro', 'registro'], {relativeTo: this.route});
+                this.form.get('pesquisaVeiculo').setValue(r.text);
             }
         }).catch(err => {
             console.log('Error', err);
         });
     }
 
-    private posicaoEmater() {
-        return new Object({
-            coords: {
-                latitude: -15.7398319,
-                longitude: -47.9122648,
-                accuracy: null,
-                altitude: null,
-                altitudeAccuracy: null,
-                heading: null,
-                speed: null
-            },
-            timestamp: Date.now(),
-        }) as Geoposition;
-    }
-
-    public diminuiOdometro() {
-        let odometro: number = this.form.get('odometro').value as number;
-        if (odometro != null) {
-            this.form.get('odometro').setValue(--odometro);
+    onPress($event, aumenta: boolean) {
+        let odometro = this.form.get('odometro').value;
+        if (odometro == null) {
+            odometro = 0;
         }
-    }
-
-    public aumentaOdometro() {
-        let odometro: number = this.form.get('odometro').value as number;
-        if (odometro != null) {
-            this.form.get('odometro').setValue(++odometro);
-        }
+        odometro = aumenta ? odometro + 1 : odometro - 1;
+        this.form.get('odometro').setValue(odometro > 0 ? odometro : 1);
         console.log(this.form);
     }
 

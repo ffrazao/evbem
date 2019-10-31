@@ -3,13 +3,9 @@ import { Pessoa } from 'src/app/entidade/pessoa/pessoa';
 import { Local } from 'src/app/entidade/comum/local';
 import { UnidadeOrganizacional } from 'src/app/entidade/funcional/unidade-organizacional';
 
-export class ViagemInicio {
-    veiculo = new Veiculo();
-    dia = (new Date()).toISOString();
-    condutor = new Pessoa();
-    localSaida = new Local();
+export class ViagemParar {
+    localChegada = new Local();
     hora = '22:00';
     odometro = 0;
-    responsavelVeiculo = new Pessoa();
-    lotacaoVeiculo = new UnidadeOrganizacional();
+    servico = '';
 }
