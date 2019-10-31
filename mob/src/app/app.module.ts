@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { File } from '@ionic-native/file/ngx';
 
 import { AppComponent } from './app.component';
@@ -39,9 +40,10 @@ import { IonicGestureConfig } from './IonicGestureConfig';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,
+    SQLitePorter,
     File,
-    SqliteService,
     {provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig},
+    SqliteService,
     MensagemService,
     LoginService,
     AutInterceptorProvider,

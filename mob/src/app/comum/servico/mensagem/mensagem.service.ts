@@ -91,9 +91,9 @@ export class MensagemService {
         return await result.present();
     }
 
-    public async aguarde() {
+    public async aguarde(mensagem?: string) {
         return await this.loadingCtrl.create({
-            message: 'Aguarde...'
+            message: mensagem ? mensagem : 'Aguarde...'
         });
     }
 

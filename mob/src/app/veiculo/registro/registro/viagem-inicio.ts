@@ -7,7 +7,7 @@ export class ViagemInicio {
     veiculo = new Veiculo();
     dia = (new Date()).toISOString();
     condutor = new Pessoa();
-    localSaida = new Local();
+    localSaida = new Local(0, 0);
     hora = '22:00';
     odometro = 0;
     responsavelVeiculo = new Pessoa();
