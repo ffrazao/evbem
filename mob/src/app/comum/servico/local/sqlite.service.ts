@@ -6,7 +6,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { HttpClient } from '@angular/common/http';
 import { MensagemService } from '../mensagem/mensagem.service';
 
-export const NomeBancoDadosLocal = 'data.db';
+export const NomeBancoDadosLocal = 'banco_dados.db';
 const localScriptInicializacao = 'assets/db/create.sql';
 
 @Injectable({ providedIn: 'root' })
