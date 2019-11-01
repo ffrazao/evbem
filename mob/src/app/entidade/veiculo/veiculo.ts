@@ -1,17 +1,29 @@
-import { Combustivel } from './combustivel';
-import { VeiculoTipo } from './veiculo-tipo';
-import { VeiculoMarca } from './veiculo-marca';
-import { VeiculoModelo } from './veiculo-modelo';
+import { Combustivel } from '../../dominio/veiculo/combustivel';
+import { Marca } from '../produto/marca';
+import { Modelo } from '../produto/modelo';
+import { Produto } from '../principal/produto';
+import { Pessoa } from '../principal/pessoa';
+import { BemPatrimonial } from '../produto/bem-patrimonial';
 
-export class Veiculo {
-    id: number;
-    tipo: VeiculoTipo;
-    marca: VeiculoMarca;
-    modelo: VeiculoModelo;
-    siglaProprietario: string;
-    identificacaoPatrimonial: string;
-    anoFabricação: number;
-    anoModelo: number;
-    combustivel: Combustivel;
-    placa: string;
+export class Veiculo extends Produto {
+
+    constructor(
+        public id?: number,
+        public observacao?: string,
+        public modelo?: Modelo,
+        public marca?: Marca,
+        public numeroSerie?: string,
+        public pessoa?: Pessoa,
+        public bemPatrimonial?: BemPatrimonial,
+        public placa?: string,
+        public anoFabricacao?: number,
+        public anoModelo?: number,
+        public renavan?: string,
+        public combustivel?: Combustivel[],
+        public cor?: string,
+        public corRgb?: string,
+    ) {
+        super(id, observacao, modelo, marca, numeroSerie, pessoa, bemPatrimonial);
+    }
+
 }

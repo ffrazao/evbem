@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;

@@ -1,12 +1,12 @@
-package br.gov.df.emater.repositorio_principal.dominio;
+package br.gov.df.emater.repositorio_principal.dominio.veiculo;
 
-public enum PessoaFisicaSexo {
+public enum Combustivel {
 
-	F("Feminino"), M("Masculino");
+	DIESEL("Diesel"), ETANOL("Etanol"), GASOLINA("Gasolina");
 
 	private String descricao;
 
-	private PessoaFisicaSexo(String descricao) {
+	private Combustivel(String descricao) {
 		this.descricao = descricao;
 	}
 

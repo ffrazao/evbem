@@ -11,7 +11,7 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.repositorio_principal.dao.principal.ProdutoDAO;
 import br.gov.df.emater.repositorio_principal.dao.produto.MarcaDAO;
 import br.gov.df.emater.repositorio_principal.dao.produto.ModeloDAO;
-import br.gov.df.emater.repositorio_principal.dominio.ItemTipo;
+import br.gov.df.emater.repositorio_principal.dominio.principal.RecursoTipo;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Recurso;
 
@@ -42,7 +42,7 @@ public class ProdutoSalvarCmd extends Comando {
 		if (recurso == null) {
 			recurso = new Recurso();
 		}
-		recurso.setTipo(ItemTipo.PRODUTO);
+		recurso.setTipo(RecursoTipo.PRODUTO);
 		produto.setRecurso(recurso);
 		produto.setModelo(modeloDAO.getOne(produto.getModelo().getId()));
 		produto.setMarca(marcaDAO.getOne(produto.getMarca().getId()));

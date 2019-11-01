@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.gov.df.emater.repositorio_principal.dominio.Combustivel;
+import br.gov.df.emater.repositorio_principal.dominio.veiculo.Combustivel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;

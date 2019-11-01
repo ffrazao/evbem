@@ -1,12 +1,12 @@
-package br.gov.df.emater.repositorio_principal.dominio;
+package br.gov.df.emater.repositorio_principal.dominio.principal;
 
-public enum ItemTipo {
+public enum RecursoTipo {
 	
 	PESSOA("Pessoa"), PRODUTO("Produto"), SERVICO("Serviço");
 
 	private String descricao;
 
-	private ItemTipo(String descricao) {
+	private RecursoTipo(String descricao) {
 		this.descricao = descricao;
 	}
 

@@ -10,7 +10,7 @@ export const NomeBancoDadosLocal = 'banco_dados.db';
 const localScriptInicializacao = 'assets/db/create.sql';
 
 @Injectable({ providedIn: 'root' })
-export class SqliteService<T, F> {
+export class SqliteService {
 
     private conexao: SQLiteObject = null;
 
@@ -68,30 +68,6 @@ export class SqliteService<T, F> {
             await this.conexao.close();
             this.conexao = null;
         }
-    }
-
-    public iniciar(r: T) {
-        return null;
-    }
-
-    public criar(r: T) {
-        return null;
-    }
-
-    public restaurar(id: number) {
-        return null;
-    }
-
-    public atualizar(id: number, r: T) {
-        return null;
-    }
-
-    public excluir(id: number) {
-        return null;
-    }
-
-    public listar(f: F) {
-        return null;
     }
 
 }

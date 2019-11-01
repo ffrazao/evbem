@@ -80,7 +80,7 @@ public class Produto extends EntidadeBase implements Serializable {
 	@JoinColumn(name = "pessoa_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Pessoa proprietario;
+	private Pessoa pessoa; // proprietario do bem
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")

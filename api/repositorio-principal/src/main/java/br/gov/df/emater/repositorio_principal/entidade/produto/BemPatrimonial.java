@@ -53,7 +53,7 @@ public class BemPatrimonial extends EntidadeBase implements Serializable {
 	@JoinColumn(name = "pessoa_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Pessoa responsavel;
+	private Pessoa pessoa; // responsavel pelo bem
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")

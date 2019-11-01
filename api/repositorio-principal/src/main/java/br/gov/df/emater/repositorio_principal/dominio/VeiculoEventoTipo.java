@@ -1,12 +1,12 @@
 package br.gov.df.emater.repositorio_principal.dominio;
 
-public enum PessoaTipo {
+public enum VeiculoEventoTipo {
 	
-	GS("Grupo Social"), PF("Pessoa Física") , PJ("Pessoa Jurídica");
+	PESSOA("Pessoa"), PRODUTO("Produto"), SERVICO("Serviço");
 
 	private String descricao;
 
-	private PessoaTipo(String descricao) {
+	private VeiculoEventoTipo(String descricao) {
 		this.descricao = descricao;
 	}
 

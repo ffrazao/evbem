@@ -1,7 +1,7 @@
-import { Veiculo } from 'src/app/entidade/veiculo/veiculo';
-import { Pessoa } from 'src/app/entidade/pessoa/pessoa';
-import { Local } from 'src/app/entidade/comum/local';
-import { UnidadeOrganizacional } from 'src/app/entidade/funcional/unidade-organizacional';
+import { Veiculo } from '../../../entidade/veiculo/veiculo';
+import { Pessoa } from '../../../entidade/principal/pessoa';
+import { Local } from '../../../entidade/comum/local';
+import { UnidadeOrganizacional } from '../../../entidade/funcional/unidade-organizacional';
 
 export class ViagemInicio {
     veiculo = new Veiculo();

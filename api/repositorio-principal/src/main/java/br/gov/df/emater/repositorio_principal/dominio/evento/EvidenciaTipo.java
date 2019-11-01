@@ -1,4 +1,4 @@
-package br.gov.df.emater.repositorio_principal.dominio;
+package br.gov.df.emater.repositorio_principal.dominio.evento;
 
 public enum EvidenciaTipo {
 

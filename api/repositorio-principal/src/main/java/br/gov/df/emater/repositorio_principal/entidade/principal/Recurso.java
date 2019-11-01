@@ -12,7 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
-import br.gov.df.emater.repositorio_principal.dominio.ItemTipo;
+import br.gov.df.emater.repositorio_principal.dominio.principal.RecursoTipo;
 import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
@@ -41,7 +41,7 @@ public class Recurso extends EntidadeBase implements Serializable, Identificavel
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	private ItemTipo tipo;
+	private RecursoTipo tipo;
 
 	@Lob
 	private String observacao;

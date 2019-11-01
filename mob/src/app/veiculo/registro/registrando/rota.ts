@@ -1,5 +1,5 @@
 import { Local } from 'src/app/entidade/comum/local';
 
-export class Rota {
+export class Rota  {
     caminho: Local[];
 }

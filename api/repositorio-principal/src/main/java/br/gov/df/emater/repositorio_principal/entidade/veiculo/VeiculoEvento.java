@@ -12,19 +12,22 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the Utilizacao database table.
+ * The persistent class for the veiculo_evento database table.
  * 
  */
 @Entity
-@Table(catalog = "veiculo")
+@Table(catalog = "veiculo", name = "veiculo_evento")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Utilizacao extends Evento implements Serializable {
+public class VeiculoEvento extends Evento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "quilometragem_atual")
-	private Integer quilometragemAtual;
+	@Column(name = "quilometragem_inicio")
+	private Integer quilometragemInicio;
+	
+	@Column(name = "quilometragem_fim")
+	private Integer quilometragemFim;
 
 }

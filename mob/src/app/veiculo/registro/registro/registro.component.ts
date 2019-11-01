@@ -35,7 +35,7 @@ export class RegistroComponent implements OnInit {
         private mensagem: MensagemService,
         private geo: Geolocation,
         private barcodeScanner: BarcodeScanner,
-        private servicoLocal: SqliteService<any, any>
+        private sqliteService: SqliteService,
     ) {
     }
 

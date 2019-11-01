@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.gov.df.emater.repositorio_principal.dominio.PessoaTipo;
+import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;
@@ -68,7 +68,7 @@ public class Pessoa extends EntidadeBase implements Serializable, Nomeavel {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo")
-	private PessoaTipo pessoaTipo;
+	private PessoaTipo tipo;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id")

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.gov.df.emater.repositorio_principal.dominio.PessoaFisicaSexo;
+import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaFisicaSexo;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

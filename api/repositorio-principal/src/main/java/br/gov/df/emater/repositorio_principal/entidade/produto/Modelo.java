@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.NomeavelCodificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

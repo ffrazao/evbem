@@ -2,20 +2,13 @@ package br.gov.df.emater.repositorio_principal.dao.principal.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.gov.df.emater.repositorio_principal.dao.principal.ProdutoDAOExtra;
-import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
-import br.gov.df.emater.repositorio_principal.entidade.produto.Marca;
-import br.gov.df.emater.repositorio_principal.entidade.produto.Modelo;
-import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
 import br.gov.df.emater.transporte.principal.ProdutoFiltroDTO;
 
 public class ProdutoDAOImpl implements ProdutoDAOExtra {
@@ -23,7 +16,6 @@ public class ProdutoDAOImpl implements ProdutoDAOExtra {
 	@Autowired
 	private EntityManager em;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Produto> findByFiltro(ProdutoFiltroDTO filtro) {
 		Collection<Produto> result = new ArrayList<>();
