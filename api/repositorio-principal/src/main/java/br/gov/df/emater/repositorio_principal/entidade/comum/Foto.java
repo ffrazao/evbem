@@ -15,9 +15,9 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.geo.Point;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

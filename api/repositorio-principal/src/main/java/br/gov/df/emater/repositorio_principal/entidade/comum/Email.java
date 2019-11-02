@@ -11,8 +11,8 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

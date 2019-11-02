@@ -75,11 +75,6 @@
 			<artifactId>comum</artifactId>
 			<version>${br-gov-df-emater.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>br.gov.df.emater</groupId>
-			<artifactId>transporte-dados</artifactId>
-			<version>${br-gov-df-emater.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

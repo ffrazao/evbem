@@ -18,11 +18,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.Visibilidade;
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Ordenavel;
-import br.gov.df.emater.repositorio_principal.entidade.Priorizavel;
-import br.gov.df.emater.repositorio_principal.entidade.Visivel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Priorizavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Visivel;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Telefone;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;

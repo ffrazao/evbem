@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
 import { AuthGuard } from './comum/servico/seguranca/guard-route/auth-guard.service';
 
 const routes: Routes = [
@@ -10,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+    loadChildren: () => import('./funcionalidade/list/list.module').then(m => m.ListPageModule)
   },
   /* rotas que apresentam o menu de opções */
   {
@@ -23,19 +24,20 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+        loadChildren: () => import('./funcionalidade/list/list.module').then(m => m.ListPageModule)
       },
       {
         path: 'veiculo-registro',
-        loadChildren: () => import('./veiculo/registro/registro/registro.module').then(m => m.RegistroComponentModule)
+        loadChildren: () => import('./funcionalidade/veiculo/registro/registro/registro.module').then(m => m.RegistroComponentModule)
       },
       {
         path: 'veiculo-registrando',
-        loadChildren: () => import('./veiculo/registro/registrando/registrando.module').then(m => m.RegistrandoComponentModule)
+        loadChildren: () => import('./funcionalidade/veiculo/registro/registrando/registrando.module')
+          .then(m => m.RegistrandoComponentModule)
       },
       {
         path: 'veiculo-parar',
-        loadChildren: () => import('./veiculo/registro/parar/parar.module').then(m => m.PararComponentModule)
+        loadChildren: () => import('./funcionalidade/veiculo/registro/parar/parar.module').then(m => m.PararComponentModule)
       },
     ],
     canActivate: [AuthGuard],

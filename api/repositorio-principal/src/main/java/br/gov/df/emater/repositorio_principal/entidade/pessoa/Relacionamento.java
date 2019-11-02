@@ -22,10 +22,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
-import br.gov.df.emater.repositorio_principal.entidade.Ativavel;
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Temporalizavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

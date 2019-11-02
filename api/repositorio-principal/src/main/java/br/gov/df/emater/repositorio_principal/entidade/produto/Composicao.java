@@ -18,9 +18,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.Temporalizavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -21,8 +21,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Nomeavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaEmail;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaEndereco;

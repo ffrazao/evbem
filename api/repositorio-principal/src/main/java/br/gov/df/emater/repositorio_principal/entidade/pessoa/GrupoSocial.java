@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
-import br.gov.df.emater.repositorio_principal.entidade.Temporalizavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

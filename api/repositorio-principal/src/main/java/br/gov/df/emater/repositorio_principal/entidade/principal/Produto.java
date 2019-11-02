@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.comum.UnidadeMedida;
 import br.gov.df.emater.repositorio_principal.entidade.produto.BemPatrimonial;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Composicao;

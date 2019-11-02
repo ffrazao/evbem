@@ -16,7 +16,7 @@ const routes: Routes = [
         children: [
           {
             path: 'veiculo',
-            loadChildren: () => import('../../../veiculo/veiculo.module').then(m => m.VeiculoPageModule)
+            loadChildren: () => import('../../../funcionalidade/veiculo/veiculo.module').then(m => m.VeiculoPageModule)
           },
           {
             path: '',
@@ -30,7 +30,7 @@ const routes: Routes = [
       /* relacionar aqui todos os links que mostram o menu mas não são protegidos pelo login */
       {
         path: 'home',
-        loadChildren: () => import('../../../home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('../../../funcionalidade/home/home.module').then(m => m.HomePageModule)
       },
       {
         path: '',

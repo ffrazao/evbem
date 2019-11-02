@@ -7,11 +7,11 @@ import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.gov.df.emater.repositorio_principal.dao.principal.ProdutoDAOExtra;
+import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import br.gov.df.emater.transporte.principal.ProdutoFiltroDTO;
 
-public class ProdutoDAOImpl implements ProdutoDAOExtra {
+public class ProdutoDAOImpl implements FiltroDAOExtra<ProdutoFiltroDTO, Produto> {
 
 	@Autowired
 	private EntityManager em;
@@ -19,9 +19,9 @@ public class ProdutoDAOImpl implements ProdutoDAOExtra {
 	@Override
 	public Collection<Produto> findByFiltro(ProdutoFiltroDTO filtro) {
 		Collection<Produto> result = new ArrayList<>();
-		
+
 		result = em.createNamedQuery("Produto", Produto.class).getResultList();
-		
+
 		return result;
 
 		/* @formatter:off

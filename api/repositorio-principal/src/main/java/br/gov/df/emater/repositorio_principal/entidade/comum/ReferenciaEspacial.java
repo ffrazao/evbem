@@ -15,8 +15,8 @@ import javax.persistence.Table;
 import org.springframework.data.geo.Polygon;
 
 import br.gov.df.emater.repositorio_principal.dominio.ReferenciaEspacialTipo;
-import br.gov.df.emater.repositorio_principal.entidade.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.Identificavel;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

@@ -36,7 +36,6 @@
 	<modules>
 		<module>comum</module>
 		<module>repositorio-principal</module>
-		<module>transporte-dados</module>
 		<module>negocio</module>
 		<module>restful-servidor</module>
 		<module>autorizador-servidor</module>
