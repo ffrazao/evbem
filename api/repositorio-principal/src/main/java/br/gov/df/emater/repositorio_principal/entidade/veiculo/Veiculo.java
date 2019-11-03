@@ -70,12 +70,12 @@ public class Veiculo extends EntidadeBase implements Serializable {
 	public Set<Combustivel> getCombustivel() {
 		return (StringUtils.isBlank(this.combustivel)) ? Collections.emptySet()
 				: Collections.unmodifiableSet(Arrays.stream(this.combustivel.split(JUNCAO))
-						.map(c -> Combustivel.valueOf(c)).collect(Collectors.toSet()));
+						.map(c -> Combustivel.valueOf(c)).sorted().collect(Collectors.toSet()));
 	}
 
 	public void setCombustivel(Set<Combustivel> combustivel) {
 		this.combustivel = (combustivel == null) ? null
-				: combustivel.stream().map(c -> c.toString()).collect(Collectors.joining(JUNCAO));
+				: combustivel.stream().map(c -> c.toString()).sorted().collect(Collectors.joining(JUNCAO));
 	}
 
 }
