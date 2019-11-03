@@ -1,5 +1,4 @@
-import { Local } from 'src/app/entidade/comum/local';
-import { Sincrono } from 'src/app/entidade/sincrono';
+import { Sincrono } from '../../entidade/sincrono';
 import { Viagem } from './viagem';
 
 export class Rota implements Sincrono {
@@ -16,4 +15,5 @@ export class Rota implements Sincrono {
     ) {
 
     }
+
 }

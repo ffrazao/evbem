@@ -1,8 +1,8 @@
-import { Modelo } from "../produto/modelo";
-import { Marca } from "../produto/marca";
-import { Pessoa } from "./pessoa";
-import { Recurso } from "./principal";
-import { RecursoTipo } from "../../dominio/principal/recurso-tipo";
+import { Modelo } from '../produto/modelo';
+import { Marca } from '../produto/marca';
+import { Pessoa } from './pessoa';
+import { Recurso } from './principal';
+import { RecursoTipo } from '../../dominio/principal/recurso-tipo';
 import { BemPatrimonial } from '../produto/bem-patrimonial';
 
 export class Produto extends Recurso {

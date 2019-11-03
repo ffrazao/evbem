@@ -1,5 +1,5 @@
-import { Evento } from "./evento";
-import { EvidenciaTipo } from "../../dominio/evento/evidencia-tipo";
+import { Evento } from './evento';
+import { EvidenciaTipo } from '../../dominio/evento/evidencia-tipo';
 
 export class Evidencia {
 
@@ -11,5 +11,5 @@ export class Evidencia {
         public tipo?: EvidenciaTipo
     ) {
     }
-    
+
 }

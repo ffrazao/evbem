@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
-import { Map, tileLayer, marker, icon } from 'leaflet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MensagemService } from 'src/app/comum/servico/mensagem/mensagem.service';
+import { Map, tileLayer, marker, icon } from 'leaflet';
+
 import { PararService } from './parar.service';
 import { ViagemParar } from './viagem-parar';
-import { posicaoEmater } from 'src/app/comum/ferramenta/funcao';
+import { MensagemService } from '../../../../comum/servico/mensagem/mensagem.service';
+import { posicaoEmater } from '../../../../comum/ferramenta/funcao';
 
 @Component({
     templateUrl: './parar.component.html',

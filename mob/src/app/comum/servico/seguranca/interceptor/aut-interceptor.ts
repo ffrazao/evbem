@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
+import { environment } from '../../../../../environments/environment';
 import { LoginService } from '../../../componente/login/login.service';
 import { iniciaCom } from '../../../ferramenta/funcao';
 

@@ -85,7 +85,6 @@ public class Produto extends EntidadeBase implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
 	@MapsId
-	@JsonIgnore
 	private Recurso recurso;
 
 }

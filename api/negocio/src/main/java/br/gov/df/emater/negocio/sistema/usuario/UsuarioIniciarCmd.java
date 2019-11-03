@@ -7,7 +7,7 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 
 @Component
-public class UsuarioCriarCmd extends Comando {
+public class UsuarioIniciarCmd extends Comando {
 
 	@Override
 	protected void procedimento(Contexto<?, ?> ctx) throws Exception {

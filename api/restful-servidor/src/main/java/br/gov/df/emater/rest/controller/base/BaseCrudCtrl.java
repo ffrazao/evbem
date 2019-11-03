@@ -1,7 +1,6 @@
 package br.gov.df.emater.rest.controller.base;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import br.gov.df.emater.negocio.base.Alterar;
+import br.gov.df.emater.negocio.base.Excluir;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,32 +23,38 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("unchecked")
-public class BaseCrudCtrl<E, F, L> extends BaseCtrl {
+// E, F, R = Entidade, Filtro, Resultado
+public class BaseCrudCtrl<E, F, R> extends BaseCtrl {
 
 	@Setter(value = AccessLevel.NONE)
 	private String funcionalidade;
-
-	@PutMapping
-	protected List<E> alterar(@RequestBody(required = true) List<E> registros, Principal usuario) throws Exception {
-		return (List<E>) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), registros,
-				usuario);
-	}
-
-	@GetMapping(value = "/criar")
-	protected E criar(E modelo, Principal usuario) throws Exception {
-		return (E) negocioFacade.executarSomenteLeitura(String.format("%sCriarCdSq", funcionalidade), modelo, usuario);
-	}
-
-	@DeleteMapping(value = "/{ids}")
-	protected void excluir(@PathVariable(name = "ids", required = true) List<Integer> ids, Principal usuario)
-			throws Exception {
-		negocioFacade.executarComEscrita(String.format("%sExcluirCdSq", funcionalidade), ids, usuario);
+	
+	@GetMapping(value = "/iniciar")
+	protected E iniciar(E modelo, Principal usuario) throws Exception {
+		return (E) negocioFacade.executarSomenteLeitura(String.format("%sIniciarCdSq", funcionalidade), modelo, usuario);
 	}
 
 	@PostMapping()
-	protected List<E> incluir(@RequestBody(required = true) List<E> registros, Principal usuario) throws Exception {
-		return (List<E>) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), registros,
+	protected E[] criar(@RequestBody(required = true) E[] entidades, Principal usuario) throws Exception {
+		return (E[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades, usuario);
+	}
+	
+	@GetMapping(value = "/{ids}")
+	protected E[] restaurar(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
+			throws Exception {
+		return (E[]) negocioFacade.executarSomenteLeitura(String.format("%sListarCdSq", funcionalidade), ids,
 				usuario);
+	}
+	
+	@PutMapping
+	protected Alterar<E>[] alterar(@RequestBody(required = true) Alterar<E>[] entidades, Principal usuario) throws Exception {
+		return (Alterar<E>[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades, usuario);
+	}
+
+	@DeleteMapping(value = "/{ids}")
+	protected Excluir[] excluir(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
+			throws Exception {
+		return (Excluir[]) negocioFacade.executarComEscrita(String.format("%sExcluirCdSq", funcionalidade), ids, usuario);
 	}
 
 	// Para passar objetos para metodos get via querystring não é necessário anotar
@@ -57,21 +64,13 @@ public class BaseCrudCtrl<E, F, L> extends BaseCtrl {
 	// GET http://localhost:8080/veiculo?bemPatrimonial=teste de valores&marca=teste
 	// de valores&modelo
 	@GetMapping()
-	protected List<L> listar(@Valid F filtro, Principal usuario) throws Exception {
-		return (List<L>) negocioFacade.executarSomenteLeitura(String.format("%sListarCdSq", funcionalidade), filtro,
-				usuario);
+	protected R[] listar(@Valid F filtro, Principal usuario) throws Exception {
+		return (R[]) negocioFacade.executarSomenteLeitura(String.format("%sListarCdSq", funcionalidade), filtro, usuario);
 	}
 
 	@PostMapping(value = "/salvar")
-	protected List<E> salvar(@RequestBody(required = true) List<E> registros, Principal usuario) throws Exception {
-		return (List<E>) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), registros,
-				usuario);
-	}
-
-	@GetMapping(value = "/{ids}")
-	protected List<E> ver(@PathVariable(name = "ids", required = true) List<Integer> ids, Principal usuario)
-			throws Exception {
-		return (List<E>) negocioFacade.executarSomenteLeitura(String.format("%sListarCdSq", funcionalidade), ids,
+	protected E[] salvar(@RequestBody(required = true) E[] entidades, Principal usuario) throws Exception {
+		return (E[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades,
 				usuario);
 	}
 

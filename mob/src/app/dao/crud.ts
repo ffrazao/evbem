@@ -1,15 +1,20 @@
-export interface Crud<T, F> {
+import { Observable } from 'rxjs';
+import { FiltroDto } from '../comum/transporte/filtro';
 
-    iniciar(r?: T): T;
+export interface Crud<E, F extends FiltroDto, R> {
 
-    criar(r: T): number;
+    iniciar(modelo?: E): Observable<E>;
 
-    restaurar(id: number): T;
+    criar(entidades: E[]): Observable<number[]>;
 
-    atualizar(id: number, r: T);
+    restaurar(ids: number[]): Observable<E[]>;
 
-    excluir(id: number): boolean;
+    alterar(entidades: {id: number, entidade: E}[]): Observable<{id: number, entidade: E}[]>;
 
-    listar(f: F): [];
+    excluir(ids: number[]): Observable<{id: number, resultado: boolean}[]>;
+
+    listar(filtro: F): Observable<R[]>;
+
+    salvar(entidades: E[]): Observable<E[]>;
 
 }

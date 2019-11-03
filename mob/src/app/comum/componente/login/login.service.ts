@@ -1,18 +1,16 @@
 import { Injectable, Type } from '@angular/core';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-
-import { ApiService } from '../../servico/externo/api.service';
-import { Login } from './login';
-import { environment } from 'src/environments/environment';
-
-import { StaticInjectorService } from '../../ferramenta/static-injector-service';
-import { UsuarioLocal } from './usuario-local';
-import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { File } from '@ionic-native/file/ngx';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { ApiService } from '../../servico/externo/api.service';
+import { environment } from '../../../../environments/environment';
+import { StaticInjectorService } from '../../ferramenta/static-injector-service';
+import { Login } from './login';
+import { UsuarioLocal } from './usuario-local';
 
 const func = '/oauth';
 const tokenAutenticacao = 'tokenAutenticacao';

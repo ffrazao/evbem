@@ -1,17 +1,17 @@
-package br.gov.df.emater.negocio.veiculo.veiculo;
+package br.gov.df.emater.negocio.principal.produto;
 
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
-import br.gov.df.emater.repositorio_principal.entidade.veiculo.Veiculo;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 
 @Component
-public class VeiculoCriarCmd extends Comando {
+public class ProdutoIniciarCmd extends Comando {
 
 	@Override
 	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
-		ctx.setResposta(new Veiculo());
+		ctx.setResposta(new Produto());
 	}
 
 }

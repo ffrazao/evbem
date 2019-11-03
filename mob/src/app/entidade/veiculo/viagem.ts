@@ -20,7 +20,7 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public recurso?: Recurso,
         public eventoTipo?: Tipo,
         public local?: Local,
-        public local_descricao?: String,
+        public local_descricao?: string,
         public inicio?: Date,
         public termino?: Date,
         public descricao?: Date, // servico
@@ -29,7 +29,7 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public tipo?: VeiculoEventoTipo,
         public localSaida?: Local,
         public localSaidaDescricao?: string,
-        public quilometragemSaida?: number,        
+        public quilometragemSaida?: number,
         public localChegada?: Local,
         public localChegadaDescricao?: string,
         public quilometragemChegada?: number,
@@ -41,7 +41,8 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public sincronizado?: Date,
         public apagar?: boolean,
     ) {
-        super(id, planejamento, recurso, eventoTipo, local, local_descricao, inicio, termino, descricao, pai, evidenciaList, VeiculoEventoTipo.VIAGEM);
+        super(id, planejamento, recurso, eventoTipo, local, local_descricao, inicio, termino, descricao, pai, 
+            evidenciaList, VeiculoEventoTipo.VIAGEM);
     }
 
 }

@@ -1,8 +1,9 @@
-import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
-import { Filtro } from '../../entidade/filtro';
 
-export abstract class CrudService<T, F extends Filtro> extends ApiService {
+import { ApiService } from './api.service';
+import { FiltroDto } from '../../transporte/filtro';
+
+export abstract class CrudService<T, F extends FiltroDto> extends ApiService {
 
     constructor(protected http: HttpClient) {
         super(http);
@@ -31,7 +32,7 @@ export abstract class CrudService<T, F extends Filtro> extends ApiService {
     }
 
     public listar(f: F) {
-        return this.http.get(`${this.url}/${this.funcionalidade()}`, f);
+        return this.http.get(`${this.url}/${this.funcionalidade()}`);
     }
 
 }

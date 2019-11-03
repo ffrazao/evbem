@@ -4,11 +4,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { Map, tileLayer, marker, icon } from 'leaflet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MensagemService } from 'src/app/comum/servico/mensagem/mensagem.service';
-import { RegistroService } from './registro.service';
+
+import { MensagemService } from '../../../../comum/servico/mensagem/mensagem.service';
+import { posicaoEmater } from '../../../../comum/ferramenta/funcao';
+import { SqliteService } from '../../../../comum/servico/local/sqlite.service';
+import { ViagemDaoLocal } from '../../../../dao/local/veiculo/viagem-dao.local';
+import { VeiculoDao } from '../../../../dao/externo/veiculo/veiculo-dao';
+import { Veiculo } from '../../../../entidade/veiculo/veiculo';
 import { ViagemInicio } from './viagem-inicio';
-import { posicaoEmater } from 'src/app/comum/ferramenta/funcao';
-import { SqliteService } from 'src/app/comum/servico/local/sqlite.service';
+import { Marca } from 'src/app/entidade/produto/marca';
+import { Produto } from 'src/app/entidade/principal/produto';
 
 @Component({
     templateUrl: './registro.component.html',
@@ -30,7 +35,8 @@ export class RegistroComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private service: RegistroService,
+        private servico: VeiculoDao,
+        private servicoLocal: ViagemDaoLocal,
         private formBuilder: FormBuilder,
         private mensagem: MensagemService,
         private geo: Geolocation,
@@ -79,7 +85,8 @@ export class RegistroComponent implements OnInit {
 
         this.mensagem.aguarde().then((res) => {
             res.present();
-            this.service.salvar(this.form.value as ViagemInicio).subscribe((r) => {
+            // new [this.form.value as ViagemInicio]
+            this.servico.salvar([]).subscribe((r) => {
                 this.router.navigate(['/', 's', 'veiculo-registrando'], { relativeTo: this.route });
                 this.mensagem.sucesso('Viagem iniciada!');
                 res.dismiss();
@@ -118,6 +125,22 @@ export class RegistroComponent implements OnInit {
     }
 
     public pesquisar() {
+        this.mensagem.aguarde().then((res) => {
+            res.present();
+            // new [this.form.value as ViagemInicio]
+            const modelo = new Veiculo();
+            modelo.produto = new Produto();
+            modelo.produto.marca = new Marca();
+            modelo.produto.marca.nome = 'Teste';
+            this.servico.iniciar(modelo).subscribe((r) => {
+                console.log(r);
+                res.dismiss();
+            }, (e) => {
+                console.log(e);
+                this.mensagem.erro(e);
+                res.dismiss();
+            });
+        });
     }
 
     public qrCode() {

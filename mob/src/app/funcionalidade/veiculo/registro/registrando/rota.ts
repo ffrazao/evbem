@@ -1,4 +1,4 @@
-import { Local } from 'src/app/entidade/comum/local';
+import { Local } from '../../../../entidade/comum/local';
 
 export class Rota  {
     caminho: Local[];

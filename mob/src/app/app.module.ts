@@ -18,7 +18,7 @@ import { LoginService } from './comum/componente/login/login.service';
 import { MensagemService } from './comum/servico/mensagem/mensagem.service';
 import { AutInterceptorProvider } from './comum/servico/seguranca/interceptor/aut-interceptor';
 import { AuthGuard } from './comum/servico/seguranca/guard-route/auth-guard.service';
-import { IonicGestureConfig } from './ionic-gesture-config';
+import { IonicGestureConfig } from './comum/config/ionic-gesture-config';
 
 @NgModule({
   declarations: [AppComponent],

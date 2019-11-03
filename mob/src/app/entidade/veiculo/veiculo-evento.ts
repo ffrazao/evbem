@@ -4,7 +4,7 @@ import { Recurso } from '../principal/principal';
 import { Tipo } from '../produto/tipo';
 import { Local } from '../comum/local';
 import { Evidencia } from '../evento/evidencia';
-import { VeiculoEventoTipo } from 'src/app/dominio/veiculo/veiculo-evento-tipo';
+import { VeiculoEventoTipo } from '../../dominio/veiculo/veiculo-evento-tipo';
 
 export class VeiculoEvento extends Evento {
 
@@ -24,4 +24,5 @@ export class VeiculoEvento extends Evento {
     ) {
         super(id, planejamento, recurso, eventoTipo, local, local_descricao, inicio, termino, descricao, pai, evidenciaList);
     }
+
 }
