@@ -167,9 +167,11 @@ export class RegistroComponent implements OnInit {
             filtro.pesq = [];
             filtro.pesq[0] = this.form.get('pesquisaCondutor').value;
             this.servicoPessoa.listar(filtro).subscribe((r) => {
-                console.log(r[0]);
-                this.form.get('condutor').setValue(r[0]);
-                this.entidade.condutor = r[0];
+                if (r) {
+                    console.log(r[0]);
+                    this.form.get('condutor').setValue(r[0]);
+                    this.entidade.condutor = r[0];
+                }
                 res.dismiss();
             }, (e) => {
                 console.log(e);

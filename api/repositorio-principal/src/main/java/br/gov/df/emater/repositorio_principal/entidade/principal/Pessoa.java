@@ -18,8 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
@@ -45,11 +43,23 @@ import lombok.NoArgsConstructor;
 public class Pessoa extends EntidadeBase implements Serializable, Nomeavel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private Integer id;
 
 	private String nome;
+
+	@Column(name = "nome_reduzido")
+	private String nomeReduzido;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo")
+	private PessoaTipo tipo;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	@MapsId
+	private Recurso recurso;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<PessoaArquivo> pessoaArquivoList;
@@ -65,15 +75,5 @@ public class Pessoa extends EntidadeBase implements Serializable, Nomeavel {
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<PessoaTelefone> pessoaTelefoneList;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo")
-	private PessoaTipo tipo;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
-	@MapsId
-	@JsonIgnore	
-	private Recurso recurso;
 
 }
