@@ -15,6 +15,7 @@ import { VeiculoFiltroDto } from 'src/app/transporte/veiculo/veiculo.filtro.dto'
 import { ViagemDao } from 'src/app/dao/externo/veiculo/viagem-dao';
 import { PessoaDao } from 'src/app/dao/externo/principal/pessoa-dao';
 import { PessoaFiltroDto } from 'src/app/transporte/principal/pessoa.filtro.dto';
+import { EscolheItemService } from 'src/app/comum/componente/escolhe-item/escolhe-item.service';
 
 @Component({
     templateUrl: './registro.component.html',
@@ -47,6 +48,7 @@ export class RegistroComponent implements OnInit {
         private geo: Geolocation,
         private barcodeScanner: BarcodeScanner,
         private sqliteService: SqliteService,
+        private escolheItem: EscolheItemService,
     ) {
     }
 
@@ -155,6 +157,22 @@ export class RegistroComponent implements OnInit {
     }
 
     public pesquisarCondutor() {
+        const itens = ['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
+            // 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b',
+            // 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
+            // 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
+            // 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b',
+            // 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
+            // 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
+            // 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b',
+            // 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
+            // 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
+            // 'a', 'b', 'c', 'a', 'b', 'c'
+        ];
+
+        this.escolheItem.escolhe(itens, false).then(r => console.log(r));
+        return;
+
         if (!this.form.get('pesquisaCondutor').value) {
             this.mensagem.erro('Conteúdo da pesquisa não informado!');
             return;

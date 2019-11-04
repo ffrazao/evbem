@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-title>Escolha</ion-title>
+    <ion-toolbar>
+        <ion-searchbar placeholder="Pesquisar" debounce="500"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-infinite-scroll>
+        <ion-radio-group>
+            <ion-item *ngIf="varios">
+                <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
+                <ion-label slot="end">
+                    Tudo
+                </ion-label>
+            </ion-item>
+            <ion-item *ngFor="let item of items">
+                <ion-radio *ngIf="!varios" slot="start"></ion-radio>
+                <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
+                <ion-label slot="end">
+                    [{{item | json}}]
+                </ion-label>
+            </ion-item>
+        </ion-radio-group>
+    </ion-infinite-scroll>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button color="primary">Ok</ion-button>
+            <ion-button>Cancelar</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

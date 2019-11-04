@@ -9,6 +9,7 @@ import { LongPressModule } from 'ionic-long-press/dist';
 import { RegistroComponent } from './registro.component';
 import { RegistroComponentRoutingModule } from './registro-routing.module';
 import { ServicoLocalModule } from '../../../../comum/servico/local/servico-local.module';
+import { EscolheItemComponentModule } from 'src/app/comum/componente/escolhe-item/escolhe-item.module';
 
 @NgModule({
     declarations: [RegistroComponent],
@@ -20,6 +21,7 @@ import { ServicoLocalModule } from '../../../../comum/servico/local/servico-loca
         LongPressModule,
         RegistroComponentRoutingModule,
         ServicoLocalModule,
+        EscolheItemComponentModule
     ],
     providers: [
         BarcodeScanner,
