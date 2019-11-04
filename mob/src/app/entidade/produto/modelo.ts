@@ -1,4 +1,4 @@
-import { Tipo } from './tipo';
+import { ProdutoTipo } from './produto-tipo';
 
 export class Modelo {
 
@@ -7,8 +7,8 @@ export class Modelo {
         public codigo?: string,
         public nome?: string,
         public descricao?: string,
-        public tipo?: Tipo,
-    ){
+        public produtoTipo?: ProdutoTipo,
+    ) {
     }
-    
+
 }

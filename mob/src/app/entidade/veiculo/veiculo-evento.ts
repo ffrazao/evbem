@@ -1,10 +1,10 @@
 import { Confirmacao } from '../../dominio/confirmacao';
 import { Evento } from '../evento/evento';
 import { Recurso } from '../principal/principal';
-import { Tipo } from '../produto/tipo';
 import { Local } from '../comum/local';
 import { Evidencia } from '../evento/evidencia';
 import { VeiculoEventoTipo } from '../../dominio/veiculo/veiculo-evento-tipo';
+import { Tipo } from '../evento/tipo';
 
 export class VeiculoEvento extends Evento {
 

@@ -34,7 +34,7 @@
                 <ion-col size="4">
                     <ion-row>
                         <ion-col>
-                            <ion-button size="small" (click)="pesquisar()" expand="full">
+                            <ion-button size="small" (click)="pesquisarVeiculo()" expand="full">
                                 <ion-icon name="search"></ion-icon>
                                 Pesquisar
                             </ion-button>
@@ -51,38 +51,39 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-grid *ngIf="true">
+        <ion-grid *ngIf="entidade?.veiculo?.id">
             <ion-row>
                 <ion-col>Responsável</ion-col>
-                <ion-col>{{form?.responsavelVeiculo?.nome}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.produto?.bemPatrimonial?.pessoa?.nome | json}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Veículo</ion-col>
-                <ion-col>{{form?.veiculo?.tipo?.nome}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.produto?.modelo?.produtoTipo?.nome}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Marca/ Modelo</ion-col>
-                <ion-col>{{form?.veiculo?.marca?.nome}}/ {{form?.veiculo?.modelo?.nome}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.produto?.marca?.nome}}/ {{entidade?.veiculo?.produto?.modelo?.nome}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Patrimônio</ion-col>
-                <ion-col>{{form?.veiculo?.siglaProprietario}} {{form?.veiculo?.identificacaoPatrimonial}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.produto?.bemPatrimonial?.siglaProprietario}}
+                    {{entidade?.veiculo?.produto?.bemPatrimonial?.identificacaoPatrimonial}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Ano Fabricação / Modelo</ion-col>
-                <ion-col>{{form?.veiculo?.anoFabricacao}}/ {{form?.veiculo?.anoModelo}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.anoFabricacao}}/ {{entidade?.veiculo?.anoModelo}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Combustível</ion-col>
-                <ion-col>{{form?.veiculo?.combustivel}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.combustivel}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Lotação</ion-col>
-                <ion-col>{{form?.lotacaoVeiculo?.sigla}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.produto?.unidadeOrganizacional?.nome}}</ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Placa</ion-col>
-                <ion-col>{{form?.veiculo?.placa}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.placa}}</ion-col>
             </ion-row>
         </ion-grid>
         <ion-item>
@@ -109,10 +110,13 @@
                     </ion-label>
                 </ion-col>
                 <ion-col size="4">
-                    <ion-button size="small" (click)="pesquisar()" expand="full">
+                    <ion-button size="small" (click)="pesquisarCondutor()" expand="full">
                         <ion-icon name="search"></ion-icon>
                         Pesquisar
                     </ion-button>
+                </ion-col>
+                <ion-col size="4">
+                    {{entidade?.condutor | json}}
                 </ion-col>
             </ion-row>
         </ion-grid>

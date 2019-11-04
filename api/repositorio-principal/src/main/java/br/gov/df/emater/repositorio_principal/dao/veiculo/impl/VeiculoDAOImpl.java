@@ -2,7 +2,6 @@ package br.gov.df.emater.repositorio_principal.dao.veiculo.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class VeiculoDAOImpl implements FiltroDAOExtra<VeiculoFiltroDTO, Veiculo>
 	private EntityManager em;
 
 	@Override
-	public Collection<Veiculo> findByFiltro(VeiculoFiltroDTO filtro) {
+	public Veiculo[] findByFiltro(VeiculoFiltroDTO filtro) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Veiculo> sql = cb.createQuery(Veiculo.class);
 
@@ -103,7 +102,7 @@ public class VeiculoDAOImpl implements FiltroDAOExtra<VeiculoFiltroDTO, Veiculo>
 		query.setFirstResult((filtro.getPagina() - 1) * filtro.getTamanho());
 		query.setMaxResults(filtro.getTamanho());
 
-		return query.getResultList();
+		return query.getResultList().stream().toArray(size -> new Veiculo[size]);
 	}
 
 }

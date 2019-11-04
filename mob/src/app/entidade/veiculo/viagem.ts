@@ -6,11 +6,11 @@ import { Participacao } from '../evento/participacao';
 import { Pessoa } from '../principal/pessoa';
 import { Recurso } from '../principal/principal';
 import { Sincrono } from '../sincrono';
-import { Tipo } from '../produto/tipo';
 import { UnidadeOrganizacional } from '../funcional/unidade-organizacional';
 import { VeiculoEvento } from './veiculo-evento';
 import { VeiculoEventoTipo } from '../../dominio/veiculo/veiculo-evento-tipo';
 import { Rota } from './rota';
+import { Tipo } from '../evento/tipo';
 
 export class Viagem extends VeiculoEvento implements Sincrono {
 
@@ -41,7 +41,7 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public sincronizado?: Date,
         public apagar?: boolean,
     ) {
-        super(id, planejamento, recurso, eventoTipo, local, local_descricao, inicio, termino, descricao, pai, 
+        super(id, planejamento, recurso, eventoTipo, local, local_descricao, inicio, termino, descricao, pai,
             evidenciaList, VeiculoEventoTipo.VIAGEM);
     }
 

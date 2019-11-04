@@ -17,12 +17,12 @@ public class ProdutoDAOImpl implements FiltroDAOExtra<ProdutoFiltroDTO, Produto>
 	private EntityManager em;
 
 	@Override
-	public Collection<Produto> findByFiltro(ProdutoFiltroDTO filtro) {
+	public Produto[] findByFiltro(ProdutoFiltroDTO filtro) {
 		Collection<Produto> result = new ArrayList<>();
 
 		result = em.createNamedQuery("Produto", Produto.class).getResultList();
 
-		return result;
+		return result.stream().toArray(tamanho -> new Produto[tamanho]);
 
 		/* @formatter:off
 		List<Object> param = new ArrayList<>();

@@ -10,10 +10,11 @@ import { posicaoEmater } from '../../../../comum/ferramenta/funcao';
 import { SqliteService } from '../../../../comum/servico/local/sqlite.service';
 import { ViagemDaoLocal } from '../../../../dao/local/veiculo/viagem-dao.local';
 import { VeiculoDao } from '../../../../dao/externo/veiculo/veiculo-dao';
-import { Veiculo } from '../../../../entidade/veiculo/veiculo';
 import { ViagemInicio } from './viagem-inicio';
-import { Marca } from 'src/app/entidade/produto/marca';
-import { Produto } from 'src/app/entidade/principal/produto';
+import { VeiculoFiltroDto } from 'src/app/transporte/veiculo/veiculo.filtro.dto';
+import { ViagemDao } from 'src/app/dao/externo/veiculo/viagem-dao';
+import { PessoaDao } from 'src/app/dao/externo/principal/pessoa-dao';
+import { PessoaFiltroDto } from 'src/app/transporte/principal/pessoa.filtro.dto';
 
 @Component({
     templateUrl: './registro.component.html',
@@ -22,6 +23,8 @@ import { Produto } from 'src/app/entidade/principal/produto';
 export class RegistroComponent implements OnInit {
 
     private form: FormGroup;
+
+    private entidade = new ViagemInicio();
 
     @ViewChild('focaliza', { static: false })
     private focaliza;
@@ -35,7 +38,9 @@ export class RegistroComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private servico: VeiculoDao,
+        private servico: ViagemDao,
+        private servicoVeiculo: VeiculoDao,
+        private servicoPessoa: PessoaDao,
         private servicoLocal: ViagemDaoLocal,
         private formBuilder: FormBuilder,
         private mensagem: MensagemService,
@@ -47,7 +52,7 @@ export class RegistroComponent implements OnInit {
 
     async ngOnInit() {
         try {
-            this.form = this.createForm(new ViagemInicio(), 'JKO5353', 'Fernando Frazão da Silva');
+            this.form = this.createForm(this.entidade, '1234', 'Fernando Frazão da Silva');
             this.initMap();
             console.log('captando posição atual');
             this.posicao = await this.geo.getCurrentPosition() as Geoposition;
@@ -86,7 +91,7 @@ export class RegistroComponent implements OnInit {
         this.mensagem.aguarde().then((res) => {
             res.present();
             // new [this.form.value as ViagemInicio]
-            this.servico.salvar([]).subscribe((r) => {
+            this.servicoVeiculo.salvar([]).subscribe((r) => {
                 this.router.navigate(['/', 's', 'veiculo-registrando'], { relativeTo: this.route });
                 this.mensagem.sucesso('Viagem iniciada!');
                 res.dismiss();
@@ -124,16 +129,47 @@ export class RegistroComponent implements OnInit {
             .addTo(this.map).openPopup();
     }
 
-    public pesquisar() {
+    public pesquisarVeiculo() {
+        if (!this.form.get('pesquisaVeiculo').value) {
+            this.mensagem.erro('Conteúdo da pesquisa não informado!');
+            return;
+        }
+
         this.mensagem.aguarde().then((res) => {
             res.present();
             // new [this.form.value as ViagemInicio]
-            const modelo = new Veiculo();
-            modelo.produto = new Produto();
-            modelo.produto.marca = new Marca();
-            modelo.produto.marca.nome = 'Teste';
-            this.servico.iniciar(modelo).subscribe((r) => {
-                console.log(r);
+            const filtro = new VeiculoFiltroDto();
+            filtro.pesq = [];
+            filtro.pesq[0] = this.form.get('pesquisaVeiculo').value;
+            this.servicoVeiculo.listar(filtro).subscribe((r) => {
+                console.log(r[0]);
+                this.form.get('veiculo').setValue(r[0]);
+                this.entidade.veiculo = r[0];
+                res.dismiss();
+            }, (e) => {
+                console.log(e);
+                this.mensagem.erro(e);
+                res.dismiss();
+            });
+        });
+    }
+
+    public pesquisarCondutor() {
+        if (!this.form.get('pesquisaCondutor').value) {
+            this.mensagem.erro('Conteúdo da pesquisa não informado!');
+            return;
+        }
+
+        this.mensagem.aguarde().then((res) => {
+            res.present();
+            // new [this.form.value as ViagemInicio]
+            const filtro = new PessoaFiltroDto();
+            filtro.pesq = [];
+            filtro.pesq[0] = this.form.get('pesquisaCondutor').value;
+            this.servicoPessoa.listar(filtro).subscribe((r) => {
+                console.log(r[0]);
+                this.form.get('condutor').setValue(r[0]);
+                this.entidade.condutor = r[0];
                 res.dismiss();
             }, (e) => {
                 console.log(e);

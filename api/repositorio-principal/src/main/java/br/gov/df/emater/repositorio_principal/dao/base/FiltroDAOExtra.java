@@ -74,6 +74,6 @@ public interface FiltroDAOExtra<F, R> {
 						.replaceAll("\\]", "");
 	}
 
-	Collection<R> findByFiltro(F filtro);
+	R[] findByFiltro(F filtro);
 
 }

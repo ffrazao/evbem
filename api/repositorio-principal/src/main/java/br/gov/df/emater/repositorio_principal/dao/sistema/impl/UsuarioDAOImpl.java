@@ -1,7 +1,6 @@
 package br.gov.df.emater.repositorio_principal.dao.sistema.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,7 +23,7 @@ public class UsuarioDAOImpl implements FiltroDAOExtra<UsuarioFiltroDTO, Usuario>
 	private EntityManager em;
 
 	@Override
-	public Collection<Usuario> findByFiltro(UsuarioFiltroDTO filtro) {
+	public Usuario[] findByFiltro(UsuarioFiltroDTO filtro) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
@@ -51,7 +50,7 @@ public class UsuarioDAOImpl implements FiltroDAOExtra<UsuarioFiltroDTO, Usuario>
 
 		final TypedQuery<Usuario> query = em.createQuery(criteria);
 
-		return query.getResultList();
+		return query.getResultList().stream().toArray(tamanho -> new Usuario[tamanho]);
 	}
 
 }
