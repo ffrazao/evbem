@@ -11,11 +11,20 @@ export class EscolheItemService {
     ) {
     }
 
-    public async escolhe(items: any[], varios = false): Promise<any> {
+    public async escolhe(items: any[], 
+        camposPesq: string[],
+        campoTitulo: string,
+        campoDescricao: string,
+        campoIcone: string,
+        varios = false): Promise<any> {
         const modal = await this.modalCtrl.create({
             component: EscolheItemComponent,
             componentProps: {
                 items,
+                camposPesq,
+                campoTitulo,
+                campoDescricao,
+                campoIcone,
                 varios
             }
         });

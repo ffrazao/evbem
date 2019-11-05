@@ -1,8 +1,9 @@
 <ion-header>
     <ion-title>Escolha</ion-title>
     <ion-toolbar>
-        <ion-searchbar placeholder="Pesquisar" debounce="500"></ion-searchbar>
+        <ion-searchbar placeholder="Pesquisar" debounce="500" (ionChange)="pesquisaItem($event)"></ion-searchbar>
     </ion-toolbar>
+    <ion-label>{{camposPesq | json}}</ion-label>
 </ion-header>
 <ion-content>
     <ion-infinite-scroll>
@@ -13,13 +14,21 @@
                     Tudo
                 </ion-label>
             </ion-item>
-            <ion-item *ngFor="let item of items">
+            <ion-item *ngIf="items && items.length; else naoecontrado" *ngFor="let item of items">
                 <ion-radio *ngIf="!varios" slot="start"></ion-radio>
                 <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
                 <ion-label slot="end">
                     [{{item | json}}]
+                    {{item['campoIcone']?}}
+                    {{item['campoTitulo']?}}
+                    {{item['campoDescricao']?}}
                 </ion-label>
             </ion-item>
+            <ng-template #naoecontrado>
+                <ion-item>
+                    Não encontrado!
+                </ion-item>
+            </ng-template>
         </ion-radio-group>
     </ion-infinite-scroll>
 </ion-content>
