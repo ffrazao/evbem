@@ -3,40 +3,50 @@
     <ion-toolbar>
         <ion-searchbar placeholder="Pesquisar" debounce="500" (ionChange)="pesquisaItem($event)"></ion-searchbar>
     </ion-toolbar>
-    <ion-label>{{camposPesq | json}}</ion-label>
 </ion-header>
 <ion-content>
     <ion-infinite-scroll>
-        <ion-radio-group>
-            <ion-item *ngIf="varios">
-                <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
-                <ion-label slot="end">
-                    Tudo
-                </ion-label>
-            </ion-item>
-            <ion-item *ngIf="items && items.length; else naoecontrado" *ngFor="let item of items">
-                <ion-radio *ngIf="!varios" slot="start"></ion-radio>
-                <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
-                <ion-label slot="end">
-                    [{{item | json}}]
-                    {{item['campoIcone']?}}
-                    {{item['campoTitulo']?}}
-                    {{item['campoDescricao']?}}
-                </ion-label>
-            </ion-item>
-            <ng-template #naoecontrado>
-                <ion-item>
-                    Não encontrado!
+        <form class="padding" [formGroup]="form" novalidate>
+            <ion-radio-group formControlName="valor">
+                <ion-item *ngIf="varios">
+                    <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
+                    <ion-label slot="end">
+                        Tudo
+                    </ion-label>
                 </ion-item>
-            </ng-template>
-        </ion-radio-group>
+                [{{form.valor | json}}]
+                [{{form.valores | json}}]
+                <div *ngIf="itemsFiltrados && itemsFiltrados.length; else naoecontrado">
+                    <ion-item *ngFor="let item of itemsFiltrados">
+                        <ion-radio *ngIf="!varios" slot="start" [value]="item">
+                        </ion-radio>
+                        <ion-checkbox *ngIf="varios" slot="start" formControlName="valores" [value]="item">
+                        </ion-checkbox>
+                        <ion-avatar slot="start" *ngIf="campoIcone && item[campoIcone]">
+                            <ion-img [src]="item[campoIcone]"></ion-img>
+                        </ion-avatar>
+                        
+                        <ion-label slot="end">
+                            <h3>{{item[campoTitulo]}}</h3>
+                            <p *ngIf="campoDescricao">{{item[campoDescricao]}}</p>
+                        </ion-label>
+                    </ion-item>
+                </div>
+                <ng-template #naoecontrado>
+                    <ion-item>
+                        Não encontrado!
+                    </ion-item>
+                </ng-template>
+            </ion-radio-group>
+        </form>
     </ion-infinite-scroll>
 </ion-content>
 <ion-footer>
     <ion-toolbar>
         <ion-buttons slot="end">
-            <ion-button color="primary">Ok</ion-button>
-            <ion-button>Cancelar</ion-button>
+            <ion-button (click)="varios = !varios">Multi/Simples</ion-button>
+            <ion-button (click)="confirmar()" color="primary" block [disabled]="form?.invalid">Ok</ion-button>
+            <ion-button (click)="cancelar()">Cancelar</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>
