@@ -32,7 +32,6 @@ export class LoginPage implements OnInit {
   ) {
   }
 
-
   ngOnInit() {
     this.form = this.createForm(new Login());
     this.urlRetorno = this.route.snapshot.queryParams.urlRetorno || this.urlRetorno;
@@ -44,10 +43,10 @@ export class LoginPage implements OnInit {
     }, 500);
   }
 
-  private createForm(login: Login): FormGroup {
+  private createForm(init: Login): FormGroup {
     return this.formBuilder.group({
-      usuario: [login.usuario, Validators.required],
-      senha: [login.senha, Validators.required],
+      usuario: [init.usuario, Validators.required],
+      senha: [init.senha, Validators.required],
     });
   }
 

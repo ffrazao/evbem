@@ -157,20 +157,46 @@ export class RegistroComponent implements OnInit {
     }
 
     public pesquisarCondutor() {
-        const itens = ['a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
-            // 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b',
-            // 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
-            // 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
-            // 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b',
-            // 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
-            // 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
-            // 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b',
-            // 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a',
-            // 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c', 'a', 'b', 'c',
-            // 'a', 'b', 'c', 'a', 'b', 'c'
+        const itens = [
+            {
+                id: 1,
+                nome: 'AAAA',
+                foto: 'XXX',
+                descricao: 'ZZZZ'
+            },
+            {
+                id: 2,
+                nome: 'BBBB',
+                foto: 'XXX',
+                descricao: 'UUU'
+            },
+            {
+                id: 3,
+                nome: 'CCCC',
+                foto: 'XXX',
+                descricao: 'TTTT'
+            },
+            {
+                id: 4,
+                nome: 'DDDD',
+                foto: 'XXX',
+                descricao: 'VVVV'
+            },
+            {
+                id: 5,
+                nome: 'EEEE',
+                foto: 'XXX',
+                descricao: 'XXXX'
+            },
+            {
+                id: 6,
+                nome: 'FFFF',
+                foto: 'XXX',
+                descricao: 'YYYY'
+            },
         ];
 
-        this.escolheItem.escolhe(itens, false).then(r => console.log(r));
+        this.escolheItem.escolhe(itens, ['nome', 'descricao'], 'nome', 'descricao', 'foto', false).then(r => console.log(r));
         return;
 
         if (!this.form.get('pesquisaCondutor').value) {
