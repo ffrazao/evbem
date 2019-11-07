@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EscolheItem } from './escolhe-item';
 import { ModalController } from '@ionic/angular';
+
 import { MensagemService } from '../../servico/mensagem/mensagem.service';
 
 @Component({
@@ -11,36 +10,62 @@ import { MensagemService } from '../../servico/mensagem/mensagem.service';
 })
 export class EscolheItemComponent implements OnInit {
 
-    private form: FormGroup;
+    @Input() private valor: any;
 
-    @Input() items: any[];
-    itemsFiltrados: any[];
+    @Input() private items: any[];
+    private itemsFiltrados: any[];
 
-    @Input() camposPesq: string[];
+    @Input() private camposPesq: string[];
 
-    @Input() campoIcone: string;
+    @Input() private campoIcone: string;
 
-    @Input() campoTitulo: string;
+    @Input() private campoTitulo: string;
 
-    @Input() campoDescricao: string;
+    @Input() private campoDescricao: string;
 
-    @Input() varios = false;
+    @Input() private varios = false;
+
+    @Input() private exibeVarios = false;
+
+    private indeterminado: boolean;
+    private tudo: boolean;
 
     constructor(
-        private formBuilder: FormBuilder,
         private modalController: ModalController,
         private mensagem: MensagemService,
     ) { }
 
     ngOnInit() {
         this.itemsFiltrados = JSON.parse(JSON.stringify(this.items));
-        this.form = this.createForm(new EscolheItem());
     }
 
-    private createForm(init: EscolheItem): FormGroup {
-        return this.formBuilder.group({
-            valor: [init.valor, Validators.required],
+    marcaTudo() {
+        setTimeout(() => {
+            this.itemsFiltrados.forEach(obj => {
+                obj.seleciona = this.tudo;
+            });
         });
+    }
+
+    verificaMarcado() {
+        const totalItems = this.itemsFiltrados.length;
+        let checked = 0;
+        this.itemsFiltrados.map(obj => {
+            if (obj.seleciona) checked++;
+        });
+        if (checked > 0 && checked < totalItems) {
+            //If even one item is checked but not all
+            this.indeterminado = true;
+            this.tudo = false;
+        } else if (checked == totalItems) {
+            //If all are checked
+            this.tudo = true;
+            this.indeterminado = false;
+        } else {
+            //If none is checked
+            this.indeterminado = false;
+            this.tudo = false;
+        }
     }
 
     public pesquisaItem(ev) {
@@ -50,12 +75,21 @@ export class EscolheItemComponent implements OnInit {
             ).filter(ii => ii === true).length > 0);
     }
 
+    private selecionados() {
+        return this.items.filter(i => i.seleciona);
+    }
+
+    private invalido() {
+        return (this.varios && !this.selecionados().length)
+            || (!this.varios && this.valor == null);
+    }
+
     public async confirmar() {
-        if (!this.form.valid) {
-            this.mensagem.erro('Dados inválidos!');
+        if (this.invalido()) {
+            this.mensagem.erro('Nenhum registro selecionado!');
             return;
         }
-        this.modalController.dismiss(this.form);
+        this.modalController.dismiss(this.varios ? this.selecionados() : this.valor);
     }
 
     public cancelar() {

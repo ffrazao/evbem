@@ -34,7 +34,7 @@ public class PessoaDAOImpl implements FiltroDAOExtra<PessoaFiltroDTO, Pessoa> {
 		Root<Pessoa> root = sql.from(Pessoa.class);
 		// para fazer referêcia à elementos herdados
 		Root<PessoaFisica> j1 = cb.treat(root, PessoaFisica.class);
-		Root<PessoaJuridica> j2 = cb.treat(root, PessoaJuridica.class);
+//		Root<PessoaJuridica> j2 = cb.treat(root, PessoaJuridica.class);
 
 		List<Predicate> pl = new ArrayList<>();
 
@@ -42,7 +42,9 @@ public class PessoaDAOImpl implements FiltroDAOExtra<PessoaFiltroDTO, Pessoa> {
 		if (!CollectionUtils.isEmpty(filtro.getPesq())) {
 			Object pesq = colecaoOuUnidade(filtro.getPesq());
 			pl.add(cb.or(criarPredicado(cb, root, "nome", pesq), criarPredicado(cb, root, "nomeReduzido", pesq),
-					criarPredicado(cb, j1, "cpf", pesq), criarPredicado(cb, j2, "cnpj", pesq)));
+					criarPredicado(cb, j1, "cpf", pesq)
+//					, criarPredicado(cb, j2, "cnpj", pesq)
+					));
 		} else {
 			if (!CollectionUtils.isEmpty(filtro.getNome())) {
 				pl.add(criarPredicado(cb, root, "nome", colecaoOuUnidade(filtro.getNome())));
@@ -53,9 +55,9 @@ public class PessoaDAOImpl implements FiltroDAOExtra<PessoaFiltroDTO, Pessoa> {
 			if (!CollectionUtils.isEmpty(filtro.getCpf())) {
 				pl.add(criarPredicado(cb, j1, "cpf", colecaoOuUnidade(filtro.getCpf())));
 			}
-			if (!CollectionUtils.isEmpty(filtro.getCnpj())) {
-				pl.add(criarPredicado(cb, j2, "cnpj", colecaoOuUnidade(filtro.getCnpj())));
-			}
+//			if (!CollectionUtils.isEmpty(filtro.getCnpj())) {
+//				pl.add(criarPredicado(cb, j2, "cnpj", colecaoOuUnidade(filtro.getCnpj())));
+//			}
 		}
 
 		// remover predicados nulos

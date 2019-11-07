@@ -85,8 +85,17 @@ export class MensagemService {
     public async sucesso(mensagem: string) {
         const result = await this.toastCtrl.create({
             message: mensagem,
-            duration: 2000,
+            duration: 3000,
             color: 'success',
+        });
+        return await result.present();
+    }
+
+    public async aviso(mensagem: string) {
+        const result = await this.toastCtrl.create({
+            message: mensagem,
+            duration: 3000,
+            color: 'danger',
         });
         return await result.present();
     }

@@ -6,8 +6,6 @@ import { EscolheItemComponent } from './escolhe-item.component';
 @Injectable({ providedIn: 'root' })
 export class EscolheItemService {
 
-    private resultadoP: any;
-
     constructor(
         private modalCtrl: ModalController
     ) {
@@ -19,29 +17,31 @@ export class EscolheItemService {
         campoTitulo: string,
         campoDescricao: string,
         campoIcone: string,
-        varios = false
+        varios = false,
+        exibeVarios = false,
     ): Promise<any> {
-        const modal = await this.modalCtrl.create({
-            component: EscolheItemComponent,
-            componentProps: {
-                items,
-                camposPesq,
-                campoTitulo,
-                campoDescricao,
-                campoIcone,
-                varios
-            }
+        return new Promise<any>(async (resolve, reject) => {
+            const modal = await this.modalCtrl.create({
+                component: EscolheItemComponent,
+                componentProps: {
+                    items,
+                    camposPesq,
+                    campoTitulo,
+                    campoDescricao,
+                    campoIcone,
+                    varios,
+                    exibeVarios,
+                }
+            });
+            modal.onDidDismiss().then((dados) => {
+                if (dados.data !== null) {
+                    resolve(dados.data);
+                } else {
+                    reject();
+                }
+            });
+            return await modal.present();
         });
-        modal.onDidDismiss().then((dados) => {
-            if (dados !== null) {
-                this.resultadoP = dados;
-            }
-        });
-        return await modal.present();
-    }
-
-    public get resultado() {
-        return this.resultadoP;
     }
 
 }

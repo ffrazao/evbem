@@ -1,51 +1,96 @@
 <ion-header>
     <ion-title>Escolha</ion-title>
+</ion-header>
+<!-- 
+<ion-content class="padding">
+    <ion-infinite-scroll>
+        <ion-radio-group [(ngModel)]="valor">
+            <ion-item *ngIf="varios">
+                <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
+                <ion-label slot="end">
+                    Tudo (selecionados [{{this.selecionados().length || 0}} / {{item.length}}])
+                </ion-label>
+            </ion-item>
+            <div *ngIf="itemsFiltrados && itemsFiltrados.length; else naoecontrado">
+                <ion-item *ngFor="let item of itemsFiltrados">
+                    <ion-radio *ngIf="!varios" slot="start" [(ngModel)]="item">
+                    </ion-radio>
+                    <ion-checkbox *ngIf="varios" slot="start" [(ngModel)]="item.seleciona" [value]="item">
+                    </ion-checkbox>
+                    <ion-avatar slot="start" *ngIf="campoIcone && item[campoIcone]">
+                        <ion-img [src]="item[campoIcone]"></ion-img>
+                    </ion-avatar>
+
+                    <ion-label slot="end">
+                        <h3>{{item[campoTitulo]}}</h3>
+                        <p *ngIf="campoDescricao">{{item[campoDescricao]}}</p>
+                    </ion-label>
+                </ion-item>
+            </div>
+            <ng-template #naoecontrado>
+                <ion-item>
+                    Não encontrado!
+                </ion-item>
+            </ng-template>
+        </ion-radio-group>
+    </ion-infinite-scroll>
+</ion-content>
+-->
+
+<ion-content class="padding">
+
     <ion-toolbar>
         <ion-searchbar placeholder="Pesquisar" debounce="500" (ionChange)="pesquisaItem($event)"></ion-searchbar>
     </ion-toolbar>
-</ion-header>
-<ion-content>
-    <ion-infinite-scroll>
-        <form class="padding" [formGroup]="form" novalidate>
-            <ion-radio-group formControlName="valor">
-                <ion-item *ngIf="varios">
-                    <ion-checkbox *ngIf="varios" slot="start"></ion-checkbox>
-                    <ion-label slot="end">
-                        Tudo
-                    </ion-label>
-                </ion-item>
-                [{{form.valor | json}}]
-                [{{form.valores | json}}]
-                <div *ngIf="itemsFiltrados && itemsFiltrados.length; else naoecontrado">
-                    <ion-item *ngFor="let item of itemsFiltrados">
-                        <ion-radio *ngIf="!varios" slot="start" [value]="item">
-                        </ion-radio>
-                        <ion-checkbox *ngIf="varios" slot="start" formControlName="valores" [value]="item">
-                        </ion-checkbox>
-                        <ion-avatar slot="start" *ngIf="campoIcone && item[campoIcone]">
-                            <ion-img [src]="item[campoIcone]"></ion-img>
-                        </ion-avatar>
-                        
-                        <ion-label slot="end">
-                            <h3>{{item[campoTitulo]}}</h3>
-                            <p *ngIf="campoDescricao">{{item[campoDescricao]}}</p>
-                        </ion-label>
-                    </ion-item>
-                </div>
-                <ng-template #naoecontrado>
-                    <ion-item>
-                        Não encontrado!
-                    </ion-item>
-                </ng-template>
-            </ion-radio-group>
-        </form>
-    </ion-infinite-scroll>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col><label>Item Selcionado</label></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <h2 *ngIf="valor && valor[campoTitulo]">{{valor[campoTitulo]}}</h2>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-radio-group [(ngModel)]="valor" *ngIf="itemsFiltrados && itemsFiltrados.length">
+        <ion-item *ngIf="varios">
+            {{indeterminado}} {{tudo}}
+            <ion-checkbox [(ngModel)]="tudo" slot="start" [indeterminate]="indeterminado" (ionChange)="marcaTudo()">
+            </ion-checkbox>
+            <ion-label slot="end">Tudo ({{selecionados()?.length || 0}}/{{items.length}})</ion-label>
+        </ion-item>
+        <div *ngIf="itemsFiltrados && itemsFiltrados.length; else naoecontrado">
+            <ion-item *ngFor="let item of itemsFiltrados">
+                <ion-radio *ngIf="!varios" [value]="item" slot="start"></ion-radio>
+                <ion-checkbox *ngIf="varios" [(ngModel)]="item.seleciona" (ionChange)="verificaMarcado()" slot="start">
+                </ion-checkbox>
+
+                <ion-avatar slot="start" *ngIf="campoIcone && item[campoIcone]">
+                    <ion-img [src]="item[campoIcone]"></ion-img>
+                </ion-avatar>
+
+                <ion-label slot="end">
+                    <h3>{{item[campoTitulo]}}</h3>
+                    <p *ngIf="campoDescricao">{{item[campoDescricao]}}</p>
+                </ion-label>
+            </ion-item>
+        </div>
+        <ng-template #naoecontrado>
+            <ion-item>
+                Não encontrado!
+            </ion-item>
+        </ng-template>
+    </ion-radio-group>
+
 </ion-content>
+
 <ion-footer>
     <ion-toolbar>
         <ion-buttons slot="end">
-            <ion-button (click)="varios = !varios">Multi/Simples</ion-button>
-            <ion-button (click)="confirmar()" color="primary" block [disabled]="form?.invalid">Ok</ion-button>
+            <ion-button *ngIf="exibeVarios" (click)="varios = !varios">Vários/Simples</ion-button>
+            <ion-button (click)="confirmar()" color="primary" block>Ok</ion-button>
             <ion-button (click)="cancelar()">Cancelar</ion-button>
         </ion-buttons>
     </ion-toolbar>

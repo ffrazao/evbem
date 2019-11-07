@@ -82,9 +82,12 @@
             campo obrigatório
         </ion-label>
         [{{form.error | json}}]
-        <ion-item>
-            <ion-button [routerLink]="['/s/veiculo-registrando']">Voltar</ion-button>
-            <ion-button type="submit" block [disabled]="form?.invalid">Avancar</ion-button>
-        </ion-item>
     </form>
 </ion-content>
+
+<ion-footer>
+    <ion-item>
+        <ion-button [routerLink]="['/s/veiculo-registrando']">Voltar</ion-button>
+        <ion-button type="submit" block [disabled]="form?.invalid">Avancar</ion-button>
+    </ion-item>
+</ion-footer>

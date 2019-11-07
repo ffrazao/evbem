@@ -62,7 +62,8 @@
             </ion-row>
             <ion-row>
                 <ion-col>Marca/ Modelo</ion-col>
-                <ion-col>{{entidade?.veiculo?.produto?.marca?.nome}}/ {{entidade?.veiculo?.produto?.modelo?.nome}}</ion-col>
+                <ion-col>{{entidade?.veiculo?.produto?.marca?.nome}}/ {{entidade?.veiculo?.produto?.modelo?.nome}}
+                </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col>Patrimônio</ion-col>
@@ -173,11 +174,14 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-item>
-            <ion-toolbar>
-                <ion-button [routerLink]="['/m/s/veiculo/registro/inicio']">Voltar</ion-button>
-                <ion-button type="submit" block [disabled]="form?.invalid">Avancar</ion-button>
-            </ion-toolbar>
-        </ion-item>
     </form>
 </ion-content>
+
+<ion-footer>
+    <ion-item>
+        <ion-toolbar>
+            <ion-button [routerLink]="['/m/s/veiculo/registro/inicio']">Voltar</ion-button>
+            <ion-button block [disabled]="form?.invalid" (click)="onSubmit()">Avancar</ion-button>
+        </ion-toolbar>
+    </ion-item>
+</ion-footer>
