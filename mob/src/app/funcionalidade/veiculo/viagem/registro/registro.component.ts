@@ -7,7 +7,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MensagemService } from '../../../../comum/servico/mensagem/mensagem.service';
 import { posicaoEmater } from '../../../../comum/ferramenta/funcao';
-import { SqliteService } from '../../../../comum/servico/local/sqlite.service';
 import { ViagemDaoLocal } from '../../../../dao/local/veiculo/viagem-dao.local';
 import { VeiculoDao } from '../../../../dao/externo/veiculo/veiculo-dao';
 import { ViagemInicio } from './viagem-inicio';
@@ -16,6 +15,9 @@ import { ViagemDao } from 'src/app/dao/externo/veiculo/viagem-dao';
 import { PessoaDao } from 'src/app/dao/externo/principal/pessoa-dao';
 import { PessoaFiltroDto } from 'src/app/transporte/principal/pessoa.filtro.dto';
 import { EscolheItemService } from 'src/app/comum/componente/escolhe-item/escolhe-item.service';
+import { LoginService } from 'src/app/comum/componente/login/login.service';
+import { UsuarioLocal } from 'src/app/comum/componente/login/usuario-local';
+import { Pessoa } from 'src/app/entidade/principal/pessoa';
 
 @Component({
     templateUrl: './registro.component.html',
@@ -24,8 +26,6 @@ import { EscolheItemService } from 'src/app/comum/componente/escolhe-item/escolh
 export class RegistroComponent implements OnInit {
 
     private form: FormGroup;
-
-    private entidade = new ViagemInicio();
 
     @ViewChild('focaliza', { static: false })
     private focaliza;
@@ -47,17 +47,32 @@ export class RegistroComponent implements OnInit {
         private mensagem: MensagemService,
         private geo: Geolocation,
         private barcodeScanner: BarcodeScanner,
-        private sqliteService: SqliteService,
         private escolheItem: EscolheItemService,
+        private loginService: LoginService,
+        private pessoaDao: PessoaDao,
     ) {
     }
 
     async ngOnInit() {
         try {
-            this.form = this.createForm(this.entidade, '1234', 'Teste');
+            const viagemInicio = new ViagemInicio();
+            const veiculo = '1234';
+            
+            let condutor = '';
+            const usuarioLocal = this.loginService.token;
+            if (usuarioLocal.pessoaId > 0) {
+                const pessoa = await this.pessoaDao.restaurar([usuarioLocal.pessoaId]);
+                if (pessoa != null) {
+                    viagemInicio.condutor = pessoa[0] as Pessoa;
+                    condutor = viagemInicio.condutor.nome;
+                }
+            }
+
+            this.form = this.createForm(viagemInicio, veiculo, condutor);
             this.initMap();
             console.log('captando posição atual');
             this.posicao = await this.geo.getCurrentPosition() as Geoposition;
+
         } finally {
             console.log(this.posicao);
             this.initMap();
@@ -85,15 +100,14 @@ export class RegistroComponent implements OnInit {
         });
     }
 
-    public async onSubmit() {
+    public salvar() {
         if (!this.form.valid) {
             return;
         }
 
         this.mensagem.aguarde().then((res) => {
             res.present();
-            // new [this.form.value as ViagemInicio]
-            this.servicoVeiculo.salvar([]).subscribe((r) => {
+            this.servico.salvar([this.form.value as ViagemInicio]).subscribe((r) => {
                 this.router.navigate(['/', 's', 'veiculo-registrando'], { relativeTo: this.route });
                 this.mensagem.sucesso('Viagem iniciada!');
                 res.dismiss();
@@ -153,14 +167,12 @@ export class RegistroComponent implements OnInit {
                     let escolhe = await this.escolheItem.escolhe(r, ['placa'], 'placa', null, null);
                     if (escolhe) {
                         this.form.get('veiculo').setValue(escolhe);
-                        this.entidade.veiculo = escolhe;        
                     } else {
                         this.mensagem.aviso('Nenhum registro não selecionado!');
                         return;
                     }
                 } else {
                     this.form.get('veiculo').setValue(r[0]);
-                    this.entidade.veiculo = r[0];    
                 }
                 this.mensagem.sucesso('Registro encontrado!');
             }, (e) => {
@@ -194,7 +206,6 @@ export class RegistroComponent implements OnInit {
                     if (escolhe) {
                         console.log('escolido ==> ', escolhe);
                         this.form.get('condutor').setValue(escolhe);
-                        this.entidade.condutor = escolhe;
                     } else {
                         this.mensagem.aviso('Nenhum registro não selecionado!');
                         return;
@@ -202,7 +213,6 @@ export class RegistroComponent implements OnInit {
                 } else {
                     console.log(r[0]);
                     this.form.get('condutor').setValue(r[0]);
-                    this.entidade.condutor = r[0];
                 }
                 this.mensagem.sucesso('Registro encontrado!');
             }, (e) => {

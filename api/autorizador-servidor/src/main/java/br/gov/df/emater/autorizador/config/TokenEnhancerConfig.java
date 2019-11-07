@@ -39,7 +39,7 @@ public class TokenEnhancerConfig implements TokenEnhancer {
 		try (Connection con = dataSource.getConnection()) {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT DISTINCT").append("\n");
-			sql.append("    id, nome, email, foto").append("\n");
+			sql.append("    id, nome, email, foto, pessoa_id").append("\n");
 			sql.append("FROM").append("\n");
 			sql.append("    sistema.usuario").append("\n");
 			sql.append("WHERE").append("\n");
@@ -52,6 +52,7 @@ public class TokenEnhancerConfig implements TokenEnhancer {
 						details.put("nome", rs.getString("nome"));
 						details.put("email", rs.getString("email"));
 						details.put("foto", rs.getBytes("foto"));
+						details.put("pessoaId", rs.getInt("pessoa_id"));
 					}
 				}
 			}

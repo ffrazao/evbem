@@ -27,17 +27,17 @@ const routes: Routes = [
         loadChildren: () => import('./funcionalidade/list/list.module').then(m => m.ListPageModule)
       },
       {
-        path: 'veiculo-registro',
-        loadChildren: () => import('./funcionalidade/veiculo/registro/registro/registro.module').then(m => m.RegistroComponentModule)
+        path: 'viagem-registro',
+        loadChildren: () => import('./funcionalidade/veiculo/viagem/registro/registro.module').then(m => m.RegistroComponentModule)
       },
       {
-        path: 'veiculo-registrando',
-        loadChildren: () => import('./funcionalidade/veiculo/registro/registrando/registrando.module')
+        path: 'viagem-registrando',
+        loadChildren: () => import('./funcionalidade/veiculo/viagem/registrando/registrando.module')
           .then(m => m.RegistrandoComponentModule)
       },
       {
-        path: 'veiculo-parar',
-        loadChildren: () => import('./funcionalidade/veiculo/registro/parar/parar.module').then(m => m.PararComponentModule)
+        path: 'viagem-parar',
+        loadChildren: () => import('./funcionalidade/veiculo/viagem/parar/parar.module').then(m => m.PararComponentModule)
       },
     ],
     canActivate: [AuthGuard],

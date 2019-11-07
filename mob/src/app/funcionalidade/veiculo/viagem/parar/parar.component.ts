@@ -71,7 +71,7 @@ export class PararComponent implements OnInit {
         this.mensagem.aguarde().then((res) => {
             res.present();
             this.service.salvar(this.form.value as ViagemParar).subscribe((r) => {
-                this.router.navigate(['/m', 's', 'veiculo', 'registro', 'inicio'], {relativeTo: this.route});
+                this.router.navigate(['/m', 's', 'veiculo', 'viagem', 'inicio'], {relativeTo: this.route});
                 this.mensagem.sucesso('Viagem concluída!');
                 res.dismiss();
             }, (e) => {
