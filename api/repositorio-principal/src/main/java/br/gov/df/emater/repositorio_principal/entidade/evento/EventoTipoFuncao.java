@@ -3,8 +3,6 @@ package br.gov.df.emater.repositorio_principal.entidade.evento;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,35 +14,33 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.principal.Recurso;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the Participacao database table.
+ * The persistent class for the Tipo database table.
  * 
  */
 @Entity
-@Table(catalog = "evento")
+@Table(catalog = "evento", name = "evento_tipo_funcao")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Participacao extends EntidadeBase implements Serializable, Identificavel {
+public class EventoTipoFuncao extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "evento_id ")
+	@JoinColumn(name = "evento_tipo_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Evento evento;
+	private EventoTipo eventoTipo;
 
 	@ManyToOne
-	@JoinColumn(name = "funcao_id ")
+	@JoinColumn(name = "funcao_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Funcao funcao;
@@ -53,13 +49,6 @@ public class Participacao extends EntidadeBase implements Serializable, Identifi
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Enumerated(EnumType.STRING)
-	private Confirmacao principal;
+	private Integer quantidade;
 
-	@ManyToOne
-	@JoinColumn(name = "recurso_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Recurso recurso;
-	
 }

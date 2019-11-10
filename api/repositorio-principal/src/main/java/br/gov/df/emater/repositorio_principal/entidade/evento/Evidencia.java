@@ -2,6 +2,7 @@ package br.gov.df.emater.repositorio_principal.entidade.evento;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -51,9 +52,10 @@ public class Evidencia extends EntidadeBase implements Serializable, Identificav
 	private String descricao;
 
 	@Lob
-	private byte[] evidencia;
+	private byte[] conteudo;
 
 	@Enumerated(EnumType.STRING)
-	private EvidenciaTipo tipo;
+	@Column(name="evidencia_tipo")
+	private EvidenciaTipo evidenciaTipo;
 
 }

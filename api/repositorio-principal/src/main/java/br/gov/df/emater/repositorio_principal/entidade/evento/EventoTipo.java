@@ -2,8 +2,12 @@ package br.gov.df.emater.repositorio_principal.entidade.evento;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
+import br.gov.df.emater.repositorio_principal.dominio.principal.RecursoTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavelCodificavel;
@@ -31,11 +37,11 @@ import lombok.Setter;
  * 
  */
 @Entity
-@Table(catalog = "evento")
+@Table(catalog = "evento", name = "evento_tipo")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Tipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavelCodificavel<Tipo> {
+public class EventoTipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavelCodificavel<EventoTipo> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,8 +49,8 @@ public class Tipo extends EntidadeBase implements Serializable, Identificavel, P
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Tipo> filhos;
-
+	private List<EventoTipo> filhos;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -55,6 +61,14 @@ public class Tipo extends EntidadeBase implements Serializable, Identificavel, P
 	@JoinColumn(name = "pai_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Tipo pai;
+	private EventoTipo pai;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="recurso_tipo")
+	private Set<RecursoTipo> recursoTipoSet;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="uso_sistema")
+	private Confirmacao usoSistema;
 
 }

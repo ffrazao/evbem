@@ -10,7 +10,7 @@ import { UnidadeOrganizacional } from '../funcional/unidade-organizacional';
 import { VeiculoEvento } from './veiculo-evento';
 import { VeiculoEventoTipo } from '../../dominio/veiculo/veiculo-evento-tipo';
 import { Rota } from './rota';
-import { Tipo } from '../evento/tipo';
+import { EventoTipo } from '../evento/evento-tipo';
 
 export class Viagem extends VeiculoEvento implements Sincrono {
 
@@ -18,12 +18,12 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public id?: number,
         public planejamento?: Confirmacao,
         public recurso?: Recurso,
-        public eventoTipo?: Tipo,
+        public eventoTipo?: EventoTipo,
         public local?: Local,
-        public local_descricao?: string,
+        public localDescricao?: String,
         public inicio?: Date,
         public termino?: Date,
-        public descricao?: Date, // servico
+        public descricao?: string,
         public pai?: Evento,
         public evidenciaList?: Evidencia[],
         public tipo?: VeiculoEventoTipo,
@@ -41,8 +41,8 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public sincronizado?: Date,
         public apagar?: boolean,
     ) {
-        super(id, planejamento, recurso, eventoTipo, local, local_descricao, inicio, termino, descricao, pai,
-            evidenciaList, VeiculoEventoTipo.VIAGEM);
+        super(id, planejamento, recurso, eventoTipo, local, localDescricao, inicio, termino,
+            descricao, pai, evidenciaList, VeiculoEventoTipo.VIAGEM);
     }
 
 }

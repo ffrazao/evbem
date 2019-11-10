@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Pai;
@@ -53,6 +57,15 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	@Lob
 	private String descricao;
 
+	@ManyToOne
+	@JoinColumn(name = "evento_tipo_id ")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private EventoTipo eventoTipo;
+
+	@OneToMany(mappedBy = "evidencia", fetch = FetchType.LAZY)
+	private List<Evidencia> evidenciaList;
+
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
 	private List<Evento> filhos;
@@ -64,13 +77,10 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar inicio;
 
-	@ManyToOne
-	@JoinColumn(name = "item_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Recurso item;
-
 	private Point local;
+
+	@Column(name = "local_descricao")
+	private String localDescricao;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
@@ -78,13 +88,16 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	@JsonIdentityReference(alwaysAsId = false)
 	private Evento pai;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar termino;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao planejamento;
 
 	@ManyToOne
-	@JoinColumn(name = "tipo_id ")
+	@JoinColumn(name = "recurso_id ")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private Tipo tipo;
+	private Recurso recurso;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar termino;
 
 }
