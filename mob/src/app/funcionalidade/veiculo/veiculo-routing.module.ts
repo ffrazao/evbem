@@ -9,12 +9,12 @@ const routes: Routes = [
     component: VeiculoPage,
     children: [
       {
-        path: 'viagem',
+        path: 'registro',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('./viagem/viagem.module').then(m => m.ViagemPageModule)
+              import('./registro/registro.module').then(m => m.RegistroPageModule)
           }
         ]
       },
@@ -40,7 +40,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'viagem',
+        redirectTo: 'registro',
         pathMatch: 'full'
       }
     ]

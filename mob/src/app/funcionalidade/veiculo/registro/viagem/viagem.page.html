@@ -1,0 +1,26 @@
+<ion-content class="padding">
+  <ion-segment scrollable >
+    <ion-segment-button (click)="setEstado(0)" checked>
+      <ion-icon name="rocket"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click)="setEstado(1)">
+      <ion-icon name="trending-up"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button (click)="setEstado(2)">
+      <ion-icon name="hand"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <app-viagem-saida *ngIf="estado == 0"></app-viagem-saida>
+  <app-viagem-rota *ngIf="estado == 1"></app-viagem-rota>
+  <app-viagem-chegada *ngIf="estado == 2"></app-viagem-chegada>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-button (click)='retornar()' [disabled]="estado == 0">Retornar</ion-button>
+        <ion-button (click)='dismiss()'>Cancelar</ion-button>
+        <ion-button (click)='avancar()' [disabled]="estado == estadoList.length - 1">Avançar</ion-button>
+      </ion-toolbar>
+</ion-footer>

@@ -26,19 +26,6 @@ const routes: Routes = [
         path: 'list',
         loadChildren: () => import('./funcionalidade/list/list.module').then(m => m.ListPageModule)
       },
-      {
-        path: 'viagem-registro',
-        loadChildren: () => import('./funcionalidade/veiculo/viagem/registro/registro.module').then(m => m.RegistroComponentModule)
-      },
-      {
-        path: 'viagem-registrando',
-        loadChildren: () => import('./funcionalidade/veiculo/viagem/registrando/registrando.module')
-          .then(m => m.RegistrandoComponentModule)
-      },
-      {
-        path: 'viagem-parar',
-        loadChildren: () => import('./funcionalidade/veiculo/viagem/parar/parar.module').then(m => m.PararComponentModule)
-      },
     ],
     canActivate: [AuthGuard],
     canLoad: [AuthGuard],

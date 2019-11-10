@@ -6,27 +6,32 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LongPressModule } from 'ionic-long-press/dist';
 
-import { RegistroComponent } from './registro.component';
-import { RegistroComponentRoutingModule } from './registro-routing.module';
-import { ServicoLocalModule } from '../../../../comum/servico/local/servico-local.module';
-import { EscolheItemComponentModule } from 'src/app/comum/componente/escolhe-item/escolhe-item.module';
+import { SaidaComponent } from './saida.component';
+import { SaidaComponentRoutingModule } from './saida-routing.module';
+import { ServicoLocalModule } from '../../../../../comum/servico/local/servico-local.module';
+import { EscolheItemComponentModule } from '../../../../../comum/componente/escolhe-item/escolhe-item.module';
 
 @NgModule({
-    declarations: [RegistroComponent],
+    declarations: [SaidaComponent],
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         LongPressModule,
-        RegistroComponentRoutingModule,
+        SaidaComponentRoutingModule,
         ServicoLocalModule,
-        EscolheItemComponentModule
+        EscolheItemComponentModule,
+    ],
+    exports: [
+        SaidaComponent
     ],
     providers: [
         BarcodeScanner,
         Geolocation,
-    ]
+    ],
+    entryComponents: [
+        SaidaComponent
+    ],
 })
-export class RegistroComponentModule {
-}
+export class SaidaComponentModule {}

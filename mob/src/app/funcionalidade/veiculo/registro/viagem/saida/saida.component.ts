@@ -5,25 +5,26 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { Map, tileLayer, marker, icon } from 'leaflet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { MensagemService } from '../../../../comum/servico/mensagem/mensagem.service';
-import { posicaoEmater } from '../../../../comum/ferramenta/funcao';
-import { ViagemDaoLocal } from '../../../../dao/local/veiculo/viagem-dao.local';
-import { VeiculoDao } from '../../../../dao/externo/veiculo/veiculo-dao';
 import { ViagemInicio } from './viagem-inicio';
-import { VeiculoFiltroDto } from 'src/app/transporte/veiculo/veiculo.filtro.dto';
-import { ViagemDao } from 'src/app/dao/externo/veiculo/viagem-dao';
-import { PessoaDao } from 'src/app/dao/externo/principal/pessoa-dao';
-import { PessoaFiltroDto } from 'src/app/transporte/principal/pessoa.filtro.dto';
-import { EscolheItemService } from 'src/app/comum/componente/escolhe-item/escolhe-item.service';
-import { LoginService } from 'src/app/comum/componente/login/login.service';
-import { UsuarioLocal } from 'src/app/comum/componente/login/usuario-local';
-import { Pessoa } from 'src/app/entidade/principal/pessoa';
+import { MensagemService } from '../../../../../comum/servico/mensagem/mensagem.service';
+import { posicaoEmater } from '../../../../../comum/ferramenta/funcao';
+import { ViagemDaoLocal } from '../../../../../dao/local/veiculo/viagem-dao.local';
+import { VeiculoDao } from '../../../../../dao/externo/veiculo/veiculo-dao';
+import { VeiculoFiltroDto } from '../../../../../transporte/veiculo/veiculo.filtro.dto';
+import { ViagemDao } from '../../../../../dao/externo/veiculo/viagem-dao';
+import { PessoaDao } from '../../../../../dao/externo/principal/pessoa-dao';
+import { PessoaFiltroDto } from '../../../../../transporte/principal/pessoa.filtro.dto';
+import { EscolheItemService } from '../../../../../comum/componente/escolhe-item/escolhe-item.service';
+import { LoginService } from '../../../../../comum/componente/login/login.service';
+import { UsuarioLocal } from '../../../../../comum/componente/login/usuario-local';
+import { Pessoa } from '../../../../../entidade/principal/pessoa';
 
 @Component({
-    templateUrl: './registro.component.html',
-    styleUrls: ['./registro.component.scss']
+    selector: 'app-viagem-saida',
+    templateUrl: './saida.component.html',
+    styleUrls: ['./saida.component.scss']
 })
-export class RegistroComponent implements OnInit {
+export class SaidaComponent implements OnInit {
 
     private form: FormGroup;
 

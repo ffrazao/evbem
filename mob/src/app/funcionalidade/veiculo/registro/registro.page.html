@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Registro
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <!-- fab placed in the center of the content with a list on each side -->
+  <ion-fab vertical="center" horizontal="center" slot="fixed">
+    <ion-fab-button size="extralarge">
+      <ion-icon name="share"></ion-icon>
+      <p>INICIAR</p>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button (click)="viagem()">
+        <ion-icon name="logo-instagram"></ion-icon>
+        Viagem
+      </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="end">
+      <ion-fab-button>
+        <ion-icon name="logo-twitter"></ion-icon>
+        Outro
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,74 @@
+<h2>
+    CHEGADA
+</h2>
+
+<form class="padding" [formGroup]="form" (submit)="onSubmit()" novalidate>
+    <ion-item-group>
+        <ion-item>
+            <ion-label (click)="tamanho.style = 'height: 1080px;'">Local Chegada</ion-label>
+        </ion-item>
+        <ion-item>
+            <div #tamanho style="width: 100%; height: 180px;">
+                <div id="localChegadaMap" style="height:100%;"></div>
+            </div>
+        </ion-item>
+    </ion-item-group>
+    <ion-item>
+        <ion-label position="floating">Hora</ion-label>
+        <ion-input type="time" formControlName="hora"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+        *ngIf="(form.controls.hora.touched || form.controls.hora.dirty) && form.controls.hora.hasError('required')"
+        class="danger">
+        campo obrigatório
+    </ion-label>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="3" class="align-self-center">
+                <ion-toolbar>
+                    <ion-button (press)="onPress($event, false)" (click)="onPress($event, false)" slot="start">
+                        -
+                    </ion-button>
+                </ion-toolbar>
+            </ion-col>
+            <ion-col size="6" class="align-self-center">
+                <ion-item>
+                    <ion-label position="floating">Odômetro (em KM)</ion-label>
+                    <ion-input type="number" class="ion-text-right" formControlName="odometro" #focaliza>
+                    </ion-input>
+                </ion-item>
+                <ion-label color="danger"
+                    *ngIf="(form.controls.odometro.touched || form.controls.odometro.dirty) && form.controls.odometro.hasError('required')"
+                    class="danger">
+                    campo obrigatório
+                </ion-label>
+                <ion-label color="danger"
+                    *ngIf="(form.controls.odometro.touched || form.controls.odometro.dirty) && form.controls.odometro.hasError('min')"
+                    class="danger">
+                    valor mínimo inválido
+                </ion-label>
+            </ion-col>
+            <ion-col size="3" class="align-self-center">
+                <ion-toolbar>
+                    <ion-button (press)="onPress($event, true)" (click)="onPress($event, true)" slot="end">
+                        +
+                    </ion-button>
+                </ion-toolbar>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-item>
+        <ion-label position="floating">Total</ion-label>
+        <ion-label>33 km</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Serviços</ion-label>
+        <ion-textarea formControlName="servico"></ion-textarea>
+    </ion-item>
+    <ion-label color="danger"
+        *ngIf="(form.controls.servico.touched || form.controls.servico.dirty) && form.controls.servico.hasError('required')"
+        class="danger">
+        campo obrigatório
+    </ion-label>
+    [{{form.error | json}}]
+</form>

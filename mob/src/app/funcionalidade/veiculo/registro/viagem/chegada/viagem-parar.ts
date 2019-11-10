@@ -1,4 +1,4 @@
-import { Local } from '../../../../entidade/comum/local';
+import { Local } from '../../../../../entidade/comum/local';
 
 export class ViagemParar {
     localChegada = new Local(0, 0);

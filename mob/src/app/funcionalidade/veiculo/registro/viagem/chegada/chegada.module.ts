@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
-import { PararComponent } from './parar.component';
-import { PararComponentRoutingModule } from './parar-routing.module';
+import { ChegadaComponent } from './chegada.component';
+import { ChegadaComponentRoutingModule } from './chegada-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
-    declarations: [PararComponent],
+    declarations: [ChegadaComponent],
     imports: [
         IonicModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        PararComponentRoutingModule
+        ChegadaComponentRoutingModule
+    ],
+    exports: [
+        ChegadaComponent
     ],
     providers: [
         Geolocation,
+    ],
+    entryComponents: [
+        ChegadaComponent
     ]
 })
-export class PararComponentModule {
+export class ChegadaComponentModule {
 }

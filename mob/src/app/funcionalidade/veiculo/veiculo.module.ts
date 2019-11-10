@@ -8,12 +8,12 @@ import { VeiculoPageRoutingModule } from './veiculo-routing.module';
 import { VeiculoPage } from './veiculo.page';
 
 @NgModule({
+  declarations: [VeiculoPage],
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     VeiculoPageRoutingModule
   ],
-  declarations: [VeiculoPage]
 })
 export class VeiculoPageModule {}

@@ -4,16 +4,16 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Map, tileLayer, marker, icon } from 'leaflet';
 
-import { PararService } from './parar.service';
 import { ViagemParar } from './viagem-parar';
-import { MensagemService } from '../../../../comum/servico/mensagem/mensagem.service';
-import { posicaoEmater } from '../../../../comum/ferramenta/funcao';
+import { MensagemService } from '../../../../../comum/servico/mensagem/mensagem.service';
+import { posicaoEmater } from '../../../../../comum/ferramenta/funcao';
 
 @Component({
-    templateUrl: './parar.component.html',
-    styleUrls: ['./parar.component.scss']
+    selector: 'app-viagem-chegada',
+    templateUrl: './chegada.component.html',
+    styleUrls: ['./chegada.component.scss']
 })
-export class PararComponent implements OnInit {
+export class ChegadaComponent implements OnInit {
 
     private form: FormGroup;
 
@@ -29,7 +29,6 @@ export class PararComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private service: PararService,
         private formBuilder: FormBuilder,
         private mensagem: MensagemService,
         private geo: Geolocation,
@@ -70,7 +69,7 @@ export class PararComponent implements OnInit {
 
         this.mensagem.aguarde().then((res) => {
             res.present();
-            this.service.salvar(this.form.value as ViagemParar).subscribe((r) => {
+/*            this.service.salvar(this.form.value as ViagemParar).subscribe((r) => {
                 this.router.navigate(['/m', 's', 'veiculo', 'viagem', 'inicio'], {relativeTo: this.route});
                 this.mensagem.sucesso('Viagem concluída!');
                 res.dismiss();
@@ -78,7 +77,7 @@ export class PararComponent implements OnInit {
                 console.log(e);
                 this.mensagem.erro(e);
                 res.dismiss();
-            });
+            });*/
         });
     }
 
