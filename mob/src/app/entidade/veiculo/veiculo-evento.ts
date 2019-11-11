@@ -20,7 +20,7 @@ export class VeiculoEvento extends Evento {
         public descricao?: string,
         public pai?: Evento,
         public evidenciaList?: Evidencia[],
-        public tipo?: VeiculoEventoTipo
+        public veiculoEventoTipo?: VeiculoEventoTipo,
     ) {
         super(id, planejamento, recurso, eventoTipo, local, localDescricao, inicio, termino, descricao, pai, evidenciaList);
     }

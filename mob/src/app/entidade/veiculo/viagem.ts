@@ -26,7 +26,7 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public descricao?: string,
         public pai?: Evento,
         public evidenciaList?: Evidencia[],
-        public tipo?: VeiculoEventoTipo,
+        public veiculoEventoTipo?: VeiculoEventoTipo,
         public localSaida?: Local,
         public localSaidaDescricao?: string,
         public quilometragemSaida?: number,
@@ -35,11 +35,7 @@ export class Viagem extends VeiculoEvento implements Sincrono {
         public quilometragemChegada?: number,
         public pessoa?: Pessoa, // responsavel pelo veiculo
         public unidadeOrganizacional?: UnidadeOrganizacional, // lotacao Veiculo
-        public rota?: Rota[],
-        public participacaoList?: Participacao[],
-        public idServidor?: number,
-        public sincronizado?: Date,
-        public apagar?: boolean,
+        public rotaList?: Rota[],
     ) {
         super(id, planejamento, recurso, eventoTipo, local, localDescricao, inicio, termino,
             descricao, pai, evidenciaList, VeiculoEventoTipo.VIAGEM);

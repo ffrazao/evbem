@@ -22,7 +22,7 @@ export class Evento implements Sincrono {
         public termino?: Date,
         public descricao?: string,
         public pai?: Evento,
-        public evidenciaList?: Evidencia[]
+        public evidenciaList?: Evidencia[],
     ) {
     }
 
