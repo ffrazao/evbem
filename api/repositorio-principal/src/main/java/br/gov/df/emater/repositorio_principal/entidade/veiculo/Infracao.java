@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import br.gov.df.emater.repositorio_principal.entidade.evento.Evento;
 import br.gov.df.emater.repositorio_principal.entidade.funcional.UnidadeOrganizacional;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Infracao extends Evento implements Serializable {
+public class Infracao extends VeiculoEvento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -23,11 +23,19 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.geo.Point;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.gov.df.emater.repositorio_principal.conversor.PointJsonDeserializer;
+import br.gov.df.emater.repositorio_principal.conversor.PointJsonSerializer;
+import br.gov.df.emater.repositorio_principal.conversor.TimestampJsonDeserializer;
+import br.gov.df.emater.repositorio_principal.conversor.TimestampJsonSerializer;
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
@@ -50,6 +58,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class Evento extends EntidadeBase implements Serializable, Identificavel, Temporalizavel, Pai<Evento> {
 
 	private static final long serialVersionUID = 1L;
@@ -63,7 +72,7 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	@JsonIdentityReference(alwaysAsId = false)
 	private EventoTipo eventoTipo;
 
-	@OneToMany(mappedBy = "evidencia", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "evento", fetch = FetchType.LAZY)
 	private List<Evidencia> evidenciaList;
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
@@ -75,8 +84,13 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonSerialize(using = TimestampJsonSerializer.class)
+	@JsonDeserialize(using = TimestampJsonDeserializer.class)
 	private Calendar inicio;
 
+	@JsonSerialize(using = PointJsonSerializer.class)
+	@JsonDeserialize(using = PointJsonDeserializer.class)
 	private Point local;
 
 	@Column(name = "local_descricao")
@@ -98,6 +112,9 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	private Recurso recurso;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonSerialize(using = TimestampJsonSerializer.class)
+	@JsonDeserialize(using = TimestampJsonDeserializer.class)
 	private Calendar termino;
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Servico extends EntidadeBase implements Serializable {
+public class Servico extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;
 

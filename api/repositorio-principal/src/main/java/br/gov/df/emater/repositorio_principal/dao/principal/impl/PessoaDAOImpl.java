@@ -17,7 +17,6 @@ import org.springframework.util.CollectionUtils;
 
 import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaFisica;
-import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaJuridica;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import br.gov.df.emater.transporte.principal.PessoaFiltroDTO;
 

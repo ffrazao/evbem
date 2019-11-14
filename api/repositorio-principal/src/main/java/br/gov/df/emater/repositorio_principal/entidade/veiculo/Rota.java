@@ -18,7 +18,11 @@ import org.springframework.data.geo.Point;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.gov.df.emater.repositorio_principal.conversor.PointJsonDeserializer;
+import br.gov.df.emater.repositorio_principal.conversor.PointJsonSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -48,6 +52,8 @@ public class Rota implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar momento;
 	
+	@JsonSerialize(using = PointJsonSerializer.class)
+	@JsonDeserialize(using = PointJsonDeserializer.class)
 	private Point ponto;
 	
 	private BigDecimal altitude;

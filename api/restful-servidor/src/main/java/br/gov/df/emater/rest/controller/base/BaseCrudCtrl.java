@@ -1,6 +1,7 @@
 package br.gov.df.emater.rest.controller.base;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -11,8 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import br.gov.df.emater.negocio.base.Alterar;
-import br.gov.df.emater.negocio.base.Excluir;
+import br.gov.df.emater.negocio.base.AlterarEntidade;
+import br.gov.df.emater.negocio.base.ExcluirEntidade;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +26,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("unchecked")
 // E, F, R = Entidade, Filtro, Resultado
-public class BaseCrudCtrl<E, F, R> extends BaseCtrl {
+public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
 
 	@Setter(value = AccessLevel.NONE)
 	private String funcionalidade;
@@ -35,26 +37,26 @@ public class BaseCrudCtrl<E, F, R> extends BaseCtrl {
 	}
 
 	@PostMapping()
-	protected E[] criar(@RequestBody(required = true) E[] entidades, Principal usuario) throws Exception {
-		return (E[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades, usuario);
+	protected List<E> criar(@RequestBody(required = true) List<E> entidades, Principal usuario) throws Exception {
+		return (List<E>) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades, usuario);
 	}
 	
 	@GetMapping(value = "/{ids}")
-	protected E[] restaurar(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
+	protected List<E> restaurar(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
 			throws Exception {
-		return (E[]) negocioFacade.executarSomenteLeitura(String.format("%sListarCdSq", funcionalidade), ids,
+		return (List<E>) negocioFacade.executarSomenteLeitura(String.format("%sListarCdSq", funcionalidade), ids,
 				usuario);
 	}
 	
 	@PutMapping
-	protected Alterar<E>[] alterar(@RequestBody(required = true) Alterar<E>[] entidades, Principal usuario) throws Exception {
-		return (Alterar<E>[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades, usuario);
+	protected AlterarEntidade<E>[] alterar(@RequestBody(required = true) AlterarEntidade<E>[] entidades, Principal usuario) throws Exception {
+		return (AlterarEntidade<E>[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades, usuario);
 	}
 
 	@DeleteMapping(value = "/{ids}")
-	protected Excluir[] excluir(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
+	protected ExcluirEntidade[] excluir(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
 			throws Exception {
-		return (Excluir[]) negocioFacade.executarComEscrita(String.format("%sExcluirCdSq", funcionalidade), ids, usuario);
+		return (ExcluirEntidade[]) negocioFacade.executarComEscrita(String.format("%sExcluirCdSq", funcionalidade), ids, usuario);
 	}
 
 	// Para passar objetos para metodos get via querystring não é necessário anotar
@@ -69,8 +71,8 @@ public class BaseCrudCtrl<E, F, R> extends BaseCtrl {
 	}
 
 	@PostMapping(value = "/salvar")
-	protected E[] salvar(@RequestBody(required = true) E[] entidades, Principal usuario) throws Exception {
-		return (E[]) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades,
+	protected List<E> salvar(@RequestBody(required = true) List<E> entidades, Principal usuario) throws Exception {
+		return (List<E>) negocioFacade.executarComEscrita(String.format("%sSalvarCdSq", funcionalidade), entidades,
 				usuario);
 	}
 

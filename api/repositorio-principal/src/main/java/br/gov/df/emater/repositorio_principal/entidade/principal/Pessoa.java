@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaEmail;
@@ -40,7 +41,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Pessoa extends EntidadeBase implements Serializable, Nomeavel {
+public class Pessoa extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
 
 	private static final long serialVersionUID = 1L;
 

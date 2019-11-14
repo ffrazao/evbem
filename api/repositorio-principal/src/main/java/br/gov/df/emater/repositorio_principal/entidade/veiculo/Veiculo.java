@@ -1,5 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
+import static br.gov.df.emater.comum.Constantes.JUNCAO_CAMPO_SET;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 
 import br.gov.df.emater.repositorio_principal.dominio.veiculo.Combustivel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,19 +36,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Veiculo extends EntidadeBase implements Serializable {
-
-	private static final String JUNCAO = ",";
+public class Veiculo extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	private Integer id;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id")
-	@MapsId
-	private Produto produto;
 
 	@Column(name = "ano_fabricacao")
 	private Integer anoFabricacao;
@@ -61,21 +54,29 @@ public class Veiculo extends EntidadeBase implements Serializable {
 	@Column(name = "cor_rgb")
 	private String corRgb;
 
+	@Id
+	private Integer id;
+
 	@Column(name = "placa")
 	private String placa;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	@MapsId
+	private Produto produto;
 
 	@Column(name = "renavan")
 	private String renavan;
 
 	public Set<Combustivel> getCombustivel() {
 		return (StringUtils.isBlank(this.combustivel)) ? Collections.emptySet()
-				: Collections.unmodifiableSet(Arrays.stream(this.combustivel.split(JUNCAO))
+				: Collections.unmodifiableSet(Arrays.stream(this.combustivel.split(JUNCAO_CAMPO_SET))
 						.map(c -> Combustivel.valueOf(c)).sorted().collect(Collectors.toSet()));
 	}
 
 	public void setCombustivel(Set<Combustivel> combustivel) {
 		this.combustivel = (combustivel == null) ? null
-				: combustivel.stream().map(c -> c.toString()).sorted().collect(Collectors.joining(JUNCAO));
+				: combustivel.stream().map(c -> c.toString()).sorted().collect(Collectors.joining(JUNCAO_CAMPO_SET));
 	}
 
 }

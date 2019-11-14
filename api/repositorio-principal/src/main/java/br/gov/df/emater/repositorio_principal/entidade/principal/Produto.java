@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.comum.UnidadeMedida;
 import br.gov.df.emater.repositorio_principal.entidade.produto.BemPatrimonial;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Composicao;
@@ -39,7 +40,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Produto extends EntidadeBase implements Serializable {
+public class Produto extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;
 

@@ -11,8 +11,24 @@
 	<artifactId>comum</artifactId>
 	<name>Funções comuns</name>
 	<description>Funções comuns do Sistema</description>
-
+	<properties>
+		<imgscalr-lib.version>4.2</imgscalr-lib.version>
+	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot</artifactId>
+			<version>${spring-boot.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>${imgscalr-lib.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

@@ -3,7 +3,7 @@
     <name>EvBem</name>
     <description>Gestão de Eventos de Bens.</description>
     <author email="ffrazao@gmail.com" href="http://ionicframework.com/">Fernando Frazão da Silva</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

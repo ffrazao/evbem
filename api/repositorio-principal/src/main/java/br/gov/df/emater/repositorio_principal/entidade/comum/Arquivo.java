@@ -15,6 +15,11 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.geo.Point;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.gov.df.emater.repositorio_principal.conversor.PointJsonDeserializer;
+import br.gov.df.emater.repositorio_principal.conversor.PointJsonSerializer;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
@@ -52,6 +57,8 @@ public class Arquivo extends EntidadeBase implements Serializable, Identificavel
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@JsonSerialize(using = PointJsonSerializer.class)
+	@JsonDeserialize(using = PointJsonDeserializer.class)
 	private Point local;
 
 	private String md5;
