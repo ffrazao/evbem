@@ -3,7 +3,7 @@ package br.gov.df.emater.negocio.sistema.usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.frazao.cadeiaresponsabilidade.CadeiaSequenciada;
+import br.com.frazao.cadeiaresponsabilidade.teste.CadeiaSequenciada;
 
 @Component("UsuarioExcluirCdSq")
 public class UsuarioExcluirCdSq extends CadeiaSequenciada {

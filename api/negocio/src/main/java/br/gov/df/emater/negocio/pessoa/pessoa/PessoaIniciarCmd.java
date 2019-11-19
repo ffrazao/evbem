@@ -10,13 +10,13 @@ import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 public class PessoaIniciarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
 
-		Pessoa modelo = (Pessoa) ctx.getRequisicao();
+		Pessoa modelo = (Pessoa) contexto.getRequisicao();
 		if (modelo == null) {
 			modelo = new Pessoa();
 		}
-		ctx.setResposta(modelo);
+		contexto.setResposta(modelo);
 	}
 
 }
