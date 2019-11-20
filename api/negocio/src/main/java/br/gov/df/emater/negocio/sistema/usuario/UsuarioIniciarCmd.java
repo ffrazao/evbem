@@ -10,8 +10,8 @@ import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 public class UsuarioIniciarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
-		ctx.setResposta(new Usuario());
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+		contexto.setResposta(new Usuario());
 	}
 
 }

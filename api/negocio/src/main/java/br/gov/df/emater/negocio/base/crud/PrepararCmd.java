@@ -1,4 +1,4 @@
-package br.gov.df.emater.negocio.sistema.usuario;
+package br.gov.df.emater.negocio.base.crud;
 
 import org.springframework.stereotype.Component;
 
@@ -6,12 +6,11 @@ import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 
 @Component
-public class UsuarioFecharCmd extends Comando {
+public class PrepararCmd extends Comando {
 
 	@Override
 	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
-		contexto.setResposta("Frz!!!");
-		System.out.println("Deu certo 3 !!!!");
+		System.out.println("Preparar");
 	}
 
 }

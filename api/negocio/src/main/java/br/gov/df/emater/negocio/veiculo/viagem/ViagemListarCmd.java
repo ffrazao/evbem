@@ -19,20 +19,20 @@ public class ViagemListarCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
 
-		if (ctx.getRequisicao() != null) {
-			if (ctx.getRequisicao() instanceof Integer) {
-				ctx.setResposta(dao.findById((Integer) ctx.getRequisicao()).orElse(null));
-			} else if (ctx.getRequisicao() instanceof List) {
-				ctx.setResposta(((List<Integer>) ctx.getRequisicao()).stream().map(id -> dao.findById(id).orElse(null))
+		if (contexto.getRequisicao() != null) {
+			if (contexto.getRequisicao() instanceof Integer) {
+				contexto.setResposta(dao.findById((Integer) contexto.getRequisicao()).orElse(null));
+			} else if (contexto.getRequisicao() instanceof List) {
+				contexto.setResposta(((List<Integer>) contexto.getRequisicao()).stream().map(id -> dao.findById(id).orElse(null))
 						.collect(Collectors.toList()));
 			} else {
-				ViagemFiltroDTO filtro = (ViagemFiltroDTO) ctx.getRequisicao();
-				ctx.setResposta(dao.findByFiltro(filtro));
+				ViagemFiltroDTO filtro = (ViagemFiltroDTO) contexto.getRequisicao();
+				contexto.setResposta(dao.findByFiltro(filtro));
 			}
 		} else {
-			ctx.setResposta(dao.findAll());
+			contexto.setResposta(dao.findAll());
 		}
 	}
 

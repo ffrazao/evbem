@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
-import br.gov.df.emater.repositorio_principal.dao.sistema.TokenDAO;
 import br.gov.df.emater.repositorio_principal.dao.principal.ProdutoDAO;
+import br.gov.df.emater.repositorio_principal.dao.sistema.TokenDAO;
 
 @Component
 public class ProdutoAbrirCmd extends Comando {
@@ -18,7 +18,7 @@ public class ProdutoAbrirCmd extends Comando {
 	private TokenDAO tDao;
 
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
 		System.out.printf("Deu certo 1 !!!! total produtos [%d] token [%d]", dao.count(), tDao.count());
 	}
 

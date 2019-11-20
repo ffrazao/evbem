@@ -10,8 +10,8 @@ import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 public class ProdutoIniciarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
-		ctx.setResposta(new Produto());
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+		contexto.setResposta(new Produto());
 	}
 
 }

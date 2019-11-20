@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<biblioteca>
+
+	<comando nome="antes" classe="br.gov.df.emater.negocio.base.crud.AntesCmd"></comando>
+	<comando nome="depois" classe="br.gov.df.emater.negocio.base.crud.DepoisCmd"></comando>
+	<comando nome="generico" classe="br.gov.df.emater.negocio.base.crud.GenericoCmd"></comando>
+
+	<catalogo nome="crud">
+		<cadeia nome="iniciar" tipo="SEQUENCIAL">
+			<comando nome="preparar" classe="br.gov.df.emater.negocio.base.crud.PrepararCmd">
+			</comando>
+			<comando nome="generico"></comando>
+			<comando nome="responder" classe="br.gov.df.emater.negocio.base.crud.ResponderCmd">
+			</comando>
+		</cadeia>
+	</catalogo>
+
+</biblioteca>

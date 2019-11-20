@@ -17,13 +17,13 @@ public class UsuarioExcluirCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
-		if (ctx.getRequisicao() != null) {
-			if (ctx.getRequisicao() instanceof Integer) {
-				dao.deleteById((Integer) ctx.getRequisicao());
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+		if (contexto.getRequisicao() != null) {
+			if (contexto.getRequisicao() instanceof Integer) {
+				dao.deleteById((Integer) contexto.getRequisicao());
 			}
-			if (ctx.getRequisicao() instanceof List) {
-				((List<Integer>) ctx.getRequisicao()).forEach(id -> dao.deleteById(id));
+			if (contexto.getRequisicao() instanceof List) {
+				((List<Integer>) contexto.getRequisicao()).forEach(id -> dao.deleteById(id));
 			}
 		}
 	}

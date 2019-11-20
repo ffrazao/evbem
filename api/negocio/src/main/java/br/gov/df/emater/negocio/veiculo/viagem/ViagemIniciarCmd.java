@@ -10,14 +10,14 @@ import br.gov.df.emater.repositorio_principal.entidade.veiculo.Viagem;
 public class ViagemIniciarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto<?, ?> ctx) throws Exception {
+	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
 
-		Viagem modelo = (Viagem) ctx.getRequisicao();
+		Viagem modelo = (Viagem) contexto.getRequisicao();
 		if (modelo == null) {
 			modelo = new Viagem();
 		}
 
-		ctx.setResposta(modelo);
+		contexto.setResposta(modelo);
 	}
 
 }

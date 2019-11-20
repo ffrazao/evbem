@@ -3,10 +3,10 @@ package br.gov.df.emater.negocio.veiculo.viagem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.frazao.cadeiaresponsabilidade.teste.CadeiaSequenciada;
+import br.com.frazao.cadeiaresponsabilidade.CadeiaSequencial;
 
 @Component("ViagemListarCdSq")
-public class ViagemListarCdSq extends CadeiaSequenciada {
+public class ViagemListarCdSq extends CadeiaSequencial {
 
 	@Autowired
 	ViagemListarCdSq(ViagemListarCmd c1) {
