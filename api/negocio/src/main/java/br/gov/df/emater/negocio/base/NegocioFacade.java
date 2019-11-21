@@ -28,7 +28,7 @@ public class NegocioFacade {
 			Contexto<String, Object> contexto) throws NegocioException {
 		Comando comando;
 		try {
-			comando = this.biblioteca.instanciar("crud", comandoNome);
+			comando = this.biblioteca.instanciar("pessoa", comandoNome);
 			if (comando == null) {
 				throw new NegocioException("Comando não reconhecido pelo sistema [%s]", comandoNome);
 			}
