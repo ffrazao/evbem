@@ -6,8 +6,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.gov.df.emater.negocio.base.NegocioFacade;
-
 @SpringBootApplication(scanBasePackages = { "br.gov.df.emater", "br.com.frazao.cadeiaresponsabilidade" })
 public class NegocioApplication implements ApplicationRunner {
 
@@ -20,7 +18,7 @@ public class NegocioApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		this.negocio.executarSomenteLeitura("iniciar");
+		this.negocio.executarSomenteLeitura("veiculo");
 	}
 
 }

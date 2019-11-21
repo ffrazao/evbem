@@ -1,4 +1,4 @@
-package br.gov.df.emater.negocio.base;
+package br.gov.df.emater.negocio;
 
 import java.security.Principal;
 
@@ -12,6 +12,7 @@ import br.com.frazao.cadeiaresponsabilidade.BibliotecaSpring;
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.com.frazao.cadeiaresponsabilidade.ContextoBase;
+import br.gov.df.emater.negocio.base.NegocioException;
 
 @Service
 public class NegocioFacade {
