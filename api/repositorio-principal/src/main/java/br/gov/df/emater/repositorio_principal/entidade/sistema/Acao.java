@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -57,7 +58,7 @@ public class Acao extends EntidadeBase
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Acao> filhos;
+	private List<Acao> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

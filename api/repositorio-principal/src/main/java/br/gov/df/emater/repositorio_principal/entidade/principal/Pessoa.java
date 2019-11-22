@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.principal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -63,18 +64,18 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	private Recurso recurso;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaArquivo> pessoaArquivoList;
+	private List<PessoaArquivo> pessoaArquivoList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaEmail> pessoaEmailList;
+	private List<PessoaEmail> pessoaEmailList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaEndereco> pessoaEnderecoList;
+	private List<PessoaEndereco> pessoaEnderecoList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaFoto> pessoaFotoList;
+	private List<PessoaFoto> pessoaFotoList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaTelefone> pessoaTelefoneList;
+	private List<PessoaTelefone> pessoaTelefoneList = new ArrayList<>();
 
 }

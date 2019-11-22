@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -55,7 +56,7 @@ public class Funcionalidade extends EntidadeBase
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Funcionalidade> filhos;
+	private List<Funcionalidade> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

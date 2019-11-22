@@ -3,6 +3,7 @@ package br.gov.df.emater.repositorio_principal.entidade.evento;
 import static br.gov.df.emater.comum.Constantes.JUNCAO_CAMPO_SET;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +58,7 @@ public class EventoTipo extends EntidadeBase
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<EventoTipo> filhos;
+	private List<EventoTipo> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

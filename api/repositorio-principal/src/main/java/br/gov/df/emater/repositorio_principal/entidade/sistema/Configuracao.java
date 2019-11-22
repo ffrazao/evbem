@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class Configuracao extends EntidadeBase
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Configuracao> filhos;
+	private List<Configuracao> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -69,7 +70,7 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 	private UsuarioTipo tipo;
 
 	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaoList;
+	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaoList = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "ultimo_perfil_id")
@@ -78,6 +79,6 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 	private Perfil ultimoPerfil;
 
 	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioPerfil> usuarioPerfilList;
+	private List<UsuarioPerfil> usuarioPerfilList = new ArrayList<>();
 
 }

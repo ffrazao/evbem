@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class RelacionamentoPessoa extends EntidadeBase implements Serializable, Identificavel {
+public class PessoaRelacionamento extends EntidadeBase implements Serializable, Identificavel {
 	
 	private static final long serialVersionUID = 1L;
 

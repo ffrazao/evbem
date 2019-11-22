@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -48,7 +49,7 @@ public class Modulo extends EntidadeBase implements Serializable, Identificavel,
 	private Integer id;
 
 	@OneToMany(mappedBy = "modulo")
-	private List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaoList;
+	private List<ModuloFuncionalidadeAcao> moduloFuncionalidadeAcaoList = new ArrayList<>();
 
 	private String nome;
 

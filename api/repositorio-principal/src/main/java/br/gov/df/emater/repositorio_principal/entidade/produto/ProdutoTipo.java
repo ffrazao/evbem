@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -41,7 +42,7 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<ProdutoTipo> filhos;
+	private List<ProdutoTipo> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.evento;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -73,11 +74,11 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	private EventoTipo eventoTipo;
 
 	@OneToMany(mappedBy = "evento", fetch = FetchType.LAZY)
-	private List<Evidencia> evidenciaList;
+	private List<Evidencia> evidenciaList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Evento> filhos;
+	private List<Evento> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

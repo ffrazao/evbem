@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -48,7 +49,7 @@ public class Marca extends EntidadeBase implements Serializable, Identificavel, 
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Marca> filhos;
+	private List<Marca> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.evento;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -43,7 +44,7 @@ public class Funcao extends EntidadeBase implements Serializable, Identificavel,
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<Funcao> filhos;
+	private List<Funcao> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

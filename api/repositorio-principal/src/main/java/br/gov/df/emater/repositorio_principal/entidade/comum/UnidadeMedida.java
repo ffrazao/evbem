@@ -2,6 +2,7 @@ package br.gov.df.emater.repositorio_principal.entidade.comum;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -69,7 +70,7 @@ public class UnidadeMedida extends EntidadeBase
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<UnidadeMedida> filhos;
+	private List<UnidadeMedida> filhos = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")

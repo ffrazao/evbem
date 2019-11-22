@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -65,7 +66,7 @@ public class FuncionalidadeAcao extends EntidadeBase
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
-	private List<FuncionalidadeAcao> filhos;
+	private List<FuncionalidadeAcao> filhos = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_id")

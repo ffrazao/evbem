@@ -2,6 +2,7 @@ package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -54,7 +55,7 @@ public class Viagem extends VeiculoEvento implements Serializable {
 	private BigDecimal quilometragemSaida;
 
 	@OneToMany(mappedBy = "viagem", fetch = FetchType.LAZY)
-	private List<Rota> rotaList;
+	private List<Rota> rotaList = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "unidade_organizacional_id")

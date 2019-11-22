@@ -1,6 +1,7 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -52,6 +53,6 @@ public class Perfil extends EntidadeBase implements Serializable, Identificavel,
 	private String nome;
 
 	@OneToMany(mappedBy = "perfil")
-	private List<Privilegio> privilegioList;
+	private List<Privilegio> privilegioList = new ArrayList<>();
 
 }

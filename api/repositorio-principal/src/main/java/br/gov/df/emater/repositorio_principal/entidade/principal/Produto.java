@@ -2,6 +2,7 @@ package br.gov.df.emater.repositorio_principal.entidade.principal;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,6 +28,7 @@ import br.gov.df.emater.repositorio_principal.entidade.produto.BemPatrimonial;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Composicao;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Marca;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Modelo;
+import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoPessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -63,7 +65,7 @@ public class Produto extends EntidadeBase implements Serializable, Identificavel
 	private String numeroSerie;
 
 	@OneToMany(mappedBy = "principal", fetch = FetchType.LAZY)
-	private List<Composicao> composicaoList;
+	private List<Composicao> composicaoList = new ArrayList<>();
 
 	@Id
 	private Integer id;
@@ -86,5 +88,8 @@ public class Produto extends EntidadeBase implements Serializable, Identificavel
 	@JoinColumn(name = "id")
 	@MapsId
 	private Recurso recurso;
+	
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	private List<ProdutoPessoa> produtoPessoaList = new ArrayList<>();
 
 }
