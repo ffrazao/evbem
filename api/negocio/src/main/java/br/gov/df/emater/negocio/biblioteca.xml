@@ -27,7 +27,7 @@
 		</cadeia>
 		<cadeia nome="veiculo">
 			<comando nome="zoop2"
-				classe="br.gov.df.emater.negocio.base.crud.ZoopCmd" ordem="3" />
+				classe="br.gov.df.emater.negocio.base.crud.ZoopCmd"/>
 		</cadeia>
 	</catalogo>
 
