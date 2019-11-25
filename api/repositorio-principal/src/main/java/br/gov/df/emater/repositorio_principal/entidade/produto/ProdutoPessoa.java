@@ -2,18 +2,14 @@ package br.gov.df.emater.repositorio_principal.entidade.produto;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
@@ -45,10 +41,10 @@ public class ProdutoPessoa extends EntidadeBase implements Serializable {
 	@JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoa; // pode utilizar o bem
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id")
-	@MapsId
-	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "produto_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
 	private Produto produto;
 
 }
