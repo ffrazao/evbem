@@ -18,7 +18,7 @@ public class UsuarioAbrirCmd extends Comando {
 	private TokenDAO tDao;
 
 	@Override
-	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+	protected void procedimento(Contexto contexto) throws Exception {
 		System.out.printf("Deu certo 1 !!!! total usuarios [%d] token [%d]", dao.count(), tDao.count());
 	}
 

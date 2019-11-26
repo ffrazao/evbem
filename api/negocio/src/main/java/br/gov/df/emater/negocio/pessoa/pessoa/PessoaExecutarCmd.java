@@ -9,7 +9,7 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 public class PessoaExecutarCmd extends Comando {
 
 	@Override
-	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+	protected void procedimento(Contexto contexto) throws Exception {
 		System.out.println("Deu certo 2 !!!!");
 	}
 

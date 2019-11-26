@@ -19,7 +19,7 @@ public class UsuarioSalvarCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+	protected void procedimento(Contexto contexto) throws Exception {
 		if (contexto.getRequisicao() instanceof Usuario) {
 			contexto.setResposta(dao.saveAndFlush((Usuario) contexto.getRequisicao()));
 		} else {

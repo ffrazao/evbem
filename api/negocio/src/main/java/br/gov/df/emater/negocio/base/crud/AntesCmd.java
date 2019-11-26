@@ -14,7 +14,7 @@ public class AntesCmd extends Comando {
 	private UsuarioDAO dao;
 
 	@Override
-	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+	protected void procedimento(Contexto contexto) throws Exception {
 		System.out.println("Antes");
 		log().info("=> total de usuarios [" + dao.count() + "]");
 	}

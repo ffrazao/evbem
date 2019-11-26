@@ -18,7 +18,7 @@ public class NegocioApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		this.negocio.executarSomenteLeitura("veiculo");
+		this.negocio.executarSomenteLeitura("veiculo", "iniciar");
 	}
 
 }

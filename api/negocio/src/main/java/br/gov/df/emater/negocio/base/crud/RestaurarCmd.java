@@ -6,7 +6,7 @@ import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 
 @Component
-public class IniciarCmd extends Comando {
+public class RestaurarCmd extends Comando {
 
 	@Override
 	protected void procedimento(Contexto contexto) throws Exception {

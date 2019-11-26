@@ -26,7 +26,6 @@ import br.gov.df.emater.repositorio_principal.dao.produto.ProdutoPessoaDAO;
 import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioDAO;
 import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioFormaAutenticacaoDAO;
 import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioPerfilDAO;
-import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Arquivo;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Email;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Endereco;
@@ -47,40 +46,53 @@ import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoPessoa;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.UsuarioFormaAutenticacao;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.UsuarioPerfil;
+import br.gov.df.emater.transporte.ListagemDTO;
+import br.gov.df.emater.transporte.principal.PessoaFiltroDTO;
 
 @Component
-public class MapaEntidadeDaoDependencias {
+public class MapaDep {
 
-	private final Set<Dep<?, ?>> mapa = new HashSet<>();
+	private final Set<Dep<?, ?, ?, ?>> mapa = new HashSet<>();
 
 	// @formatter:off
-	MapaEntidadeDaoDependencias() {
+	MapaDep() {
 
 		// mapa pessoa
-		this.mapa.add(Dep.of(Pessoa.class, PessoaDAO.class, new Dep[] {
-				Dep.of(PessoaArquivo.class, PessoaArquivoDAO.class, Dep.of(Arquivo.class, ArquivoDAO.class)),
-				Dep.of(PessoaEmail.class, PessoaEmailDAO.class, Dep.of(Email.class, EmailDAO.class)),
-				Dep.of(PessoaEndereco.class, PessoaEnderecoDAO.class, Dep.of(Endereco.class, EnderecoDAO.class)),
-				Dep.of(PessoaFoto.class, PessoaFotoDAO.class, Dep.of(Foto.class, FotoDAO.class)),
-				Dep.of(PessoaRelacionamento.class, PessoaRelacionamentoDAO.class,
-						Dep.of(Relacionamento.class, RelacionamentoDAO.class)),
-				Dep.of(PessoaTelefone.class, PessoaTelefoneDAO.class, Dep.of(Telefone.class, TelefoneDAO.class)), }));
+		this.mapa.add(
+				Dep.of("pessoa", Pessoa.class, PessoaDAO.class, PessoaFiltroDTO.class, ListagemDTO.class, 
+					Dep.of("pessoaArquivoList", PessoaArquivo.class, PessoaArquivoDAO.class, 
+							Dep.of("arquivo", Arquivo.class, ArquivoDAO.class)),
+					Dep.of("pessoaEmailList", PessoaEmail.class, PessoaEmailDAO.class, 
+							Dep.of("email", Email.class, EmailDAO.class)),
+					Dep.of("pessoaEnderecoList", PessoaEndereco.class, PessoaEnderecoDAO.class, 
+							Dep.of("endereco", Endereco.class, EnderecoDAO.class)),
+					Dep.of("pessoaFotoList", PessoaFoto.class, PessoaFotoDAO.class, 
+							Dep.of("foto", Foto.class, FotoDAO.class)),
+					Dep.of("pessoaRelacionamentoList", PessoaRelacionamento.class, PessoaRelacionamentoDAO.class,
+							Dep.of("relacionamento", Relacionamento.class, RelacionamentoDAO.class)),
+					Dep.of("pessoaTelefoneList", PessoaTelefone.class, PessoaTelefoneDAO.class, 
+							Dep.of("telefone", Telefone.class, TelefoneDAO.class)) 
+				));
 
 		// mapa usuario
 		this.mapa.add(
-				Dep.of(Usuario.class, UsuarioDAO.class, new Dep[] { Dep.of(UsuarioPerfil.class, UsuarioPerfilDAO.class),
-						Dep.of(UsuarioFormaAutenticacao.class, UsuarioFormaAutenticacaoDAO.class), }));
+				Dep.of("usuario", Usuario.class, UsuarioDAO.class,
+						Dep.of("usuarioPerfilList", UsuarioPerfil.class, UsuarioPerfilDAO.class),
+						Dep.of("usuarioFormaAutenticacaoList", UsuarioFormaAutenticacao.class, UsuarioFormaAutenticacaoDAO.class)
+				));
 
 		// mapa produto
-		this.mapa.add(Dep.of(Produto.class, ProdutoDAO.class,
-				new Dep[] { Dep.of(BemPatrimonial.class, BemPatrimonialDAO.class),
-						Dep.of(Composicao.class, ComposicaoDAO.class),
-						Dep.of(ProdutoPessoa.class, ProdutoPessoaDAO.class), }));
+		this.mapa.add(
+				Dep.of("produto", Produto.class, ProdutoDAO.class,
+						Dep.of("bemPatrimonial", BemPatrimonial.class, BemPatrimonialDAO.class),
+						Dep.of("composicaoList", Composicao.class, ComposicaoDAO.class),
+						Dep.of("produtoPessoaList", ProdutoPessoa.class, ProdutoPessoaDAO.class)
+				));
 
 	}
 	// @formatter:on
 
-	public <E extends EntidadeBase> Optional<Dep<?, ?>> getDaoDependencias(final E entidade) {
-		return this.mapa.stream().filter(d -> d.equals(entidade)).findFirst();
+	public Optional<Dep<?, ?, ?, ?>> getDep(final String funcionalidadeCampo) {
+		return this.mapa.stream().filter(d -> funcionalidadeCampo.equals(d.getFuncionalidadeCampo())).findFirst();
 	}
 }

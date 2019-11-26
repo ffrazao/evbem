@@ -18,7 +18,7 @@ public class ViagemSalvarCmd extends Comando {
 	private ViagemDAO dao;
 
 	@Override
-	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+	protected void procedimento(Contexto contexto) throws Exception {
 		if (contexto.getRequisicao() instanceof Collection) {
 			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
 					.map(reg -> dao.saveAndFlush(prepara((Viagem) reg))).collect(Collectors.toList()));

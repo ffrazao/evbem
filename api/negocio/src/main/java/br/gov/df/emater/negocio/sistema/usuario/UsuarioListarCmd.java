@@ -19,7 +19,7 @@ public class UsuarioListarCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected <k, v> void procedimento(Contexto<k, v> contexto) throws Exception {
+	protected void procedimento(Contexto contexto) throws Exception {
 		if (contexto.getRequisicao() != null) {
 			if (contexto.getRequisicao() instanceof Integer) {
 				contexto.setResposta(dao.findById((Integer) contexto.getRequisicao()).orElse(null));

@@ -26,20 +26,27 @@ public class NegocioFacade {
 	}
 
 	private Object executar(final String comandoNome, final Object requisicao, final Principal usuario,
-			Contexto<String, Object> contexto) throws NegocioException {
+			final Contexto contexto) throws NegocioException {
+		return this.executar(null, comandoNome, requisicao, usuario, contexto);
+	}
+
+	private Object executar(final String catalogoNome, final String comandoNome, final Object requisicao,
+			final Principal usuario, Contexto contexto) throws NegocioException {
 		Comando comando;
 		try {
-			comando = this.biblioteca.instanciar("pessoa", comandoNome);
+			comando = catalogoNome == null ? this.biblioteca.instanciar(comandoNome)
+					: this.biblioteca.instanciar(catalogoNome, comandoNome);
 			if (comando == null) {
-				throw new NegocioException("Comando não reconhecido pelo sistema [%s]", comandoNome);
+				throw new NegocioException("Comando não identificado [%s][%s]", catalogoNome, comandoNome);
 			}
 			if (contexto == null) {
-				contexto = new ContextoBase<>();
+				contexto = new ContextoBase();
 			}
-			contexto.put("comando", comando.getClass().getName());
+			contexto.setCatalogo(catalogoNome);
+			contexto.setComando(comandoNome);
 			contexto.setRequisicao(requisicao);
-			contexto.put("usuario", usuario);
-
+			contexto.setUsuario(usuario);
+			
 			comando.executar(contexto);
 		} catch (final Exception e) {
 			throw new NegocioException(e);
@@ -66,8 +73,31 @@ public class NegocioFacade {
 
 	@Transactional
 	public Object executarComEscrita(final String comando, final Object requisicao, final Principal usuario,
-			final Contexto<String, Object> contexto) throws NegocioException {
+			final Contexto contexto) throws NegocioException {
 		return this.executar(comando, requisicao, usuario, contexto);
+	}
+
+	@Transactional
+	public Object executarComEscrita(final String catalogo, final String comando) throws NegocioException {
+		return this.executar(catalogo, comando, null, null, null);
+	}
+
+	@Transactional
+	public Object executarComEscrita(final String catalogo, final String comando, final Object requisicao)
+			throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, null, null);
+	}
+
+	@Transactional
+	public Object executarComEscrita(final String catalogo, final String comando, final Object requisicao,
+			final Principal usuario) throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, usuario, null);
+	}
+
+	@Transactional
+	public Object executarComEscrita(final String catalogo, final String comando, final Object requisicao,
+			final Principal usuario, final Contexto contexto) throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, usuario, contexto);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -89,8 +119,32 @@ public class NegocioFacade {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Object executarComEscritaENovaTransacao(final String comando, final Object requisicao,
-			final Principal usuario, final Contexto<String, Object> contexto) throws NegocioException {
+			final Principal usuario, final Contexto contexto) throws NegocioException {
 		return this.executar(comando, requisicao, usuario, contexto);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Object executarComEscritaENovaTransacao(final String catalogo, final String comando)
+			throws NegocioException {
+		return this.executar(catalogo, comando, null, null, null);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Object executarComEscritaENovaTransacao(final String catalogo, final String comando, final Object requisicao)
+			throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, null, null);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Object executarComEscritaENovaTransacao(final String catalogo, final String comando, final Object requisicao,
+			final Principal usuario) throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, usuario, null);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Object executarComEscritaENovaTransacao(final String catalogo, final String comando, final Object requisicao,
+			final Principal usuario, final Contexto contexto) throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, usuario, contexto);
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
@@ -111,8 +165,31 @@ public class NegocioFacade {
 
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public Object executarSomenteLeitura(final String comando, final Object requisicao, final Principal usuario,
-			final Contexto<String, Object> contexto) throws NegocioException {
+			final Contexto contexto) throws NegocioException {
 		return this.executar(comando, requisicao, usuario, contexto);
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public Object executarSomenteLeitura(final String catalogo, final String comando) throws NegocioException {
+		return this.executar(catalogo, comando, null, null, null);
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public Object executarSomenteLeitura(final String catalogo, final String comando, final Object requisicao)
+			throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, null, null);
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public Object executarSomenteLeitura(final String catalogo, final String comando, final Object requisicao,
+			final Principal usuario) throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, usuario, null);
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public Object executarSomenteLeitura(final String catalogo, final String comando, final Object requisicao,
+			final Principal usuario, final Contexto contexto) throws NegocioException {
+		return this.executar(catalogo, comando, requisicao, usuario, contexto);
 	}
 
 }

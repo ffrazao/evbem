@@ -27,6 +27,7 @@ import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaEmail;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaEndereco;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaFoto;
+import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaRelacionamento;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaTelefone;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -54,15 +55,6 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@Column(name = "nome_reduzido")
 	private String nomeReduzido;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo")
-	private PessoaTipo tipo;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id")
-	@MapsId
-	private Recurso recurso;
-
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<PessoaArquivo> pessoaArquivoList = new ArrayList<>();
 
@@ -76,6 +68,18 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	private List<PessoaFoto> pessoaFotoList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
+	private List<PessoaRelacionamento> pessoaRelacionamentoList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<PessoaTelefone> pessoaTelefoneList = new ArrayList<>();
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id")
+	@MapsId
+	private Recurso recurso;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo")
+	private PessoaTipo tipo;
 
 }
