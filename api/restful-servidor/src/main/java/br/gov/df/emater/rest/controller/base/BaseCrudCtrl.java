@@ -2,6 +2,7 @@ package br.gov.df.emater.rest.controller.base;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.gov.df.emater.negocio.base.AlterarEntidade;
 import br.gov.df.emater.negocio.base.ExcluirEntidade;
@@ -48,24 +50,28 @@ public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
 	@PutMapping
 	protected AlterarEntidade<E>[] alterar(@RequestBody(required = true) final AlterarEntidade<E>[] entidades,
 			final Principal usuario) throws Exception {
-		return (AlterarEntidade<E>[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.ALTERAR, entidades,
-				usuario);
+		return (AlterarEntidade<E>[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.ALTERAR,
+				entidades, usuario);
 	}
 
 	@PostMapping()
-	protected List<E> criar(@RequestBody(required = true) final List<E> entidades, final Principal usuario) throws Exception {
-		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.CRIAR, entidades, usuario);
+	protected List<E> criar(@RequestBody(required = true) final List<E> entidades, final Principal usuario)
+			throws Exception {
+		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.CRIAR, entidades,
+				usuario);
 	}
 
 	@DeleteMapping(value = "/{ids}")
-	protected ExcluirEntidade[] excluir(@PathVariable(name = "ids", required = true) final Integer[] ids, final Principal usuario)
-			throws Exception {
-		return (ExcluirEntidade[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.EXCLUIR, ids, usuario);
+	protected ExcluirEntidade[] excluir(@PathVariable(name = "ids", required = true) final Integer[] ids,
+			final Principal usuario) throws Exception {
+		return (ExcluirEntidade[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.EXCLUIR, ids,
+				usuario);
 	}
 
 	@GetMapping(value = "/" + BaseCrudCtrl.INICIAR)
-	protected E iniciar(final E modelo, final Principal usuario) throws Exception {
-		return (E) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.INICIAR, modelo, usuario);
+	protected E iniciar(@RequestParam final Map<String, String> modelo, final Principal usuario) throws Exception {
+		return (E) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.INICIAR, modelo,
+				usuario);
 	}
 
 	// Para passar objetos para metodos get via querystring não é necessário anotar
@@ -76,18 +82,22 @@ public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
 	// de valores&modelo
 	@GetMapping()
 	protected R[] listar(@Valid final F filtro, final Principal usuario) throws Exception {
-		return (R[]) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.LISTAR, filtro, usuario);
+		return (R[]) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.LISTAR, filtro,
+				usuario);
 	}
 
 	@GetMapping(value = "/{ids}")
-	protected List<E> restaurar(@PathVariable(name = "ids", required = true) final Integer[] ids, final Principal usuario)
-			throws Exception {
-		return (List<E>) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.RESTAURAR, ids, usuario);
+	protected List<E> restaurar(@PathVariable(name = "ids", required = true) final Integer[] ids,
+			final Principal usuario) throws Exception {
+		return (List<E>) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.RESTAURAR, ids,
+				usuario);
 	}
 
 	@PostMapping(value = "/" + BaseCrudCtrl.SALVAR)
-	protected List<E> salvar(@RequestBody(required = true) final List<E> entidades, final Principal usuario) throws Exception {
-		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.SALVAR, entidades, usuario);
+	protected List<E> salvar(@RequestBody(required = true) final List<E> entidades, final Principal usuario)
+			throws Exception {
+		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.SALVAR, entidades,
+				usuario);
 	}
 
 }
