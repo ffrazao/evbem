@@ -73,11 +73,11 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 			return false;
 		}
 		final Dep<?, ?, ?, ?> other = (Dep<?, ?, ?, ?>) obj;
-		return Objects.equals(this.funcionalidadeCampo, other.funcionalidadeCampo);
+		return this.funcionalidadeCampo.equalsIgnoreCase(other.funcionalidadeCampo);
 	}
 
 	public Optional<Dep<?, ?, ?, ?>> getDependencia(final String funcionalidadeCampo) {
-		return this.dependencias.stream().filter(d -> funcionalidadeCampo.equals(this.getFuncionalidadeCampo()))
+		return this.dependencias.stream().filter(d -> funcionalidadeCampo.equalsIgnoreCase(this.getFuncionalidadeCampo()))
 				.findFirst();
 	}
 

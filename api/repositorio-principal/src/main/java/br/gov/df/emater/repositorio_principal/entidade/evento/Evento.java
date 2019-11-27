@@ -59,7 +59,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Evento extends EntidadeBase implements Serializable, Identificavel, Temporalizavel, Pai<Evento> {
 
 	private static final long serialVersionUID = 1L;

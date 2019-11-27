@@ -41,30 +41,31 @@ public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
 	public static final String RESTAURAR = "restaurar";
 
 	public static final String SALVAR = "salvar";
-	
+
 	@Setter(value = AccessLevel.NONE)
-	private String funcionalidade;
+	private final String funcionalidade;
 
 	@PutMapping
-	protected AlterarEntidade<E>[] alterar(@RequestBody(required = true) AlterarEntidade<E>[] entidades,
-			Principal usuario) throws Exception {
-		return (AlterarEntidade<E>[]) negocioFacade.executarComEscrita(funcionalidade, BaseCrudCtrl.ALTERAR, entidades, usuario);
+	protected AlterarEntidade<E>[] alterar(@RequestBody(required = true) final AlterarEntidade<E>[] entidades,
+			final Principal usuario) throws Exception {
+		return (AlterarEntidade<E>[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.ALTERAR, entidades,
+				usuario);
 	}
 
 	@PostMapping()
-	protected List<E> criar(@RequestBody(required = true) List<E> entidades, Principal usuario) throws Exception {
-		return (List<E>) negocioFacade.executarComEscrita(funcionalidade, BaseCrudCtrl.CRIAR, entidades, usuario);
+	protected List<E> criar(@RequestBody(required = true) final List<E> entidades, final Principal usuario) throws Exception {
+		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.CRIAR, entidades, usuario);
 	}
 
 	@DeleteMapping(value = "/{ids}")
-	protected ExcluirEntidade[] excluir(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
+	protected ExcluirEntidade[] excluir(@PathVariable(name = "ids", required = true) final Integer[] ids, final Principal usuario)
 			throws Exception {
-		return (ExcluirEntidade[]) negocioFacade.executarComEscrita(funcionalidade, BaseCrudCtrl.EXCLUIR, ids, usuario);
+		return (ExcluirEntidade[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.EXCLUIR, ids, usuario);
 	}
 
 	@GetMapping(value = "/" + BaseCrudCtrl.INICIAR)
-	protected E iniciar(E modelo, Principal usuario) throws Exception {
-		return (E) negocioFacade.executarSomenteLeitura(funcionalidade, BaseCrudCtrl.INICIAR, modelo, usuario);
+	protected E iniciar(final E modelo, final Principal usuario) throws Exception {
+		return (E) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.INICIAR, modelo, usuario);
 	}
 
 	// Para passar objetos para metodos get via querystring não é necessário anotar
@@ -74,19 +75,19 @@ public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
 	// GET http://localhost:8080/veiculo?bemPatrimonial=teste de valores&marca=teste
 	// de valores&modelo
 	@GetMapping()
-	protected R[] listar(@Valid F filtro, Principal usuario) throws Exception {
-		return (R[]) negocioFacade.executarSomenteLeitura(funcionalidade, BaseCrudCtrl.LISTAR, filtro, usuario);
+	protected R[] listar(@Valid final F filtro, final Principal usuario) throws Exception {
+		return (R[]) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.LISTAR, filtro, usuario);
 	}
 
 	@GetMapping(value = "/{ids}")
-	protected List<E> restaurar(@PathVariable(name = "ids", required = true) Integer[] ids, Principal usuario)
+	protected List<E> restaurar(@PathVariable(name = "ids", required = true) final Integer[] ids, final Principal usuario)
 			throws Exception {
-		return (List<E>) negocioFacade.executarSomenteLeitura(funcionalidade, BaseCrudCtrl.RESTAURAR, ids, usuario);
+		return (List<E>) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.RESTAURAR, ids, usuario);
 	}
 
 	@PostMapping(value = "/" + BaseCrudCtrl.SALVAR)
-	protected List<E> salvar(@RequestBody(required = true) List<E> entidades, Principal usuario) throws Exception {
-		return (List<E>) negocioFacade.executarComEscrita(funcionalidade, BaseCrudCtrl.SALVAR, entidades, usuario);
+	protected List<E> salvar(@RequestBody(required = true) final List<E> entidades, final Principal usuario) throws Exception {
+		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.SALVAR, entidades, usuario);
 	}
 
 }

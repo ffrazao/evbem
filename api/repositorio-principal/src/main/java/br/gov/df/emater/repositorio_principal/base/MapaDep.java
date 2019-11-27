@@ -93,6 +93,6 @@ public class MapaDep {
 	// @formatter:on
 
 	public Optional<Dep<?, ?, ?, ?>> getDep(final String funcionalidadeCampo) {
-		return this.mapa.stream().filter(d -> funcionalidadeCampo.equals(d.getFuncionalidadeCampo())).findFirst();
+		return this.mapa.stream().filter(d -> funcionalidadeCampo.equalsIgnoreCase(d.getFuncionalidadeCampo())).findFirst();
 	}
 }

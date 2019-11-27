@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
@@ -40,6 +41,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class Relacionamento extends EntidadeBase implements Serializable, Identificavel, Ativavel, Temporalizavel {
 
 	private static final long serialVersionUID = 1L;

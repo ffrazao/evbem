@@ -14,9 +14,7 @@ public class IniciarCmd extends Comando {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void procedimento(Contexto contexto) throws Exception {
-		Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA)).get();
 		Object modelo = contexto.getRequisicao();
-		Object instancia = null;
 		if (modelo != null) {
 
 			if (modelo instanceof Integer) {
@@ -24,9 +22,13 @@ public class IniciarCmd extends Comando {
 			} else {
 
 			}
+		} else {			
+			Optional<Dep<?, ?, ?, ?>> dep = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
+			if (dep.isPresent()) {
+				modelo = dep.get().getEntidade().newInstance();
+			}
 		}
-		instancia = modelo == null ? dep.getEntidade().newInstance() : modelo;
-		contexto.setResposta(instancia);
+		contexto.setResposta(modelo);
 	}
 
 }

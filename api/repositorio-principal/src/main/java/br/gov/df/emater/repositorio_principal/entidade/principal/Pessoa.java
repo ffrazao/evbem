@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
@@ -43,6 +45,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class Pessoa extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
 
 	private static final long serialVersionUID = 1L;

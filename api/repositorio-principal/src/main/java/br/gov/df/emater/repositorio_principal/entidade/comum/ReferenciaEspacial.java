@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.geo.Polygon;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import br.gov.df.emater.repositorio_principal.dominio.ReferenciaEspacialTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
@@ -31,6 +33,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class ReferenciaEspacial extends EntidadeBase implements Serializable, Identificavel {
 	
 	private static final long serialVersionUID = 1L;

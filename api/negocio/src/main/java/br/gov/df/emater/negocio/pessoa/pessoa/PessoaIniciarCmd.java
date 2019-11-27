@@ -14,7 +14,7 @@ public class PessoaIniciarCmd extends Comando {
 
 		Pessoa modelo = (Pessoa) contexto.getRequisicao();
 		if (modelo == null) {
-			modelo = new Pessoa();
+			
 		}
 		contexto.setResposta(modelo);
 	}
