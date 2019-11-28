@@ -27,7 +27,7 @@ public class VeiculoIniciarCmd extends Comando {
 			modelo.getProduto().setRecurso(new Recurso());
 		}
 		modelo.getProduto().getRecurso().setAtivo(Confirmacao.S);		
-		modelo.getProduto().getRecurso().setTipo(RecursoTipo.PRODUTO);
+		modelo.getProduto().getRecurso().setRecursoTipo(RecursoTipo.PRODUTO);
 		
 		contexto.setResposta(modelo);
 	}

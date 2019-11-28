@@ -22,11 +22,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * The persistent class for the relacionamento_pessoa database table.
+ * The persistent class for the pessoa_relacionamento database table.
  * 
  */
 @Entity
-@Table(catalog = "pessoa", name = "relacionamento_pessoa")
+@Table(catalog = "pessoa", name = "pessoa_relacionamento")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)

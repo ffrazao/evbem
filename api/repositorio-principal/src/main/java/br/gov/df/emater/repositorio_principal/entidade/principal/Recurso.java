@@ -2,6 +2,7 @@ package br.gov.df.emater.repositorio_principal.entidade.principal;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -41,7 +42,8 @@ public class Recurso extends EntidadeBase implements Serializable, Identificavel
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	private RecursoTipo tipo;
+	@Column(name="recurso_tipo")
+	private RecursoTipo recursoTipo;
 
 	@Lob
 	private String observacao;

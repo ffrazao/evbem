@@ -2,6 +2,7 @@ package br.gov.df.emater.repositorio_principal.entidade.comum;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -45,6 +46,7 @@ public class ReferenciaEspacial extends EntidadeBase implements Serializable, Id
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	private ReferenciaEspacialTipo tipo;
+	@Column(name="referencia_espacial_tipo")
+	private ReferenciaEspacialTipo referenciaEspacialTipo;
 
 }

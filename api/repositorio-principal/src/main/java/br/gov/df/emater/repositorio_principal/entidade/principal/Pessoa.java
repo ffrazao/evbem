@@ -76,13 +76,13 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
 	private List<PessoaTelefone> pessoaTelefoneList = new ArrayList<>();
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "pessoa_tipo")
+	private PessoaTipo pessoaTipo;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
 	@MapsId
 	private Recurso recurso;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo")
-	private PessoaTipo tipo;
 
 }

@@ -47,7 +47,7 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 	private String nome;
 
 	@ManyToOne
-	@JoinColumn(name = "tipo_id")
+	@JoinColumn(name = "produto_tipo_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;

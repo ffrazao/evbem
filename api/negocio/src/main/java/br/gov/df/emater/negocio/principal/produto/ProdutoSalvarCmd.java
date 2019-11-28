@@ -42,7 +42,7 @@ public class ProdutoSalvarCmd extends Comando {
 		if (recurso == null) {
 			recurso = new Recurso();
 		}
-		recurso.setTipo(RecursoTipo.PRODUTO);
+		recurso.setRecursoTipo(RecursoTipo.PRODUTO);
 		produto.setRecurso(recurso);
 		produto.setModelo(modeloDAO.getOne(produto.getModelo().getId()));
 		produto.setMarca(marcaDAO.getOne(produto.getMarca().getId()));
