@@ -29,6 +29,7 @@ web/.idea
 *.launch
 .settings/
 *.sublime-workspace
+**/.sts4-cache/*
 
 # IDE - VSCode
 **/*/.vscode

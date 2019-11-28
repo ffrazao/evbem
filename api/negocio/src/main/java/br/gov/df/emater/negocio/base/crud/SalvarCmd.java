@@ -1,5 +1,6 @@
 package br.gov.df.emater.negocio.base.crud;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
@@ -20,7 +21,7 @@ public class SalvarCmd extends Comando {
 
 			}
 		}
-		instancia = modelo == null ? ((Class<?>) contexto.get("entidade")).newInstance() : modelo;
+		instancia = modelo == null ? BeanUtils.instantiateClass((Class<?>) contexto.get("entidade")) : modelo;
 		contexto.setResposta(instancia);
 	}
 

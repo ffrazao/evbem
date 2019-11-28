@@ -2,6 +2,7 @@ package br.gov.df.emater.negocio.base.crud;
 
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
@@ -25,7 +26,7 @@ public class ListarCmd extends Comando {
 		} else {
 			Optional<Dep<?, ?, ?, ?>> dep = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
 			if (dep.isPresent()) {
-				modelo = dep.get().getEntidade().newInstance();
+				modelo = BeanUtils.instantiateClass(dep.get().getEntidade());
 			}
 		}
 		contexto.setResposta(new PessoaFisica[] { new PessoaFisica() });

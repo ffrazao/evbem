@@ -15,8 +15,22 @@ import org.springframework.util.DigestUtils;
 
 public final class Criptografia {
 
-	public static final synchronized String md5(String text) throws NoSuchAlgorithmException {
-		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+	public static void main(final String[] args) {
+		// 20141103_070304.jpg
+//		Pattern p = Pattern.compile("/^\\d{8}\\_\\d{6}\\.jpg$/");
+		final Pattern p = Pattern.compile("\\d{8}\\_\\d{6}");
+		final String arqs = Arrays.toString(new File("I:\\fotos\\2015\\camera").list());
+		final Matcher m = p.matcher(arqs);
+
+		final List<String> result = new ArrayList<>();
+		while (m.find()) {
+			result.add(m.group());
+		}
+		System.out.println(result);
+	}
+
+	public static synchronized String md5(final String text) throws NoSuchAlgorithmException {
+		final MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 		messageDigest.update(text.getBytes(), 0, text.length());
 		String result = new BigInteger(1, messageDigest.digest()).toString(16);
 		if (result.length() < 32) {
@@ -25,23 +39,8 @@ public final class Criptografia {
 		return result;
 	}
 
-	public static final synchronized String md5File(byte[] bytes) throws IOException {
+	public static synchronized String md5File(final byte[] bytes) throws IOException {
 		return DigestUtils.md5DigestAsHex(bytes);
 	}
-	
-	public static void main(String[] args) {
-		// 20141103_070304.jpg
-//		Pattern p = Pattern.compile("/^\\d{8}\\_\\d{6}\\.jpg$/");
-		Pattern p = Pattern.compile("\\d{8}\\_\\d{6}");
-		String arqs = Arrays.toString(new File("I:\\fotos\\2015\\camera").list());
-		Matcher m = p.matcher(arqs);
-		
-		List<String> result = new ArrayList<String>();
-		while (m.find()) {
-			result.add(m.group());
-		}
-		System.out.println(result);
-	}
-	
 
 }

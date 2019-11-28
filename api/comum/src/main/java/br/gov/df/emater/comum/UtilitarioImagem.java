@@ -14,19 +14,19 @@ import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 
 /**
- * 
- * 
+ *
+ *
  * @author Abhishek Somani
- * 
+ *
  */
-public class UtilitarioImagem {
+public final class UtilitarioImagem {
 
 	private static final Logger logger = Logger.getLogger(UtilitarioImagem.class.getName());
 
-	public static File redimensionar(File arquivo, int pixels) throws IOException {
+	public static File redimensionar(final File arquivo, final int pixels) throws IOException {
 
-		long startTime = System.currentTimeMillis();
-		BufferedImage img = ImageIO.read(arquivo); // load image
+		final long startTime = System.currentTimeMillis();
+		final BufferedImage img = ImageIO.read(arquivo); // load image
 
 		// Quality indicate that the scaling implementation should do everything
 		// create as nice of a result as possible , other options like speed
@@ -37,20 +37,21 @@ public class UtilitarioImagem {
 		// fixed size like 50*50 then use FIT_EXACT
 		// other modes like FIT_TO_WIDTH..etc also available.
 
-		BufferedImage thumbImg = Scalr.resize(img, Method.QUALITY, Mode.AUTOMATIC, pixels, pixels, Scalr.OP_ANTIALIAS);
+		final BufferedImage thumbImg = Scalr.resize(img, Method.QUALITY, Mode.AUTOMATIC, pixels, pixels,
+				Scalr.OP_ANTIALIAS);
 		// convert bufferedImage to outpurstream
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		final ByteArrayOutputStream os = new ByteArrayOutputStream();
 		ImageIO.write(thumbImg, "jpg", os);
 
 		// or wrtite to a file
 
-		File result = new File(UtilitarioArquivo.removeArquivo(arquivo.getAbsolutePath()),
+		final File result = new File(UtilitarioArquivo.removeArquivo(arquivo.getAbsolutePath()),
 				"thumbnail_" + pixels + "_" + arquivo.getName());
 
 		ImageIO.write(thumbImg, "jpg", result);
 
-		if (logger.isLoggable(Level.FINE)) {
-			logger.fine(
+		if (UtilitarioImagem.logger.isLoggable(Level.FINE)) {
+			UtilitarioImagem.logger.fine(
 					String.format("thumbnail gerado em [%d] milisegundos.", (System.currentTimeMillis() - startTime)));
 		}
 
