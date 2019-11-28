@@ -56,3 +56,6 @@ api/**/.settings
 api/**/.project
 api/**/target
 */.attach_*
+
+#asta
+**/*.asta.lock
