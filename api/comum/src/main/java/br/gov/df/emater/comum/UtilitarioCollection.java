@@ -10,7 +10,7 @@ public final class UtilitarioCollection {
 
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> deMapStringParaMapObject(final Map<String, Object> modelo) {
-		// FIXME terminar este código
+
 		final Map<String, Object> resultTemp = new LinkedHashMap<>();
 
 		final Map<String, Map<String, Object>> arrays = new LinkedHashMap<>();
