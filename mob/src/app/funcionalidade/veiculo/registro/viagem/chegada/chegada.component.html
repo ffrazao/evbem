@@ -5,11 +5,11 @@
 <form class="padding" [formGroup]="form" (submit)="onSubmit()" novalidate>
     <ion-item-group>
         <ion-item>
-            <ion-label (click)="tamanho.style = 'height: 1080px;'">Local Chegada</ion-label>
+            <ion-label position="floating">Local Chegada</ion-label>
         </ion-item>
         <ion-item>
-            <div #tamanho style="width: 100%; height: 180px;">
-                <div id="localChegadaMap" style="height:100%;"></div>
+            <div class="map_container">
+                <div class="map" #map></div>
             </div>
         </ion-item>
     </ion-item-group>

@@ -5,7 +5,6 @@ import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import { Map, tileLayer, marker, icon } from 'leaflet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { ViagemInicio } from './viagem-inicio';
 import { MensagemService } from '../../../../../comum/servico/mensagem/mensagem.service';
 import { posicaoEmater } from '../../../../../comum/ferramenta/funcao';
 import { ViagemDaoLocal } from '../../../../../dao/local/veiculo/viagem-dao.local';
@@ -18,6 +17,7 @@ import { EscolheItemService } from '../../../../../comum/componente/escolhe-item
 import { LoginService } from '../../../../../comum/componente/login/login.service';
 import { UsuarioLocal } from '../../../../../comum/componente/login/usuario-local';
 import { Pessoa } from '../../../../../entidade/principal/pessoa';
+import { Viagem } from 'src/app/entidade/veiculo/viagem';
 
 @Component({
     selector: 'app-viagem-saida',
@@ -56,7 +56,7 @@ export class SaidaComponent implements OnInit {
 
     async ngOnInit() {
         try {
-            const viagemInicio = new ViagemInicio();
+            const viagemInicio = new Viagem();
             const veiculo = '1234';
             
             let condutor = '';
@@ -64,8 +64,8 @@ export class SaidaComponent implements OnInit {
             if (usuarioLocal.pessoaId > 0) {
                 const pessoa = await this.pessoaDao.restaurar([usuarioLocal.pessoaId]);
                 if (pessoa != null) {
-                    viagemInicio.condutor = pessoa[0] as Pessoa;
-                    condutor = viagemInicio.condutor.nome;
+                    // viagemInicio.condutor = pessoa[0] as Pessoa;
+                    // condutor = viagemInicio.condutor.nome;
                 }
             }
 
@@ -86,18 +86,18 @@ export class SaidaComponent implements OnInit {
         }, 500);
     }
 
-    private createForm(viagem: ViagemInicio, pesquisaVeiculo: string, pesquisaCondutor: string): FormGroup {
+    private createForm(viagem: Viagem, pesquisaVeiculo: string, pesquisaCondutor: string): FormGroup {
         return this.formBuilder.group({
             pesquisaVeiculo: [pesquisaVeiculo, [Validators.required]],
-            veiculo: [viagem.veiculo, [Validators.required]],
-            dia: [viagem.dia, [Validators.required]],
+            // veiculo: [viagem.veiculo, [Validators.required]],
+            // dia: [viagem.dia, [Validators.required]],
             pesquisaCondutor: [pesquisaCondutor, [Validators.required]],
-            condutor: [viagem.condutor, [Validators.required]],
+            // condutor: [viagem.condutor, [Validators.required]],
             localSaida: [viagem.localSaida, [Validators.required]],
-            hora: [viagem.hora, [Validators.required]],
-            odometro: [viagem.odometro, [Validators.required, Validators.min(1)]],
-            responsavelVeiculo: [viagem.responsavelVeiculo, [Validators.required]],
-            lotacaoVeiculo: [viagem.lotacaoVeiculo, [Validators.required]],
+            // hora: [viagem.hora, [Validators.required]],
+            // odometro: [viagem.odometro, [Validators.required, Validators.min(1)]],
+            // responsavelVeiculo: [viagem.responsavelVeiculo, [Validators.required]],
+            // lotacaoVeiculo: [viagem.lotacaoVeiculo, [Validators.required]],
         });
     }
 
@@ -108,7 +108,7 @@ export class SaidaComponent implements OnInit {
 
         this.mensagem.aguarde().then((res) => {
             res.present();
-            this.servico.salvar([this.form.value as ViagemInicio]).subscribe((r) => {
+            this.servico.salvar([this.form.value as Viagem]).subscribe((r) => {
                 this.router.navigate(['/', 's', 'veiculo-registrando'], { relativeTo: this.route });
                 this.mensagem.sucesso('Viagem iniciada!');
                 res.dismiss();
