@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
-import { Map, tileLayer, marker, icon } from 'leaflet';
+import { Map as MapL, tileLayer, marker, icon } from 'leaflet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MensagemService } from '../../../../../comum/servico/mensagem/mensagem.service';
@@ -11,13 +11,14 @@ import { ViagemDaoLocal } from '../../../../../dao/local/veiculo/viagem-dao.loca
 import { VeiculoDao } from '../../../../../dao/externo/veiculo/veiculo-dao';
 import { VeiculoFiltroDto } from '../../../../../transporte/veiculo/veiculo.filtro.dto';
 import { ViagemDao } from '../../../../../dao/externo/veiculo/viagem-dao';
-import { PessoaDao } from '../../../../../dao/externo/principal/pessoa-dao';
+import { PessoaDaoExterno } from '../../../../../dao/externo/principal/pessoa-dao';
 import { PessoaFiltroDto } from '../../../../../transporte/principal/pessoa.filtro.dto';
 import { EscolheItemService } from '../../../../../comum/componente/escolhe-item/escolhe-item.service';
 import { LoginService } from '../../../../../comum/componente/login/login.service';
 import { UsuarioLocal } from '../../../../../comum/componente/login/usuario-local';
 import { Pessoa } from '../../../../../entidade/principal/pessoa';
 import { Viagem } from 'src/app/entidade/veiculo/viagem';
+import { stringify } from 'querystring';
 
 @Component({
     selector: 'app-viagem-saida',
@@ -42,7 +43,7 @@ export class SaidaComponent implements OnInit {
         private route: ActivatedRoute,
         private servico: ViagemDao,
         private servicoVeiculo: VeiculoDao,
-        private servicoPessoa: PessoaDao,
+        private servicoPessoa: PessoaDaoExterno,
         private servicoLocal: ViagemDaoLocal,
         private formBuilder: FormBuilder,
         private mensagem: MensagemService,
@@ -50,33 +51,47 @@ export class SaidaComponent implements OnInit {
         private barcodeScanner: BarcodeScanner,
         private escolheItem: EscolheItemService,
         private loginService: LoginService,
-        private pessoaDao: PessoaDao,
     ) {
     }
 
     async ngOnInit() {
         try {
+
+            console.log('Chamando o metodo iniciar');
+            let modelo = new Map<string, string>();
+            modelo.set('@class', 'br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaFisica');
+            modelo.set('nome', 'Joaquim das Neves');
+            modelo.set('sexo', 'M');
+            this.servicoPessoa.iniciar(modelo).subscribe((r) => {
+                console.log('Retorno do iniciar', r);
+            }, 
+            e => console.log('Erro ao iniciar', e)
+            );
+    
+
+
+
             const viagemInicio = new Viagem();
             const veiculo = '1234';
-            
+
             let condutor = '';
             const usuarioLocal = this.loginService.token;
             if (usuarioLocal.pessoaId > 0) {
-                const pessoa = await this.pessoaDao.restaurar([usuarioLocal.pessoaId]);
-                if (pessoa != null) {
-                    // viagemInicio.condutor = pessoa[0] as Pessoa;
-                    // condutor = viagemInicio.condutor.nome;
-                }
+                // const pessoa = await this.servicoPessoa.restaurar([usuarioLocal.pessoaId]);
+                // if (pessoa != null) {
+                //     // viagemInicio.condutor = pessoa[0] as Pessoa;
+                //     // condutor = viagemInicio.condutor.nome;
+                // }
             }
 
             this.form = this.createForm(viagemInicio, veiculo, condutor);
-            this.initMap();
+            // this.initMap();
             console.log('captando posição atual');
             this.posicao = await this.geo.getCurrentPosition() as Geoposition;
 
         } finally {
             console.log(this.posicao);
-            this.initMap();
+            // this.initMap();
         }
     }
 
@@ -87,6 +102,7 @@ export class SaidaComponent implements OnInit {
     }
 
     private createForm(viagem: Viagem, pesquisaVeiculo: string, pesquisaCondutor: string): FormGroup {
+        console.log('Criando Form Viagem');
         return this.formBuilder.group({
             pesquisaVeiculo: [pesquisaVeiculo, [Validators.required]],
             // veiculo: [viagem.veiculo, [Validators.required]],
@@ -121,12 +137,13 @@ export class SaidaComponent implements OnInit {
     }
 
     initMap() {
+        console.log('Iniciando o mapa!');
         if (!this.posicao || !this.posicao.coords) {
             this.posicao = posicaoEmater();
         }
 
         if (!this.map) {
-            this.map = new Map('localSaidaMap').setView([this.posicao.coords.latitude, this.posicao.coords.longitude], 23);
+            this.map = new MapL('localSaidaMap').setView([this.posicao.coords.latitude, this.posicao.coords.longitude], 23);
         }
 
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -12,11 +12,11 @@ export class VeiculoDaoLocal implements Crud<Veiculo, any, any> {
     ) {
     }
 
-    iniciar(modelo?: Veiculo): import('rxjs').Observable<Veiculo> {
+    iniciar(modelo?: Map<string, string>): import('rxjs').Observable<Veiculo> {
         throw new Error('Method not implemented.');
     }
 
-    criar(entidades: Veiculo[]): import('rxjs').Observable<number[]> {
+    criar(entidades: Veiculo[]): import('rxjs').Observable<Veiculo[]> {
         throw new Error('Method not implemented.');
     }
     restaurar(ids: number[]): import('rxjs').Observable<Veiculo[]> {

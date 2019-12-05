@@ -17,14 +17,14 @@ export class VeiculoDao implements Crud<Veiculo, VeiculoFiltroDto, Veiculo> {
     ) {
     }
 
-    iniciar(modelo?: Veiculo): Observable<Veiculo> {
+    iniciar(modelo?: Map<string, string>): Observable<Veiculo> {
         const query = `?`;
         return this.http.get<Veiculo>(`${environment.apiUrl}/${funcionalidade}/iniciar${query}`,
             // { params:  }
         );
     }
 
-    criar(entidades: Veiculo[]): Observable<number[]> {
+    criar(entidades: Veiculo[]): Observable<Veiculo[]> {
         throw new Error('Method not implemented.');
     }
 

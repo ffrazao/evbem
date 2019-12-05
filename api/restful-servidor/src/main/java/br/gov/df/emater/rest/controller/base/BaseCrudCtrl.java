@@ -17,60 +17,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.gov.df.emater.negocio.base.AlterarEntidade;
 import br.gov.df.emater.negocio.base.ExcluirEntidade;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Setter;
 
 @Data
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("unchecked")
 // E, F, R = Entidade, Filtro, Resultado
-public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
+public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl implements Crud<E, F, R> {
 
-	public static final String ALTERAR = "alterar";
+	public BaseCrudCtrl(final String funcionalidade) {
+		super(funcionalidade);
+	}
 
-	public static final String CRIAR = "criar";
-
-	public static final String EXCLUIR = "excluir";
-
-	public static final String INICIAR = "iniciar";
-
-	public static final String LISTAR = "listar";
-
-	public static final String RESTAURAR = "restaurar";
-
-	public static final String SALVAR = "salvar";
-
-	@Setter(value = AccessLevel.NONE)
-	private final String funcionalidade;
-
+	@Override
 	@PutMapping
-	protected AlterarEntidade<E>[] alterar(@RequestBody(required = true) final AlterarEntidade<E>[] entidades,
+	public List<AlterarEntidade<E>> alterar(@RequestBody(required = true) final List<AlterarEntidade<E>> entidades,
 			final Principal usuario) throws Exception {
-		return (AlterarEntidade<E>[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.ALTERAR,
-				entidades, usuario);
+		return (List<AlterarEntidade<E>>) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(),
+				Crud.ALTERAR, entidades, usuario);
 	}
 
+	@Override
 	@PostMapping()
-	protected List<E> criar(@RequestBody(required = true) final List<E> entidades, final Principal usuario)
+	public List<E> criar(@RequestBody(required = true) final List<E> entidades, final Principal usuario)
 			throws Exception {
-		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.CRIAR, entidades,
+		return (List<E>) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.CRIAR, entidades,
 				usuario);
 	}
 
+	@Override
 	@DeleteMapping(value = "/{ids}")
-	protected ExcluirEntidade[] excluir(@PathVariable(name = "ids", required = true) final Integer[] ids,
+	public List<ExcluirEntidade> excluir(@PathVariable(name = "ids", required = true) final List<Integer> ids,
 			final Principal usuario) throws Exception {
-		return (ExcluirEntidade[]) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.EXCLUIR, ids,
-				usuario);
+		return (List<ExcluirEntidade>) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(),
+				Crud.EXCLUIR, ids, usuario);
 	}
 
-	@GetMapping(value = "/" + BaseCrudCtrl.INICIAR)
-	protected E iniciar(@RequestParam final Map<String, String> modelo, final Principal usuario) throws Exception {
-		return (E) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.INICIAR, modelo,
+	@Override
+	@GetMapping(value = "/" + Crud.INICIAR)
+	public E iniciar(@RequestParam final Map<String, Object> modelo, final Principal usuario) throws Exception {
+		return (E) this.getNegocioFacade().executarSomenteLeitura(this.getFuncionalidade(), Crud.INICIAR, modelo,
 				usuario);
 	}
 
@@ -80,23 +67,26 @@ public class BaseCrudCtrl<E extends Identificavel, F, R> extends BaseCtrl {
 	// exemplo de chamada deste método via postman
 	// GET http://localhost:8080/veiculo?bemPatrimonial=teste de valores&marca=teste
 	// de valores&modelo
+	@Override
 	@GetMapping()
-	protected R[] listar(@Valid final F filtro, final Principal usuario) throws Exception {
-		return (R[]) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.LISTAR, filtro,
+	public List<R> listar(@Valid final F filtro, final Principal usuario) throws Exception {
+		return (List<R>) this.getNegocioFacade().executarSomenteLeitura(this.getFuncionalidade(), Crud.LISTAR, filtro,
 				usuario);
 	}
 
+	@Override
 	@GetMapping(value = "/{ids}")
-	protected List<E> restaurar(@PathVariable(name = "ids", required = true) final Integer[] ids,
+	public List<E> restaurar(@PathVariable(name = "ids", required = true) final List<Integer> ids,
 			final Principal usuario) throws Exception {
-		return (List<E>) this.negocioFacade.executarSomenteLeitura(this.funcionalidade, BaseCrudCtrl.RESTAURAR, ids,
+		return (List<E>) this.getNegocioFacade().executarSomenteLeitura(this.getFuncionalidade(), Crud.RESTAURAR, ids,
 				usuario);
 	}
 
-	@PostMapping(value = "/" + BaseCrudCtrl.SALVAR)
-	protected List<E> salvar(@RequestBody(required = true) final List<E> entidades, final Principal usuario)
+	@Override
+	@PostMapping(value = "/" + Crud.SALVAR)
+	public List<E> salvar(@RequestBody(required = true) final List<E> entidades, final Principal usuario)
 			throws Exception {
-		return (List<E>) this.negocioFacade.executarComEscrita(this.funcionalidade, BaseCrudCtrl.SALVAR, entidades,
+		return (List<E>) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.SALVAR, entidades,
 				usuario);
 	}
 

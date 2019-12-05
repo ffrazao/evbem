@@ -10,8 +10,15 @@ import lombok.Setter;
 @Data
 public class BaseCtrl {
 
+	@Setter(value = AccessLevel.NONE)
+	private final String funcionalidade;
+	
 	@Autowired
 	@Setter(value = AccessLevel.NONE)
-	protected NegocioFacade negocioFacade;
+	private NegocioFacade negocioFacade;
+	
+	public BaseCtrl(String funcionalidade) {
+		this.funcionalidade = funcionalidade;
+	}
 
 }

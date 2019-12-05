@@ -12,10 +12,10 @@ export class ViagemDao implements Crud<Viagem, any, Viagem> {
     ) {
     }
 
-    iniciar(modelo?: Viagem): import('rxjs').Observable<Viagem> {
+    iniciar(modelo?: Map<string, string>): import('rxjs').Observable<Viagem> {
         throw new Error('Method not implemented.');
     }
-    criar(entidades: Viagem[]): import('rxjs').Observable<number[]> {
+    criar(entidades: Viagem[]): import('rxjs').Observable<Viagem[]> {
         throw new Error('Method not implemented.');
     }
     restaurar(ids: number[]): import('rxjs').Observable<Viagem[]> {
