@@ -32,19 +32,19 @@ export class BaseDaoExterno<E, F extends FiltroDto, R> implements Crud<E, F, R> 
     }
 
     criar(entidades: E[]): Observable<E[]> {
-        throw new Error('Method not implemented.');
+        return this._http.post<E[]>(`${environment.apiUrl}/${this.funcionalidade}`, entidades);
     }
 
     restaurar(ids: number[]): Observable<E[]> {
-        throw new Error('Method not implementado.');
+        return this._http.get<E[]>(`${environment.apiUrl}/${this.funcionalidade}/${ids}`);
     }
 
     alterar(entidades: { id: number; entidade: E; }[]): Observable<{ id: number; entidade: E; }[]> {
-        throw new Error('Method not implemented.');
+        return this._http.put<{ id: number; entidade: E; }[]>(`${environment.apiUrl}/${this.funcionalidade}`, entidades);
     }
 
     excluir(ids: number[]): Observable<{ id: number; resultado: boolean; }[]> {
-        throw new Error('Method not implemented.');
+        return this._http.delete<{ id: number; resultado: boolean; }[]>(`${environment.apiUrl}/${this.funcionalidade}/${ids}`);
     }
 
     listar(filtro: F): Observable<R[]> {
@@ -55,7 +55,7 @@ export class BaseDaoExterno<E, F extends FiltroDto, R> implements Crud<E, F, R> 
     }
 
     salvar(entidades: E[]): Observable<E[]> {
-        throw new Error('Method not implemented.');
+        return this._http.post<E[]>(`${environment.apiUrl}/${this.funcionalidade}/salvar`, entidades);
     }
 
 }

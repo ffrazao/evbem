@@ -64,10 +64,15 @@ export class SaidaComponent implements OnInit {
             modelo.set('sexo', 'M');
             this.servicoPessoa.iniciar(modelo).subscribe((r) => {
                 console.log('Retorno do iniciar', r);
-            }, 
-            e => console.log('Erro ao iniciar', e)
+                this.servicoPessoa.criar([r]).subscribe((r) => {
+                    console.log('Retorno do criar', r);
+                },
+                    e => console.log('Erro ao criar ', e)
+                );
+            },
+                e => console.log('Erro ao iniciar', e)
             );
-    
+
 
 
 
