@@ -56,7 +56,7 @@ public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializab
 	private String grupoMenu;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne

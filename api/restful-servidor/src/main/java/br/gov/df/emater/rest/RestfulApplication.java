@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@SpringBootApplication(scanBasePackages = { "br.gov.df.emater", "br.com.frazao.cadeiaresponsabilidade", "br.gov.df.emater.repositorio_principal" })
+@SpringBootApplication(scanBasePackages = { "br.gov.df.emater", "br.com.frazao.cadeiaresponsabilidade" })
 public class RestfulApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

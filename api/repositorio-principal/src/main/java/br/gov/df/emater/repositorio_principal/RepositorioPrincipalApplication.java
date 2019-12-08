@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +16,6 @@ import br.gov.df.emater.repositorio_principal.dao.produto.ProdutoTipoDAO;
 import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
 
 @SpringBootApplication(scanBasePackages = "br.gov.df.emater")
-@EntityScan("br.gov.df.emater.repositorio_principal.entidade")
 @EnableJpaRepositories("br.gov.df.emater.repositorio_principal.dao")
 public class RepositorioPrincipalApplication /* implements CommandLineRunner */ {
 

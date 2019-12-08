@@ -46,7 +46,7 @@ public class Privilegio extends EntidadeBase implements Serializable, Identifica
 	private FuncionalidadeAcao funcionalidadeAcao;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne

@@ -33,7 +33,7 @@ public class Email extends EntidadeBase implements Serializable, Identificavel {
 	private String dominio;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String usuario;

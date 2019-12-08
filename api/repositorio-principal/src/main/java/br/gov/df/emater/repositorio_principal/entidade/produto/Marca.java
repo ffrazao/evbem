@@ -52,7 +52,7 @@ public class Marca extends EntidadeBase implements Serializable, Identificavel, 
 	private List<Marca> filhos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Lob

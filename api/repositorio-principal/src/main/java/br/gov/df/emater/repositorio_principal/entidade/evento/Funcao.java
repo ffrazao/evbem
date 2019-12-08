@@ -47,7 +47,7 @@ public class Funcao extends EntidadeBase implements Serializable, Identificavel,
 	private List<Funcao> filhos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nome;

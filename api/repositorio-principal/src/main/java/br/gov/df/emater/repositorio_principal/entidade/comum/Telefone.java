@@ -35,7 +35,7 @@ public class Telefone extends EntidadeBase implements Serializable, Identificave
 	private String ddi;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String numero;

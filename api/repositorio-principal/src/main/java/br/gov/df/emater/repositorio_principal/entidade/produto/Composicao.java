@@ -40,7 +40,7 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -2,9 +2,11 @@ package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +26,6 @@ import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Priorizavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Visivel;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Telefone;
-import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -43,23 +44,17 @@ public class PessoaTelefone extends EntidadeBase
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "telefone_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Telefone telefone;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private Integer ordem;
-
-	@ManyToOne
-	@JoinColumn(name = "pessoa_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Pessoa pessoa;
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao principal;

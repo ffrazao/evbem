@@ -51,7 +51,7 @@ public class UsuarioFormaAutenticacao extends EntidadeBase implements Serializab
 	private FormaAutenticacao formaAutenticacao;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne

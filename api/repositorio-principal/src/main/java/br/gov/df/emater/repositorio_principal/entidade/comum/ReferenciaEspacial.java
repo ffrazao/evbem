@@ -42,7 +42,7 @@ public class ReferenciaEspacial extends EntidadeBase implements Serializable, Id
 	private Polygon area;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)

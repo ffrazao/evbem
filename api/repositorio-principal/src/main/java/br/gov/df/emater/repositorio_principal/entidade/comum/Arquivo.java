@@ -54,7 +54,7 @@ public class Arquivo extends EntidadeBase implements Serializable, Identificavel
 	private String extensao;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@JsonSerialize(using = PointJsonSerializer.class)

@@ -35,7 +35,7 @@ public class ProdutoTipoMarca extends EntidadeBase implements Serializable, Iden
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne

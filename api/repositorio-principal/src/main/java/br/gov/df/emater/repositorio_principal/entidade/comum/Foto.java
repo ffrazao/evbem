@@ -57,7 +57,7 @@ public class Foto extends EntidadeBase implements Serializable, Identificavel, N
 	private String extensao;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(name = "largura_pixel")

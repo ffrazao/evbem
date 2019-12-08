@@ -50,7 +50,7 @@ public class Participacao extends EntidadeBase implements Serializable, Identifi
 	private Funcao funcao;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)

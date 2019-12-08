@@ -45,7 +45,7 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 	private List<ProdutoTipo> filhos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nome;

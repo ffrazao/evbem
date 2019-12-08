@@ -61,7 +61,7 @@ public class EventoTipo extends EntidadeBase
 	private List<EventoTipo> filhos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nome;

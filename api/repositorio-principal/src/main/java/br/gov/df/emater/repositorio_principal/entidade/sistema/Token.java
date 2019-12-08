@@ -56,7 +56,7 @@ public class Token extends EntidadeBase implements Serializable, Identificavel {
 	private Integer expiraEm;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(name = "invalidado_em")

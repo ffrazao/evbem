@@ -43,7 +43,7 @@ public class Localizacao extends ReferenciaEspacial implements Serializable, Ide
 	private List<Localizacao> filhos;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne

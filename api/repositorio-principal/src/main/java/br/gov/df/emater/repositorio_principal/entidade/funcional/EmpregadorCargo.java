@@ -38,7 +38,7 @@ public class EmpregadorCargo extends EntidadeBase implements Serializable, Ident
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne

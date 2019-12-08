@@ -41,7 +41,7 @@ public class UsuarioPerfil extends EntidadeBase implements Serializable, Identif
 	private Confirmacao ativo;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)

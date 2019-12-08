@@ -32,7 +32,7 @@ public class RelacionamentoFuncao extends EntidadeBase implements Serializable, 
 	private String codigo;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nome;

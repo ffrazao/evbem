@@ -81,7 +81,7 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	private List<Evento> filhos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)

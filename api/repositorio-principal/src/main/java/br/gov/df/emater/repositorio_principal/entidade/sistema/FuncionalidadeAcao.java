@@ -75,7 +75,7 @@ public class FuncionalidadeAcao extends EntidadeBase
 	private Funcionalidade funcionalidade;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY)

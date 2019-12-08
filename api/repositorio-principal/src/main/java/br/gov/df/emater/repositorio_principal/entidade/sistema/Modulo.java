@@ -45,7 +45,7 @@ public class Modulo extends EntidadeBase implements Serializable, Identificavel,
 	private String descricao;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@OneToMany(mappedBy = "modulo")

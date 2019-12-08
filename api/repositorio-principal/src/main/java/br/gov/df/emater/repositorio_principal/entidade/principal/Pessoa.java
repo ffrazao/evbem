@@ -45,10 +45,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Pessoa extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
 
 	private static final long serialVersionUID = 1L;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pessoa_id")
+	private List<PessoaArquivo> arquivoList = new ArrayList<>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pessoa_id")
+	private List<PessoaEmail> emailList = new ArrayList<>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pessoa_id")
+	private List<PessoaEndereco> enderecoList = new ArrayList<>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pessoa_id")
+	private List<PessoaFoto> fotoList = new ArrayList<>();
 
 	@Id
 	private Integer id;
@@ -58,31 +74,21 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@Column(name = "nome_reduzido")
 	private String nomeReduzido;
 
-	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaArquivo> pessoaArquivoList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaEmail> pessoaEmailList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaEndereco> pessoaEnderecoList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaFoto> pessoaFotoList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaRelacionamento> pessoaRelacionamentoList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
-	private List<PessoaTelefone> pessoaTelefoneList = new ArrayList<>();
-
 	@Enumerated(EnumType.STRING)
 	@Column(name = "pessoa_tipo")
 	private PessoaTipo pessoaTipo;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id")
 	@MapsId
 	private Recurso recurso;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pessoa_id")
+	private List<PessoaRelacionamento> relacionamentoList = new ArrayList<>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "pessoa_id")
+	private List<PessoaTelefone> telefoneList = new ArrayList<>();
 
 }

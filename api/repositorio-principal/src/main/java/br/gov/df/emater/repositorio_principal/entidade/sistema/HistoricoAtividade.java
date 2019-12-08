@@ -56,7 +56,7 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 	private Funcionalidade funcionalidade;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)

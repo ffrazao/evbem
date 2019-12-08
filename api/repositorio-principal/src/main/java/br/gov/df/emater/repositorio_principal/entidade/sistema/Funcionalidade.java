@@ -59,7 +59,7 @@ public class Funcionalidade extends EntidadeBase
 	private List<Funcionalidade> filhos = new ArrayList<>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String nome;
