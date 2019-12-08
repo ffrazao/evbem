@@ -19,25 +19,27 @@ import lombok.Setter;
 public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> {
 
 	public static <E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> Dep<E, D, F, L> of(
-			final String funcionalidadeCampo, final Class<E> entidade, final Class<D> dao, final Class<F> filtro,
+			final String funcionalidadeCampo, final Class<E> entidade, final Class<D> daoClass, final Class<F> filtro,
 			final Class<L> listagem, final Dep<?, ?, ?, ?>... dependencias) {
-		return new Dep<>(funcionalidadeCampo, entidade, dao, filtro, listagem, dependencias);
+		return new Dep<>(funcionalidadeCampo, entidade, daoClass, filtro, listagem, dependencias);
 	}
 
 	public static <E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> Dep<E, D, F, L> of(
-			final String funcionalidadeCampo, final Class<E> entidade, final Class<D> dao, final Class<F> filtro,
+			final String funcionalidadeCampo, final Class<E> entidade, final Class<D> daoClass, final Class<F> filtro,
 			final Dep<?, ?, ?, ?>... dependencias) {
-		return Dep.of(funcionalidadeCampo, entidade, dao, filtro, null, dependencias);
+		return Dep.of(funcionalidadeCampo, entidade, daoClass, filtro, null, dependencias);
 	}
 
 	public static <E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> Dep<E, D, F, L> of(
-			final String funcionalidadeCampo, final Class<E> entidade, final Class<D> dao,
+			final String funcionalidadeCampo, final Class<E> entidade, final Class<D> daoClass,
 			final Dep<?, ?, ?, ?>... dependencias) {
-		return Dep.of(funcionalidadeCampo, entidade, dao, null, null, dependencias);
+		return Dep.of(funcionalidadeCampo, entidade, daoClass, null, null, dependencias);
 	}
 
 	@Setter(value = AccessLevel.NONE)
-	private final Class<D> dao;
+	private final Class<D> daoClass;
+	
+	private D dao;
 
 	@Setter(value = AccessLevel.NONE)
 	private final Set<Dep<?, ?, ?, ?>> dependencias = new HashSet<>();
@@ -54,11 +56,11 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 	@Setter(value = AccessLevel.NONE)
 	private final Class<L> listagem;
 
-	private Dep(final String funcionalidadeCampo, final Class<E> entidade, final Class<D> dao, final Class<F> filtro,
+	private Dep(final String funcionalidadeCampo, final Class<E> entidade, final Class<D> daoClass, final Class<F> filtro,
 			final Class<L> listagem, final Dep<?, ?, ?, ?>... dependencias) {
 		this.funcionalidadeCampo = funcionalidadeCampo;
 		this.entidade = entidade;
-		this.dao = dao;
+		this.daoClass = daoClass;
 		this.filtro = filtro;
 		this.listagem = listagem;
 		this.dependencias.addAll(Arrays.asList(dependencias));

@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import br.gov.df.emater.repositorio_principal.dao.comum.ArquivoDAO;
@@ -26,6 +28,7 @@ import br.gov.df.emater.repositorio_principal.dao.produto.ProdutoPessoaDAO;
 import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioDAO;
 import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioFormaAutenticacaoDAO;
 import br.gov.df.emater.repositorio_principal.dao.sistema.UsuarioPerfilDAO;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Arquivo;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Email;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Endereco;
@@ -46,17 +49,28 @@ import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoPessoa;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.UsuarioFormaAutenticacao;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.UsuarioPerfil;
+import br.gov.df.emater.transporte.FiltroDTO;
 import br.gov.df.emater.transporte.ListagemDTO;
 import br.gov.df.emater.transporte.principal.PessoaFiltroDTO;
 
 @Component
 public class MapaDep {
 
+	private final InstanciaBean instanciaBean;
+
 	private final Set<Dep<?, ?, ?, ?>> mapa = new HashSet<>();
 
-	// @formatter:off
-	MapaDep() {
+	private <E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> void instanciaDao(
+			Dep<E, D, F, L> d) {
+		d.setDao((D) this.instanciaBean.instanciarBean(d.getDaoClass()));
+		d.getDependencias().ifPresent(c -> c.forEach(x -> instanciaDao(x)));
+	}
 
+	// @formatter:off
+	@Autowired
+	MapaDep(InstanciaBean instanciaBean) {
+		this.instanciaBean = instanciaBean;
+		
 		// mapa pessoa
 		this.mapa.add(
 				Dep.of("pessoa", Pessoa.class, PessoaDAO.class, PessoaFiltroDTO.class, ListagemDTO.class, 
@@ -88,11 +102,16 @@ public class MapaDep {
 						Dep.of("composicaoList", Composicao.class, ComposicaoDAO.class),
 						Dep.of("produtoPessoaList", ProdutoPessoa.class, ProdutoPessoaDAO.class)
 				));
+		
+		// instanciar os daos
+		this.mapa.forEach((i) -> instanciaDao(i));
 
 	}
 	// @formatter:on
 
 	public Optional<Dep<?, ?, ?, ?>> getDep(final String funcionalidadeCampo) {
-		return this.mapa.stream().filter(d -> funcionalidadeCampo.equalsIgnoreCase(d.getFuncionalidadeCampo())).findFirst();
+		return this.mapa.stream().filter(d -> funcionalidadeCampo.equalsIgnoreCase(d.getFuncionalidadeCampo()))
+				.findFirst();
 	}
+
 }

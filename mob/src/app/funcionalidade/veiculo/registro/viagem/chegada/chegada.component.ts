@@ -9,19 +9,21 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MensagemService } from '../../../../../comum/servico/mensagem/mensagem.service';
 import { posicaoEmater } from '../../../../../comum/ferramenta/funcao';
+import { FullScreenControl } from '../../../../../comum/componente/map/full-screen-control';
+import { Viagem } from 'src/app/entidade/veiculo/viagem';
 
 @Component({
     selector: 'app-viagem-chegada',
     templateUrl: './chegada.component.html',
     styleUrls: ['./chegada.component.scss']
 })
-export class ChegadaComponent implements OnInit {
+export class ChegadaComponent implements OnInit, AfterViewInit {
 
-    @ViewChild('map', {static: false})
+    @ViewChild('map', { static: false })
     public mapElement: ElementRef;
 
     private map: L.Map;
-    
+
     private form: FormGroup;
 
     @ViewChild('focaliza', { static: false })
@@ -47,20 +49,22 @@ export class ChegadaComponent implements OnInit {
     }
 
     private initMap() {
-        const mapTileDefault =
-            L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=93fd0e6776254aa3997cd55752310e15');
+
+        const mapTileDefault = L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=93fd0e6776254aa3997cd55752310e15');
 
         this.map = L.map(this.mapElement.nativeElement, {
             center: [-15.794797016134899, -47.9262052592602],
             zoom: 12,
             maxZoom: 18,
             layers: [mapTileDefault],
-            zoomControl: false
+            zoomControl: true
         });
 
         this.map['attributionControl'].remove();
 
-        new FullscreenControl('btn_fullscreen_map').addTo(this.map);
+        new FullScreenControl('btn_fullscreen_map').addTo(this.map);
+
+        this.map.on('click', (e) => console.log('map click event', e));
 
         setTimeout(() => {
             this.map.invalidateSize();
@@ -68,15 +72,15 @@ export class ChegadaComponent implements OnInit {
     }
 
     async ngOnInit() {
-    //     try {
-    //         this.form = this.createForm(new ViagemParar());
-    //         this.initMap();
-    //         console.log('captando posição atual');
-    //         this.posicao = await this.geo.getCurrentPosition() as Geoposition;
-    //     } finally {
-    //         console.log(this.posicao);
-    //         this.initMap();
-    //     }
+        try {
+            this.form = this.createForm(new Viagem());
+            // this.initMap();
+            // console.log('captando posição atual');
+            // this.posicao = await this.geo.getCurrentPosition() as Geoposition;
+        } finally {
+            // console.log(this.posicao);
+            // this.initMap();
+        }
     }
 
     ionViewDidEnter() {
@@ -85,14 +89,14 @@ export class ChegadaComponent implements OnInit {
         }, 500);
     }
 
-    // private createForm(viagem: ViagemParar): FormGroup {
-    //     return this.formBuilder.group({
-    //         localChegada: [viagem.localChegada, []],
-    //         hora: [viagem.hora, [Validators.required]],
-    //         odometro: [viagem.odometro, [Validators.required, Validators.min(1)]],
-    //         servico: [viagem.servico, [Validators.required]],
-    //     });
-    // }
+    private createForm(viagem: Viagem): FormGroup {
+        return this.formBuilder.group({
+            localChegada: [viagem.localChegada, []],
+            hora: [null, [Validators.required]],
+            odometro: [null, [Validators.required, Validators.min(1)]],
+            servico: [null, [Validators.required]],
+        });
+    }
 
     public async onSubmit() {
         if (!this.form.valid) {
@@ -101,15 +105,15 @@ export class ChegadaComponent implements OnInit {
 
         this.mensagem.aguarde().then((res) => {
             res.present();
-/*            this.service.salvar(this.form.value as ViagemParar).subscribe((r) => {
-                this.router.navigate(['/m', 's', 'veiculo', 'viagem', 'inicio'], {relativeTo: this.route});
-                this.mensagem.sucesso('Viagem concluída!');
-                res.dismiss();
-            }, (e) => {
-                console.log(e);
-                this.mensagem.erro(e);
-                res.dismiss();
-            });*/
+            /*            this.service.salvar(this.form.value as ViagemParar).subscribe((r) => {
+                            this.router.navigate(['/m', 's', 'veiculo', 'viagem', 'inicio'], {relativeTo: this.route});
+                            this.mensagem.sucesso('Viagem concluída!');
+                            res.dismiss();
+                        }, (e) => {
+                            console.log(e);
+                            this.mensagem.erro(e);
+                            res.dismiss();
+                        });*/
         });
     }
 
@@ -150,45 +154,3 @@ export class ChegadaComponent implements OnInit {
     }
 
 }
-
-export class FullscreenControl extends L.Control.EasyButton {
-
-    public constructor(elementId: string) {
-        super({
-                id: elementId,
-                states: [{
-                    stateName: 'expand',
-                    icon: 'fa-arrows-alt',
-                    title: '',
-                    onClick: (control, map) => {
-                        control.state('minimize');
-
-                        this.makeFullscreen(map.getContainer());
-
-                        setTimeout(() => map.invalidateSize(), 300);
-                    }
-                    }, {
-                    stateName: 'minimize',
-                    icon: 'fa-compress',
-                    title: '',
-                    onClick: (control, map) => {
-                        control.state('expand');
-
-                        this.makeMinimize(map.getContainer());
-
-                        setTimeout(() => map.invalidateSize(), 100);
-                    }
-                }],
-                position: 'bottomright'
-        });
-    }
-
-    private makeFullscreen(container: HTMLElement) {
-        L.DomUtil.addClass(container, 'leaflet-pseudo-fullscreen');
-    }
-
-    private makeMinimize(container: HTMLElement) {
-        L.DomUtil.removeClass(container, 'leaflet-pseudo-fullscreen');
-    }
-
-} 

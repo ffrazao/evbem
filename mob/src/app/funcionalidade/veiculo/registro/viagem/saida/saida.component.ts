@@ -57,7 +57,7 @@ export class SaidaComponent implements OnInit {
     async ngOnInit() {
         try {
 
-            console.log('Chamando o metodo iniciar');
+            /*console.log('Chamando o metodo iniciar');
             let modelo = new Map<string, string>();
             modelo.set('@class', 'br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaFisica');
             modelo.set('nome', 'Joaquim das Neves');
@@ -71,9 +71,7 @@ export class SaidaComponent implements OnInit {
                 );
             },
                 e => console.log('Erro ao iniciar', e)
-            );
-
-
+            );*/
 
 
             const viagemInicio = new Viagem();

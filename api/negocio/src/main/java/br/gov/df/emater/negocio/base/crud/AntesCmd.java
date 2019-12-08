@@ -1,10 +1,13 @@
 package br.gov.df.emater.negocio.base.crud;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.gov.df.emater.repositorio_principal.base.Dep;
 import br.gov.df.emater.repositorio_principal.base.MapaDep;
 
 @Component
@@ -18,7 +21,8 @@ public class AntesCmd extends Comando {
 	@Override
 	protected void procedimento(Contexto contexto) throws Exception {
 		log().info("Identificação das dependencias");
-		contexto.put(DEPENDENCIA, mapa.getDep(contexto.getCatalogo()));
+		Optional<Dep<?,?,?,?>> dep = mapa.getDep(contexto.getCatalogo());
+		contexto.put(DEPENDENCIA, dep);
 	}
 
 }

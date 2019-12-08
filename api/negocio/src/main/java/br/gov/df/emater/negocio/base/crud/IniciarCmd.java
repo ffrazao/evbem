@@ -6,12 +6,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.frazao.cadeiaresponsabilidade.BibliotecaSpring;
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.repositorio_principal.base.Dep;
@@ -19,9 +17,6 @@ import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 
 @Component
 public class IniciarCmd extends Comando {
-
-	@Autowired
-	private BibliotecaSpring biblioteca;
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -33,8 +28,7 @@ public class IniciarCmd extends Comando {
 		final Map<String, Object> modelo = (Map<String, Object>) contexto.getRequisicao();
 		if ((modelo != null) && !modelo.isEmpty()) {
 			if (modelo.get("id") != null && dep.isPresent()) {
-				result = biblioteca.instanciarBean(dep.get().getDao())
-						.findById(Integer.valueOf((String) modelo.get("id")));
+				result = dep.get().getDao().findById(Integer.valueOf((String) modelo.get("id")));
 				
 				result = ((Optional<?>) result).orElse(null);
 				
