@@ -3,6 +3,7 @@ package br.gov.df.emater.repositorio_principal.entidade.base;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EntidadeUnicaComponent {
-	
+
 	@Autowired
 	private EntityManager em;
 
@@ -26,17 +27,24 @@ public class EntidadeUnicaComponent {
 		}
 		EntidadeUnica entidadeUnica = AnnotationUtils.findAnnotation(entidade.getClass(), EntidadeUnica.class);
 		if (entidadeUnica != null) {
-			entidadeUnica.value();
-			
+
 			// aprender a como instanciar uma classe generica
-			Class<?> cls = new Class<>();
-			
-			SimpleJpaRepository<?,?> jpa = new SimpleJpaRepository(entidade.getClass(), em);
-			jpa.findAll();
-			jpa.findAll (Example.of(entidade, ExampleMatcher.matchingAll()));
-			
-			
-			System.out.println(entidadeUnica);
+			try {
+				Object entidadeExemplo = entidade.getClass().newInstance();
+				for (String valorUnico : entidadeUnica.value()) {
+					entidadeExemplo.getClass().getField(valorUnico).set(entidadeExemplo, entidade.getClass().getField(valorUnico).get(entidade));
+				}
+
+				Example exemplo = Example.of(entidadeExemplo, ExampleMatcher.matchingAll());
+
+				SimpleJpaRepository<?, ?> jpa = new SimpleJpaRepository(entidade.getClass(), em);
+				List resp = jpa.findAll(exemplo);
+
+				System.out.println(resp);
+				
+			} catch (InstantiationException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+				e.printStackTrace();
+			}
 		}
 		Class<?> clazz = entidade.getClass();
 		while (!Arrays.asList(EntidadeBase.class, Object.class, Class.class, Enum.class).contains(clazz)) {
