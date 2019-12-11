@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnica;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;

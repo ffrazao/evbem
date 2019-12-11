@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -29,6 +31,7 @@ import br.gov.df.emater.repositorio_principal.entidade.comum.Email;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The persistent class for the pessoa_email database table.
@@ -39,6 +42,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@ToString()
 public class PessoaEmail extends EntidadeBase implements Serializable, Identificavel, Ordenavel, Priorizavel, Visivel {
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +52,18 @@ public class PessoaEmail extends EntidadeBase implements Serializable, Identific
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Email email;
+	
+	@PrePersist
+	@PreUpdate
+	public void antesSalvar() {
+		System.out.println("Salvando Pessoa Email ..." + this.toString());
+//		@MantemUnicaEntidade(
+//				atributo = {{"telefone"}}, 
+//				entidade = {{Telefone.class}}, 
+//				valor = {{"ddi","ddd","numero"}})
+
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

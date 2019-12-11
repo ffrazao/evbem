@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.StringUtils;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnica;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@EntidadeUnica({"ddi", "ddd", "numero"})
 public class Telefone extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;

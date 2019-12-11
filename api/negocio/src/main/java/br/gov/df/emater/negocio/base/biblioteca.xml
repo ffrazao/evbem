@@ -12,6 +12,8 @@
 				classe="br.gov.df.emater.negocio.base.crud.IniciarCmd" />
 		</cadeia>
 		<cadeia nome="criar" tipo="SEQUENCIAL">
+			<comando nome="prepararCmd"
+				classe="br.gov.df.emater.negocio.base.crud.PrepararCmd"/>
 			<comando nome="criarCmd"
 				classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
 		</cadeia>
