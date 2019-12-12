@@ -25,21 +25,20 @@ public class ViagemDAOImpl implements FiltroDAOExtra<ViagemFiltroDTO, Viagem> {
 	private EntityManager em;
 
 	@Override
-	public Viagem[] findByFiltro(ViagemFiltroDTO filtro) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Viagem> sql = cb.createQuery(Viagem.class);
+	public Viagem[] findByFiltro(final ViagemFiltroDTO filtro) {
+		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
+		final CriteriaQuery<Viagem> sql = cb.createQuery(Viagem.class);
 
-		Root<Viagem> root = sql.from(Viagem.class);
+		final Root<Viagem> root = sql.from(Viagem.class);
 
 		List<Predicate> pl = new ArrayList<>();
 
 		// campo especial de pesquisa
 		if (!CollectionUtils.isEmpty(filtro.getPesq())) {
-			Object pesq = colecaoOuUnidade(filtro.getPesq());
-			pl.add(cb.or(criarPredicado(cb, root, "placa", pesq),
-					criarPredicado(cb, root, "renavan", pesq)));
+			final Object pesq = this.colecaoOuUnidade(filtro.getPesq());
+			pl.add(cb.or(this.criarPredicado(cb, root, "placa", pesq), this.criarPredicado(cb, root, "renavan", pesq)));
 		} else {
-			
+
 		}
 
 		// remover predicados nulos
@@ -52,7 +51,7 @@ public class ViagemDAOImpl implements FiltroDAOExtra<ViagemFiltroDTO, Viagem> {
 
 		sql.orderBy(Arrays.asList(cb.asc(root.get("placa"))));
 
-		TypedQuery<Viagem> query = em.createQuery(sql);
+		final TypedQuery<Viagem> query = this.em.createQuery(sql);
 
 		query.setFirstResult((filtro.getPagina() - 1) * filtro.getTamanho());
 		query.setMaxResults(filtro.getTamanho());

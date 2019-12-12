@@ -9,9 +9,9 @@ public interface PaiNomeavel<T> extends Pai<T>, Nomeavel {
 	@SuppressWarnings("unchecked")
 	@Transient
 	default String getNomeAscendente() {
-		StringBuilder result = new StringBuilder();
-		result.append(getNome());
-		Optional.ofNullable(getPai())
+		final StringBuilder result = new StringBuilder();
+		result.append(this.getNome());
+		Optional.ofNullable(this.getPai())
 				.ifPresent((v) -> result.append("/ ").append(((PaiNomeavel<T>) v).getNomeAscendente()));
 		return result.toString();
 	}
@@ -19,10 +19,10 @@ public interface PaiNomeavel<T> extends Pai<T>, Nomeavel {
 	@SuppressWarnings("unchecked")
 	@Transient
 	default String getNomeDescendente() {
-		StringBuilder result = new StringBuilder();
-		Optional.ofNullable(getPai())
+		final StringBuilder result = new StringBuilder();
+		Optional.ofNullable(this.getPai())
 				.ifPresent((v) -> result.append(((PaiNomeavel<T>) v).getNomeAscendente()).append("/ "));
-		result.append(getNome());
+		result.append(this.getNome());
 		return result.toString();
 	}
 

@@ -17,18 +17,18 @@ public class PessoaSalvarCmd extends Comando {
 	@Autowired
 	private PessoaDAO dao;
 
-	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		if (contexto.getRequisicao() instanceof Collection) {
-			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
-					.map(reg -> dao.saveAndFlush(prepara((Pessoa) reg))).collect(Collectors.toList()));
-		} else {
-			contexto.setResposta(dao.saveAndFlush(prepara((Pessoa) contexto.getRequisicao())));
-		}
+	private Pessoa prepara(final Pessoa registro) {
+		return registro;
 	}
 
-	private Pessoa prepara(Pessoa registro) {
-		return registro;
+	@Override
+	protected void procedimento(final Contexto contexto) throws Exception {
+		if (contexto.getRequisicao() instanceof Collection) {
+			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
+					.map(reg -> this.dao.saveAndFlush(this.prepara((Pessoa) reg))).collect(Collectors.toList()));
+		} else {
+			contexto.setResposta(this.dao.saveAndFlush(this.prepara((Pessoa) contexto.getRequisicao())));
+		}
 	}
 
 }

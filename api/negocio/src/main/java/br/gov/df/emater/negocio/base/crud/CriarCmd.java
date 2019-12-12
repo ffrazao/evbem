@@ -16,22 +16,22 @@ public class CriarCmd extends Comando {
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
+	protected void procedimento(final Contexto contexto) throws Exception {
 
 		final Optional<Dep<?, ?, ?, ?>> depOpt = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
 
 		if (depOpt.isPresent()) {
 			final Dep<?, ?, ?, ?> dep = depOpt.get();
 
-			Collection<Integer> result = ((Collection<EntidadeBase>) contexto.getRequisicao()).stream()
-					.map((reg) -> salvar(dep, reg)).collect(Collectors.toList());
+			final Collection<Integer> result = ((Collection<EntidadeBase>) contexto.getRequisicao()).stream()
+					.map((reg) -> this.salvar(dep, reg)).collect(Collectors.toList());
 
 			contexto.setResposta(result);
 		}
 
 	}
 
-	private Integer salvar(Dep<?, ?, ?, ?> dep, EntidadeBase entidade) {
+	private Integer salvar(final Dep<?, ?, ?, ?> dep, final EntidadeBase entidade) {
 		return entidade.getId();
 	}
 

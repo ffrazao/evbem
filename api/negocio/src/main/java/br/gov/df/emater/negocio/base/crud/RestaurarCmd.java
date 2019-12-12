@@ -10,8 +10,8 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 public class RestaurarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		Object modelo = contexto.getRequisicao();
+	protected void procedimento(final Contexto contexto) throws Exception {
+		final Object modelo = contexto.getRequisicao();
 		Object instancia = null;
 		if (modelo != null) {
 

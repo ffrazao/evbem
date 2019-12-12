@@ -36,10 +36,10 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 		return Dep.of(funcionalidadeCampo, entidade, daoClass, null, null, dependencias);
 	}
 
+	private D dao;
+
 	@Setter(value = AccessLevel.NONE)
 	private final Class<D> daoClass;
-	
-	private D dao;
 
 	@Setter(value = AccessLevel.NONE)
 	private final Set<Dep<?, ?, ?, ?>> dependencias = new HashSet<>();
@@ -56,8 +56,8 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 	@Setter(value = AccessLevel.NONE)
 	private final Class<L> listagem;
 
-	private Dep(final String funcionalidadeCampo, final Class<E> entidade, final Class<D> daoClass, final Class<F> filtro,
-			final Class<L> listagem, final Dep<?, ?, ?, ?>... dependencias) {
+	private Dep(final String funcionalidadeCampo, final Class<E> entidade, final Class<D> daoClass,
+			final Class<F> filtro, final Class<L> listagem, final Dep<?, ?, ?, ?>... dependencias) {
 		this.funcionalidadeCampo = funcionalidadeCampo;
 		this.entidade = entidade;
 		this.daoClass = daoClass;
@@ -79,8 +79,8 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 	}
 
 	public Optional<Dep<?, ?, ?, ?>> getDependencia(final String funcionalidadeCampo) {
-		return this.dependencias.stream().filter(d -> funcionalidadeCampo.equalsIgnoreCase(this.getFuncionalidadeCampo()))
-				.findFirst();
+		return this.dependencias.stream()
+				.filter(d -> funcionalidadeCampo.equalsIgnoreCase(this.getFuncionalidadeCampo())).findFirst();
 	}
 
 	public Optional<Set<Dep<?, ?, ?, ?>>> getDependencias() {

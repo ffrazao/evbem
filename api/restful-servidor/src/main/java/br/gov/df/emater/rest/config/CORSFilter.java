@@ -19,21 +19,26 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements Filter {
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+	@Override
+	public void destroy() {
+	}
+
+	@Override
+	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletResponse response = (HttpServletResponse) res;
-		HttpServletRequest request = (HttpServletRequest) req;
+		final HttpServletResponse response = (HttpServletResponse) res;
+		final HttpServletRequest request = (HttpServletRequest) req;
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Methods", "DELETE, GET, OPTIONS, POST, PUT");
 		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", 
+		response.setHeader("Access-Control-Allow-Headers",
 				// "*"
-				// "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization, Access-Control-Request-Headers"
-				"Origin, X-Requested-With, Content-Type, Accept, Key, Authorization, Access-Control-Request-Headers, boundary"				
-				);
+				// "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization,
+				// Access-Control-Request-Headers"
+				"Origin, X-Requested-With, Content-Type, Accept, Key, Authorization, Access-Control-Request-Headers, boundary");
 
 		if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
 			response.setStatus(HttpServletResponse.SC_OK);
@@ -43,10 +48,8 @@ public class CORSFilter implements Filter {
 
 	}
 
-	public void init(FilterConfig filterConfig) {
-	}
-
-	public void destroy() {
+	@Override
+	public void init(final FilterConfig filterConfig) {
 	}
 
 }

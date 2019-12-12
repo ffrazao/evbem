@@ -52,18 +52,6 @@ public class PessoaEmail extends EntidadeBase implements Serializable, Identific
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Email email;
-	
-	@PrePersist
-	@PreUpdate
-	public void antesSalvar() {
-		System.out.println("Salvando Pessoa Email ..." + this.toString());
-//		@MantemUnicaEntidade(
-//				atributo = {{"telefone"}}, 
-//				entidade = {{Telefone.class}}, 
-//				valor = {{"ddi","ddd","numero"}})
-
-	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,5 +64,16 @@ public class PessoaEmail extends EntidadeBase implements Serializable, Identific
 
 	@Enumerated(EnumType.STRING)
 	private Visibilidade visibilidade;
+
+	@PrePersist
+	@PreUpdate
+	public void antesSalvar() {
+		System.out.println("Salvando Pessoa Email ..." + this.toString());
+//		@MantemUnicaEntidade(
+//				atributo = {{"telefone"}}, 
+//				entidade = {{Telefone.class}}, 
+//				valor = {{"ddi","ddd","numero"}})
+
+	}
 
 }

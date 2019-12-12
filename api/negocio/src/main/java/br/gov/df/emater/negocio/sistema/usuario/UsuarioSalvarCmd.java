@@ -19,12 +19,12 @@ public class UsuarioSalvarCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
+	protected void procedimento(final Contexto contexto) throws Exception {
 		if (contexto.getRequisicao() instanceof Usuario) {
-			contexto.setResposta(dao.saveAndFlush((Usuario) contexto.getRequisicao()));
+			contexto.setResposta(this.dao.saveAndFlush((Usuario) contexto.getRequisicao()));
 		} else {
-			contexto.setResposta(((List<Usuario>) contexto.getRequisicao()).stream().map(reg -> dao.saveAndFlush(reg))
-					.collect(Collectors.toList()));
+			contexto.setResposta(((List<Usuario>) contexto.getRequisicao()).stream()
+					.map(reg -> this.dao.saveAndFlush(reg)).collect(Collectors.toList()));
 		}
 	}
 

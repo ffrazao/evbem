@@ -17,13 +17,13 @@ public class ViagemExcluirCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
+	protected void procedimento(final Contexto contexto) throws Exception {
 		if (contexto.getRequisicao() != null) {
 			if (contexto.getRequisicao() instanceof Integer) {
-				dao.deleteById((Integer) contexto.getRequisicao());
+				this.dao.deleteById((Integer) contexto.getRequisicao());
 			}
 			if (contexto.getRequisicao() instanceof List) {
-				((List<Integer>) contexto.getRequisicao()).forEach(id -> dao.deleteById(id));
+				((List<Integer>) contexto.getRequisicao()).forEach(id -> this.dao.deleteById(id));
 			}
 		}
 	}

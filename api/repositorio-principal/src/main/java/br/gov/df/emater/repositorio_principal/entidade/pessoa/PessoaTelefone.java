@@ -48,11 +48,23 @@ public class PessoaTelefone extends EntidadeBase
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	private Integer ordem;
+
+	@Enumerated(EnumType.STRING)
+	private Confirmacao principal;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "telefone_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Telefone telefone;
+
+	@Enumerated(EnumType.STRING)
+	private Visibilidade visibilidade;
 
 	@PrePersist
 	@PreUpdate
@@ -64,17 +76,5 @@ public class PessoaTelefone extends EntidadeBase
 //				valor = {{"ddi","ddd","numero"}})
 
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	private Integer ordem;
-
-	@Enumerated(EnumType.STRING)
-	private Confirmacao principal;
-
-	@Enumerated(EnumType.STRING)
-	private Visibilidade visibilidade;
 
 }

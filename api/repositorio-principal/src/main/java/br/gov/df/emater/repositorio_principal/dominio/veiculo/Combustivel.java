@@ -6,17 +6,17 @@ public enum Combustivel {
 
 	private String descricao;
 
-	private Combustivel(String descricao) {
+	private Combustivel(final String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	@Override
 	public String toString() {
-		return getDescricao();
+		return this.getDescricao();
 	}
 
 }

@@ -47,19 +47,29 @@ public class UnidadeMedida extends EntidadeBase
 
 	private static final long serialVersionUID = 1L;
 
-	private String nome;
-
 	private String codigo;
 
-	private String sigla;
+	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PRIVATE)
+	private List<UnidadeMedida> filhos = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	private String nome;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "padrao_identificavel")
 	private Confirmacao padraoIdentificavel;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pai_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private UnidadeMedida pai;
+
+	private String sigla;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "unidade_basica")
@@ -67,15 +77,5 @@ public class UnidadeMedida extends EntidadeBase
 
 	@Column(name = "valor_referencia")
 	private BigDecimal valorReferencia;
-
-	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
-	@Setter(AccessLevel.PRIVATE)
-	private List<UnidadeMedida> filhos = new ArrayList<>();
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private UnidadeMedida pai;
 
 }

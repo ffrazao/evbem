@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class PessoaFiltroDTO extends FiltroDTO {
 
-	private Set<Optional<String>> pesq;
-
-	private Set<Optional<String>> nome;
-
-	private Set<Optional<String>> siglaApelido;
+	private Set<Optional<String>> cnpj;
 
 	private Set<Optional<String>> cpf;
 
-	private Set<Optional<String>> cnpj;
+	private Set<Optional<String>> nome;
+
+	private Set<Optional<String>> pesq;
+
+	private Set<Optional<String>> siglaApelido;
 
 }

@@ -14,15 +14,15 @@ import br.gov.df.emater.repositorio_principal.base.MapaDep;
 public class AntesCmd extends Comando {
 
 	public static final String DEPENDENCIA = "dependencia";
-	
+
 	@Autowired
 	private MapaDep mapa;
 
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		log().info("Identificação das dependencias");
-		Optional<Dep<?,?,?,?>> dep = mapa.getDep(contexto.getCatalogo());
-		contexto.put(DEPENDENCIA, dep);
+	protected void procedimento(final Contexto contexto) throws Exception {
+		this.log().info("Identificação das dependencias");
+		final Optional<Dep<?, ?, ?, ?>> dep = this.mapa.getDep(contexto.getCatalogo());
+		contexto.put(AntesCmd.DEPENDENCIA, dep);
 	}
 
 }

@@ -13,7 +13,8 @@ import br.gov.df.emater.comum.UtilitarioData;
 public class TimestampJsonSerializer extends JsonSerializer<Calendar> {
 
 	@Override
-	public void serialize(Calendar date, JsonGenerator gen, SerializerProvider provider) throws IOException, JsonProcessingException {
+	public void serialize(final Calendar date, final JsonGenerator gen, final SerializerProvider provider)
+			throws IOException, JsonProcessingException {
 		if (date != null) {
 			gen.writeString(UtilitarioData.getInstance().formataTimestamp(date));
 		}

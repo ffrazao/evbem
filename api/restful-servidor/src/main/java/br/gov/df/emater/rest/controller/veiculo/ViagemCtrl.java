@@ -10,9 +10,9 @@ import br.gov.df.emater.transporte.veiculo.ViagemFiltroDTO;
 @RestController()
 @RequestMapping("viagem")
 public class ViagemCtrl extends BaseCrudCtrl<Viagem, ViagemFiltroDTO, Viagem> {
-	
+
 	public ViagemCtrl() {
 		super("Viagem");
 	}
-	
+
 }

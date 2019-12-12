@@ -9,7 +9,7 @@ import br.com.frazao.cadeiaresponsabilidade.CadeiaSequencial;
 public class ViagemIniciarCdSq extends CadeiaSequencial {
 
 	@Autowired
-	ViagemIniciarCdSq(ViagemIniciarCmd c1) {
+	ViagemIniciarCdSq(final ViagemIniciarCmd c1) {
 		super(c1);
 	}
 

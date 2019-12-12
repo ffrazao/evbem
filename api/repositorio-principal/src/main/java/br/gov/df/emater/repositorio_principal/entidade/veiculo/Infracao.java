@@ -34,6 +34,17 @@ public class Infracao extends VeiculoEvento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "aviso_condutor")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar avisoCondutor;
+
+	@Column(name = "envio_email")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar envioEmail;
+
+	@Column(name = "limite_justificativa")
+	@Temporal(TemporalType.DATE)
+	private Calendar limiteJustificativa;
 
 	@ManyToOne
 	@JoinColumn(name = "lotacao_id")
@@ -41,13 +52,9 @@ public class Infracao extends VeiculoEvento implements Serializable {
 	@JsonIdentityReference(alwaysAsId = false)
 	private UnidadeOrganizacional lotacao;
 
-	@Column(name = "aviso_condutor")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar avisoCondutor;
-
-	@Column(name = "limite_justificativa")
+	@Column(name = "notificacao")
 	@Temporal(TemporalType.DATE)
-	private Calendar limiteJustificativa;
+	private Calendar notificacao;
 
 	@ManyToOne
 	@JoinColumn(name = "orgao_autuador_id")
@@ -55,13 +62,9 @@ public class Infracao extends VeiculoEvento implements Serializable {
 	@JsonIdentityReference(alwaysAsId = false)
 	private OrgaoTransito orgaoAutuador;
 
-	@Column(name = "envio_email")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar envioEmail;
-
-	@Column(name = "notificacao")
+	@Column(name = "pagamento")
 	@Temporal(TemporalType.DATE)
-	private Calendar notificacao;
+	private Calendar pagamento;
 
 	@Column(name = "recebimento_boleto")
 	@Temporal(TemporalType.DATE)
@@ -72,9 +75,5 @@ public class Infracao extends VeiculoEvento implements Serializable {
 	@Column(name = "vencimento")
 	@Temporal(TemporalType.DATE)
 	private Calendar vencimento;
-
-	@Column(name = "pagamento")
-	@Temporal(TemporalType.DATE)
-	private Calendar pagamento;
 
 }

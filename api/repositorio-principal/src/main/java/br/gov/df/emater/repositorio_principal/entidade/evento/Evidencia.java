@@ -38,9 +38,11 @@ public class Evidencia extends EntidadeBase implements Serializable, Identificav
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Lob
+	private byte[] conteudo;
+
+	@Lob
+	private String descricao;
 
 	@ManyToOne
 	@JoinColumn(name = "evento_id ")
@@ -48,14 +50,12 @@ public class Evidencia extends EntidadeBase implements Serializable, Identificav
 	@JsonIdentityReference(alwaysAsId = false)
 	private Evento evento;
 
-	@Lob
-	private String descricao;
-
-	@Lob
-	private byte[] conteudo;
-
 	@Enumerated(EnumType.STRING)
-	@Column(name="evidencia_tipo")
+	@Column(name = "evidencia_tipo")
 	private EvidenciaTipo evidenciaTipo;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 }

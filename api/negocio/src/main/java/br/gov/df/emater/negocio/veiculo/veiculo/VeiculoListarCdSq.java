@@ -9,7 +9,7 @@ import br.com.frazao.cadeiaresponsabilidade.CadeiaSequencial;
 public class VeiculoListarCdSq extends CadeiaSequencial {
 
 	@Autowired
-	VeiculoListarCdSq(VeiculoListarCmd c1) {
+	VeiculoListarCdSq(final VeiculoListarCmd c1) {
 		super(c1);
 	}
 

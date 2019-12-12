@@ -1,5 +1,5 @@
 package br.gov.df.emater.repositorio_principal.conversor;
-	
+
 import java.io.IOException;
 
 import org.springframework.data.geo.Point;
@@ -11,23 +11,21 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class PointJsonSerializer extends JsonSerializer<Point> {
 
-    @Override
-    public void serialize(Point value, JsonGenerator jgen,
-            SerializerProvider provider) throws IOException,
-            JsonProcessingException {
+	@Override
+	public void serialize(final Point value, final JsonGenerator jgen, final SerializerProvider provider)
+			throws IOException, JsonProcessingException {
 
-        String jsonValue = "null";
-        try
-        {
-            if(value != null) {             
-                double lat = value.getY();
-                double lon = value.getX();
-                jsonValue = String.format("POINT (%s %s)", lat, lon);
-            }
-        }
-        catch(Exception e) {}
+		String jsonValue = "null";
+		try {
+			if (value != null) {
+				final double lat = value.getY();
+				final double lon = value.getX();
+				jsonValue = String.format("POINT (%s %s)", lat, lon);
+			}
+		} catch (final Exception e) {
+		}
 
-        jgen.writeString(jsonValue);
-    }
+		jgen.writeString(jsonValue);
+	}
 
 }

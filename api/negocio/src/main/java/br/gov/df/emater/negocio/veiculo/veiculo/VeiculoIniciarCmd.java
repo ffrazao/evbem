@@ -14,8 +14,8 @@ import br.gov.df.emater.repositorio_principal.entidade.veiculo.Veiculo;
 public class VeiculoIniciarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		
+	protected void procedimento(final Contexto contexto) throws Exception {
+
 		Veiculo modelo = (Veiculo) contexto.getRequisicao();
 		if (modelo == null) {
 			modelo = new Veiculo();
@@ -26,9 +26,9 @@ public class VeiculoIniciarCmd extends Comando {
 		if (modelo.getProduto().getRecurso() == null) {
 			modelo.getProduto().setRecurso(new Recurso());
 		}
-		modelo.getProduto().getRecurso().setAtivo(Confirmacao.S);		
+		modelo.getProduto().getRecurso().setAtivo(Confirmacao.S);
 		modelo.getProduto().getRecurso().setRecursoTipo(RecursoTipo.PRODUTO);
-		
+
 		contexto.setResposta(modelo);
 	}
 

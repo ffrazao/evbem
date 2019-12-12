@@ -40,11 +40,8 @@ public class UnidadeOrganizacionalHierarquia extends EntidadeBase implements Ser
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "unidade_organizacional_principal_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private UnidadeOrganizacional unidadeOrganizacionalPrincipal;
+	@Enumerated(EnumType.STRING)
+	private UnidadeOrganizacionalHierarquiaTipo tipo;
 
 	@ManyToOne
 	@JoinColumn(name = "unidade_organizacional_id")
@@ -52,7 +49,10 @@ public class UnidadeOrganizacionalHierarquia extends EntidadeBase implements Ser
 	@JsonIdentityReference(alwaysAsId = false)
 	private UnidadeOrganizacional unidadeOrganizacional;
 
-	@Enumerated(EnumType.STRING)
-	private UnidadeOrganizacionalHierarquiaTipo tipo;
+	@ManyToOne
+	@JoinColumn(name = "unidade_organizacional_principal_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private UnidadeOrganizacional unidadeOrganizacionalPrincipal;
 
 }

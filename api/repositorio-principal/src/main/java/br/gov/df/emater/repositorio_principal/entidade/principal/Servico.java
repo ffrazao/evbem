@@ -35,9 +35,9 @@ public class Servico extends EntidadeBase implements Serializable, Identificavel
 	private Integer id;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
+	@JoinColumn(name = "id")
 	@MapsId
-	@JsonIgnore	
+	@JsonIgnore
 	private Recurso recurso;
 
 }

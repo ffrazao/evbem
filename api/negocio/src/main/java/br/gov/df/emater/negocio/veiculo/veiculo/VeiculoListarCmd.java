@@ -19,20 +19,20 @@ public class VeiculoListarCmd extends Comando {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
+	protected void procedimento(final Contexto contexto) throws Exception {
 
 		if (contexto.getRequisicao() != null) {
 			if (contexto.getRequisicao() instanceof Integer) {
-				contexto.setResposta(dao.findById((Integer) contexto.getRequisicao()).orElse(null));
+				contexto.setResposta(this.dao.findById((Integer) contexto.getRequisicao()).orElse(null));
 			} else if (contexto.getRequisicao() instanceof List) {
-				contexto.setResposta(((List<Integer>) contexto.getRequisicao()).stream().map(id -> dao.findById(id).orElse(null))
-						.collect(Collectors.toList()));
+				contexto.setResposta(((List<Integer>) contexto.getRequisicao()).stream()
+						.map(id -> this.dao.findById(id).orElse(null)).collect(Collectors.toList()));
 			} else {
-				VeiculoFiltroDTO filtro = (VeiculoFiltroDTO) contexto.getRequisicao();
-				contexto.setResposta(dao.findByFiltro(filtro));
+				final VeiculoFiltroDTO filtro = (VeiculoFiltroDTO) contexto.getRequisicao();
+				contexto.setResposta(this.dao.findByFiltro(filtro));
 			}
 		} else {
-			contexto.setResposta(dao.findAll());
+			contexto.setResposta(this.dao.findAll());
 		}
 	}
 

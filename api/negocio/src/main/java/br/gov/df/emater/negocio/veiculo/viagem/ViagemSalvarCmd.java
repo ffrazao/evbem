@@ -17,18 +17,18 @@ public class ViagemSalvarCmd extends Comando {
 	@Autowired
 	private ViagemDAO dao;
 
-	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		if (contexto.getRequisicao() instanceof Collection) {
-			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
-					.map(reg -> dao.saveAndFlush(prepara((Viagem) reg))).collect(Collectors.toList()));
-		} else {
-			contexto.setResposta(dao.saveAndFlush(prepara((Viagem) contexto.getRequisicao())));
-		}
+	private Viagem prepara(final Viagem registro) {
+		return registro;
 	}
 
-	private Viagem prepara(Viagem registro) {
-		return registro;
+	@Override
+	protected void procedimento(final Contexto contexto) throws Exception {
+		if (contexto.getRequisicao() instanceof Collection) {
+			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
+					.map(reg -> this.dao.saveAndFlush(this.prepara((Viagem) reg))).collect(Collectors.toList()));
+		} else {
+			contexto.setResposta(this.dao.saveAndFlush(this.prepara((Viagem) contexto.getRequisicao())));
+		}
 	}
 
 }

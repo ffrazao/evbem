@@ -10,14 +10,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public interface Pai<T> {
 
 	@SuppressWarnings("unchecked")
-	public default void adicionarFilho(T t) {
+	public default void adicionarFilho(final T t) {
 		((Pai<T>) t).setPai((T) this);
-		getFilhos().add(t);
+		this.getFilhos().add(t);
 	}
 
 	@SuppressWarnings("unchecked")
-	public default void adicionarFilho(T... ts) {
-		Arrays.stream(ts).forEach(f -> adicionarFilho(f));
+	public default void adicionarFilho(final T... ts) {
+		Arrays.stream(ts).forEach(f -> this.adicionarFilho(f));
 	}
 
 	public Collection<T> getFilhos();
@@ -27,12 +27,12 @@ public interface Pai<T> {
 	public T getPai();
 
 	public default void removerFilho() {
-		getFilhos().forEach(f -> this.removerFilho(f));
+		this.getFilhos().forEach(f -> this.removerFilho(f));
 	}
 
 	@SuppressWarnings("unchecked")
-	public default void removerFilho(T t) {
-		if (getFilhos().remove(t)) {
+	public default void removerFilho(final T t) {
+		if (this.getFilhos().remove(t)) {
 			((Pai<T>) t).setPai((T) null);
 		}
 	}

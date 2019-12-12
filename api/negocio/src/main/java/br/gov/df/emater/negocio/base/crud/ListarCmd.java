@@ -15,7 +15,7 @@ public class ListarCmd extends Comando {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected void procedimento(Contexto contexto) throws Exception {
+	protected void procedimento(final Contexto contexto) throws Exception {
 		Object modelo = contexto.getRequisicao();
 		if (modelo != null) {
 			if (modelo instanceof Integer) {
@@ -24,7 +24,7 @@ public class ListarCmd extends Comando {
 
 			}
 		} else {
-			Optional<Dep<?, ?, ?, ?>> dep = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
+			final Optional<Dep<?, ?, ?, ?>> dep = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
 			if (dep.isPresent()) {
 				modelo = BeanUtils.instantiateClass(dep.get().getEntidade());
 			}

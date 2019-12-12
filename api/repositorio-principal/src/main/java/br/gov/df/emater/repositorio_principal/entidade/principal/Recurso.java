@@ -41,11 +41,11 @@ public class Recurso extends EntidadeBase implements Serializable, Identificavel
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name="recurso_tipo")
-	private RecursoTipo recursoTipo;
-
 	@Lob
 	private String observacao;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "recurso_tipo")
+	private RecursoTipo recursoTipo;
 
 }

@@ -18,8 +18,8 @@ public class ViagemAbrirCmd extends Comando {
 	private TokenDAO tDao;
 
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		System.out.printf("Deu certo 1 !!!! total viagems [%d] token [%d]", dao.count(), tDao.count());
+	protected void procedimento(final Contexto contexto) throws Exception {
+		System.out.printf("Deu certo 1 !!!! total viagems [%d] token [%d]", this.dao.count(), this.tDao.count());
 	}
 
 }

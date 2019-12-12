@@ -49,11 +49,11 @@ public class Produto extends EntidadeBase implements Serializable, Identificavel
 	@OneToOne(mappedBy = "produto")
 	private BemPatrimonial bemPatrimonial;
 
-	@ManyToOne
-	@JoinColumn(name = "modelo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Modelo modelo;
+	@OneToMany(mappedBy = "principal", fetch = FetchType.LAZY)
+	private List<Composicao> composicaoList = new ArrayList<>();
+
+	@Id
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "marca_id")
@@ -61,22 +61,14 @@ public class Produto extends EntidadeBase implements Serializable, Identificavel
 	@JsonIdentityReference(alwaysAsId = false)
 	private Marca marca;
 
-	@Column(name = "numero_serie")
-	private String numeroSerie;
-
-	@OneToMany(mappedBy = "principal", fetch = FetchType.LAZY)
-	private List<Composicao> composicaoList = new ArrayList<>();
-
-	@Id
-	private Integer id;
-
-	private BigDecimal quantidade;
-
 	@ManyToOne
-	@JoinColumn(name = "unidade_medida_id")
+	@JoinColumn(name = "modelo_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
-	private UnidadeMedida unidademedida;
+	private Modelo modelo;
+
+	@Column(name = "numero_serie")
+	private String numeroSerie;
 
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
@@ -84,12 +76,20 @@ public class Produto extends EntidadeBase implements Serializable, Identificavel
 	@JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoa; // proprietario do bem
 
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	private List<ProdutoPessoa> produtoPessoaList = new ArrayList<>();
+
+	private BigDecimal quantidade;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
 	@MapsId
 	private Recurso recurso;
-	
-	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
-	private List<ProdutoPessoa> produtoPessoaList = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "unidade_medida_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private UnidadeMedida unidademedida;
 
 }

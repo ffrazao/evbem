@@ -1,22 +1,22 @@
 package br.gov.df.emater.repositorio_principal.dominio;
 
 public enum Confirmacao {
-	
+
 	N("Não"), S("Sim");
 
 	private String descricao;
 
-	private Confirmacao(String descricao) {
+	private Confirmacao(final String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	@Override
 	public String toString() {
-		return getDescricao();
+		return this.getDescricao();
 	}
 
 }

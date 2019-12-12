@@ -17,11 +17,11 @@ public class PrepararCmd extends Comando {
 	private EntidadeUnicaUtil entidadeUnica;
 
 	@Override
-	protected <k, v> void procedimento(Contexto contexto) throws Exception {
+	protected <k, v> void procedimento(final Contexto contexto) throws Exception {
 		if (contexto.getRequisicao() instanceof Collection<?>) {
 			((Collection<?>) contexto.getRequisicao()).forEach(e -> {
-				if (e instanceof EntidadeBase) {			
-					entidadeUnica.executar((EntidadeBase) e);
+				if (e instanceof EntidadeBase) {
+					this.entidadeUnica.executar(e);
 				}
 			});
 		}

@@ -11,25 +11,26 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 public class PointJsonDeserializer extends JsonDeserializer<Point> {
 
-    @Override
-    public Point deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+	@Override
+	public Point deserialize(final JsonParser jp, final DeserializationContext ctxt)
+			throws IOException, JsonProcessingException {
 
-        try {
-            String text = jp.getText();
-            if(text == null || text.length() <= 0)
-                return null;
+		try {
+			final String text = jp.getText();
+			if ((text == null) || (text.length() <= 0)) {
+				return null;
+			}
 
-            String[] coordinates = text.toUpperCase().replaceFirst("POINT ?\\(", "").replaceFirst("\\)", "").split(" ");
-            double lat = Double.parseDouble(coordinates[0]);
-            double lon = Double.parseDouble(coordinates[1]);
+			final String[] coordinates = text.toUpperCase().replaceFirst("POINT ?\\(", "").replaceFirst("\\)", "")
+					.split(" ");
+			final double lat = Double.parseDouble(coordinates[0]);
+			final double lon = Double.parseDouble(coordinates[1]);
 
-            Point point = new Point(lat, lon);
-            return point;
-        }
-        catch(Exception e){
-            return null;
-        }
-    }
+			final Point point = new Point(lat, lon);
+			return point;
+		} catch (final Exception e) {
+			return null;
+		}
+	}
 
 }

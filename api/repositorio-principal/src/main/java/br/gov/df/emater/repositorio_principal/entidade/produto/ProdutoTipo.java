@@ -36,9 +36,12 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ProdutoTipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavelCodificavel<ProdutoTipo> {
+public class ProdutoTipo extends EntidadeBase
+		implements Serializable, Identificavel, PaiNomeavelCodificavel<ProdutoTipo> {
 
 	private static final long serialVersionUID = 1L;
+
+	private String codigo;
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
@@ -49,8 +52,6 @@ public class ProdutoTipo extends EntidadeBase implements Serializable, Identific
 	private Integer id;
 
 	private String nome;
-	
-	private String codigo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")

@@ -7,17 +7,17 @@ public interface Ordenavel {
 
 	public Integer getOrdem();
 
-	default void reordenar(Iterable<Ordenavel> ordenaveis) {
-		AtomicInteger ordem = new AtomicInteger(0);
+	default void reordenar(final Iterable<Ordenavel> ordenaveis) {
+		final AtomicInteger ordem = new AtomicInteger(0);
 		ordenaveis.forEach(o -> o.setOrdem(ordem.incrementAndGet()));
 	}
 
-	default void reordenar(Ordenavel... ordenaveis) {
-		reordenar(Arrays.asList(ordenaveis));
+	default void reordenar(final Ordenavel... ordenaveis) {
+		this.reordenar(Arrays.asList(ordenaveis));
 	}
 
-	default Ordenavel reordenar(Ordenavel ordenavel) {
-		Integer ordem = ordenavel.getOrdem();
+	default Ordenavel reordenar(final Ordenavel ordenavel) {
+		final Integer ordem = ordenavel.getOrdem();
 		ordenavel.setOrdem(this.getOrdem());
 		this.setOrdem(ordem);
 		return this;

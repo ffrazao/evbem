@@ -45,7 +45,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 public class FuncionalidadeAcao extends EntidadeBase
 		implements Serializable, Identificavel, Ativavel, Pai<FuncionalidadeAcao> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne

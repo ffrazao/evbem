@@ -39,15 +39,15 @@ public class ProdutoTipoUnidadeMedida extends EntidadeBase implements Serializab
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "unidade_medida_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private UnidadeMedida unidadeMedida;
-
-	@ManyToOne
 	@JoinColumn(name = "tipo_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;
+
+	@ManyToOne
+	@JoinColumn(name = "unidade_medida_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private UnidadeMedida unidadeMedida;
 
 }

@@ -15,19 +15,19 @@ public class JsonHashMapConverter implements AttributeConverter<Map<String, Obje
 
 	private static final Logger logger = LoggerFactory.getLogger(JsonHashMapConverter.class);
 
-	private ObjectMapper objectMapper = new ObjectMapper();
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	public JsonHashMapConverter() {
 	}
 
 	@Override
-	public String convertToDatabaseColumn(Map<String, Object> objeto) {
+	public String convertToDatabaseColumn(final Map<String, Object> objeto) {
 
 		String json = null;
 		try {
-			json = objectMapper.writeValueAsString(objeto);
+			json = this.objectMapper.writeValueAsString(objeto);
 		} catch (final JsonProcessingException e) {
-			logger.error("JSON writing error", e);
+			JsonHashMapConverter.logger.error("JSON writing error", e);
 		}
 
 		return json;
@@ -35,13 +35,13 @@ public class JsonHashMapConverter implements AttributeConverter<Map<String, Obje
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> convertToEntityAttribute(String json) {
+	public Map<String, Object> convertToEntityAttribute(final String json) {
 
 		Map<String, Object> objeto = null;
 		try {
-			objeto = objectMapper.readValue(json, Map.class);
+			objeto = this.objectMapper.readValue(json, Map.class);
 		} catch (final IOException e) {
-			logger.error("JSON reading error", e);
+			JsonHashMapConverter.logger.error("JSON reading error", e);
 		}
 
 		return objeto;

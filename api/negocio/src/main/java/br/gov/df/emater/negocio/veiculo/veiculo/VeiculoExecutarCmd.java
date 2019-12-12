@@ -9,7 +9,7 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 public class VeiculoExecutarCmd extends Comando {
 
 	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
+	protected void procedimento(final Contexto contexto) throws Exception {
 		System.out.println("Deu certo 2 !!!!");
 	}
 

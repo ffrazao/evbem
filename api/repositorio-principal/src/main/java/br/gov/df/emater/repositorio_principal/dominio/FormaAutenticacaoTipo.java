@@ -6,17 +6,17 @@ public enum FormaAutenticacaoTipo {
 
 	private String descricao;
 
-	private FormaAutenticacaoTipo(String descricao) {
+	private FormaAutenticacaoTipo(final String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	@Override
 	public String toString() {
-		return getDescricao();
+		return this.getDescricao();
 	}
 
 }

@@ -48,13 +48,13 @@ public class UsuarioPerfil extends EntidadeBase implements Serializable, Identif
 	private Confirmacao padrao;
 
 	@ManyToOne
-	@JoinColumn(name="perfil_id")
+	@JoinColumn(name = "perfil_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Perfil perfil;
 
 	@ManyToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name = "usuario_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Usuario usuario;

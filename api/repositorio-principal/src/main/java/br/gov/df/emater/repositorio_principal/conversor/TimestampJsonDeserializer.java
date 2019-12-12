@@ -17,22 +17,22 @@ public class TimestampJsonDeserializer extends JsonDeserializer<Calendar> {
 	}
 
 	@Override
-	public Calendar deserialize(JsonParser jp, DeserializationContext ctxt)
+	public Calendar deserialize(final JsonParser jp, final DeserializationContext ctxt)
 			throws IOException, JsonProcessingException {
 		Calendar result = null;
-		String vlr = jp.getText();
+		final String vlr = jp.getText();
 		try {
 			result = UtilitarioData.getInstance().formataMilisegundos(vlr);
-		} catch (ParseException e1) {
+		} catch (final ParseException e1) {
 			try {
 				result = UtilitarioData.getInstance().formataTimestamp(vlr);
-			} catch (ParseException e2) {
+			} catch (final ParseException e2) {
 				try {
 					result = UtilitarioData.getInstance().formataDataHora(vlr);
-				} catch (ParseException e3) {
+				} catch (final ParseException e3) {
 					try {
 						result = UtilitarioData.getInstance().formataData(vlr);
-					} catch (ParseException e4) {
+					} catch (final ParseException e4) {
 						new RuntimeException(e4);
 					}
 				}

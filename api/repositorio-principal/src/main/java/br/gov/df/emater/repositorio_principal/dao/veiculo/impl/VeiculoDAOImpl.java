@@ -31,58 +31,59 @@ public class VeiculoDAOImpl implements FiltroDAOExtra<VeiculoFiltroDTO, Veiculo>
 	private EntityManager em;
 
 	@Override
-	public Veiculo[] findByFiltro(VeiculoFiltroDTO filtro) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Veiculo> sql = cb.createQuery(Veiculo.class);
+	public Veiculo[] findByFiltro(final VeiculoFiltroDTO filtro) {
+		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
+		final CriteriaQuery<Veiculo> sql = cb.createQuery(Veiculo.class);
 
-		Root<Veiculo> root = sql.from(Veiculo.class);
-		Join<Veiculo, Produto> join1 = root.join("produto");
-		Join<Produto, Marca> join2 = join1.join("marca");
-		Join<Produto, Modelo> join3 = join1.join("modelo");
-		Join<Modelo, ProdutoTipo> join4 = join3.join("produtoTipo");
-		Join<Produto, BemPatrimonial> join5 = join1.join("bemPatrimonial");
+		final Root<Veiculo> root = sql.from(Veiculo.class);
+		final Join<Veiculo, Produto> join1 = root.join("produto");
+		final Join<Produto, Marca> join2 = join1.join("marca");
+		final Join<Produto, Modelo> join3 = join1.join("modelo");
+		final Join<Modelo, ProdutoTipo> join4 = join3.join("produtoTipo");
+		final Join<Produto, BemPatrimonial> join5 = join1.join("bemPatrimonial");
 
 		List<Predicate> pl = new ArrayList<>();
 
 		// campo especial de pesquisa
 		if (!CollectionUtils.isEmpty(filtro.getPesq())) {
-			Object pesq = colecaoOuUnidade(filtro.getPesq());
-			pl.add(cb.or(criarPredicado(cb, root, "placa", pesq),
-					criarPredicado(cb, root, "renavan", pesq),
-					criarPredicado(cb, join5, "identificacaoPatrimonial", pesq)));
+			final Object pesq = this.colecaoOuUnidade(filtro.getPesq());
+			pl.add(cb.or(this.criarPredicado(cb, root, "placa", pesq), this.criarPredicado(cb, root, "renavan", pesq),
+					this.criarPredicado(cb, join5, "identificacaoPatrimonial", pesq)));
 		} else {
 			if (!CollectionUtils.isEmpty(filtro.getPlaca())) {
-				pl.add(criarPredicado(cb, root, "placa", colecaoOuUnidade(filtro.getPlaca())));
+				pl.add(this.criarPredicado(cb, root, "placa", this.colecaoOuUnidade(filtro.getPlaca())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getRenavan())) {
-				pl.add(criarPredicado(cb, root, "renavan", colecaoOuUnidade(filtro.getRenavan())));
+				pl.add(this.criarPredicado(cb, root, "renavan", this.colecaoOuUnidade(filtro.getRenavan())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getCor())) {
-				pl.add(criarPredicado(cb, root, "cor", colecaoOuUnidade(filtro.getCor())));
+				pl.add(this.criarPredicado(cb, root, "cor", this.colecaoOuUnidade(filtro.getCor())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getCombustivel())) {
-				pl.add(criarPredicado(cb, root, "combustivel", enumSetToString(filtro.getCombustivel())));
+				pl.add(this.criarPredicado(cb, root, "combustivel", this.enumSetToString(filtro.getCombustivel())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getAnoFabricacao())) {
-				pl.add(criarPredicado(cb, root, "anoFabricacao", colecaoOuUnidade(filtro.getAnoFabricacao())));
+				pl.add(this.criarPredicado(cb, root, "anoFabricacao",
+						this.colecaoOuUnidade(filtro.getAnoFabricacao())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getAnoModelo())) {
-				pl.add(criarPredicado(cb, root, "anoModelo", colecaoOuUnidade(filtro.getAnoModelo())));
+				pl.add(this.criarPredicado(cb, root, "anoModelo", this.colecaoOuUnidade(filtro.getAnoModelo())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getNumeroSerie())) {
-				pl.add(criarPredicado(cb, join1, "numeroSerie", colecaoOuUnidade(filtro.getNumeroSerie())));
+				pl.add(this.criarPredicado(cb, join1, "numeroSerie", this.colecaoOuUnidade(filtro.getNumeroSerie())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getMarca())) {
-				pl.add(criarPredicado(cb, join2, "nome", colecaoOuUnidade(filtro.getMarca())));
+				pl.add(this.criarPredicado(cb, join2, "nome", this.colecaoOuUnidade(filtro.getMarca())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getModelo())) {
-				pl.add(criarPredicado(cb, join3, "nome", colecaoOuUnidade(filtro.getModelo())));
+				pl.add(this.criarPredicado(cb, join3, "nome", this.colecaoOuUnidade(filtro.getModelo())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getProdutoTipo())) {
-				pl.add(criarPredicado(cb, join4, "nome", colecaoOuUnidade(filtro.getProdutoTipo())));
+				pl.add(this.criarPredicado(cb, join4, "nome", this.colecaoOuUnidade(filtro.getProdutoTipo())));
 			}
 			if (!CollectionUtils.isEmpty(filtro.getIdentificacaoPatrimonial())) {
-				pl.add(criarPredicado(cb, join5, "identificacaoPatrimonial", colecaoOuUnidade(filtro.getIdentificacaoPatrimonial())));
+				pl.add(this.criarPredicado(cb, join5, "identificacaoPatrimonial",
+						this.colecaoOuUnidade(filtro.getIdentificacaoPatrimonial())));
 			}
 		}
 
@@ -97,7 +98,7 @@ public class VeiculoDAOImpl implements FiltroDAOExtra<VeiculoFiltroDTO, Veiculo>
 		sql.orderBy(Arrays.asList(cb.asc(join4.get("nome")), cb.asc(join3.get("nome")), cb.asc(join2.get("nome")),
 				cb.asc(root.get("placa"))));
 
-		TypedQuery<Veiculo> query = em.createQuery(sql);
+		final TypedQuery<Veiculo> query = this.em.createQuery(sql);
 
 		query.setFirstResult((filtro.getPagina() - 1) * filtro.getTamanho());
 		query.setMaxResults(filtro.getTamanho());

@@ -40,29 +40,29 @@ public class UnidadeOrganizacionalGestor extends EntidadeBase implements Seriali
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@ManyToOne
-	@JoinColumn(name = "unidade_organizacional_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private UnidadeOrganizacional unidadeOrganizacional;
-	
 	@ManyToOne
 	@JoinColumn(name = "empregado_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Empregado empregado;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar inicio;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar termino;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Confirmacao substituto;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar termino;
+
+	@ManyToOne
+	@JoinColumn(name = "unidade_organizacional_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private UnidadeOrganizacional unidadeOrganizacional;
 
 }

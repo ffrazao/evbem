@@ -7,7 +7,7 @@ import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
 import br.gov.df.emater.transporte.sistema.UsuarioFiltroDTO;
 
 public interface UsuarioDAO extends JpaRepository<Usuario, Integer>, FiltroDAOExtra<UsuarioFiltroDTO, Usuario> {
-	
+
 	Usuario findByLogin(String login);
-	
+
 }

@@ -41,14 +41,11 @@ public class BemPatrimonial extends EntidadeBase implements Serializable {
 	@Id
 	private Integer id;
 
-	@Lob
-	private String observacao;
-
-	@Column(name = "sigla_proprietario")
-	private String siglaProprietario;
-
 	@Column(name = "identificacao_patrimonial")
 	private String identificacaoPatrimonial;
+
+	@Lob
+	private String observacao;
 
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
@@ -61,5 +58,8 @@ public class BemPatrimonial extends EntidadeBase implements Serializable {
 	@MapsId
 	@JsonIgnore
 	private Produto produto;
+
+	@Column(name = "sigla_proprietario")
+	private String siglaProprietario;
 
 }

@@ -8,14 +8,14 @@ public class ExcluirEntidade {
 
 	public boolean resultado = false;
 
-	public ExcluirEntidade(Identificavel entidade) {
-		if (entidade == null || entidade.getId() == null) {
+	public ExcluirEntidade(final Identificavel entidade) {
+		if ((entidade == null) || (entidade.getId() == null)) {
 			throw new NullPointerException("Entidade nula ou não identificavel");
 		}
-		this.id = ((Identificavel) entidade).getId();
+		this.id = entidade.getId();
 	}
 
-	public ExcluirEntidade(Integer id) {
+	public ExcluirEntidade(final Integer id) {
 		this.id = id;
 	}
 

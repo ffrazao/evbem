@@ -8,23 +8,23 @@ public class NegocioException extends Exception {
 		super();
 	}
 
-	public NegocioException(String message) {
+	public NegocioException(final String message) {
 		super(message);
 	}
 
-	public NegocioException(String mensagem, Object... itens) {
-		this(String.format(mensagem, (Object[]) itens));
+	public NegocioException(final String mensagem, final Object... itens) {
+		this(String.format(mensagem, itens));
 	}
 
-	public NegocioException(String message, Throwable cause) {
+	public NegocioException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
-	public NegocioException(String mensagem, Throwable cause, Object... itens) {
-		this(String.format(mensagem, (Object[]) itens), cause);
+	public NegocioException(final String mensagem, final Throwable cause, final Object... itens) {
+		this(String.format(mensagem, itens), cause);
 	}
 
-	public NegocioException(Throwable cause) {
+	public NegocioException(final Throwable cause) {
 		super(cause);
 	}
 }

@@ -22,31 +22,31 @@ public class ProdutoSalvarCmd extends Comando {
 	private ProdutoDAO dao;
 
 	@Autowired
-	private ModeloDAO modeloDAO;
-	
-	@Autowired
 	private MarcaDAO marcaDAO;
 
-	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		if (contexto.getRequisicao() instanceof Collection) {
-			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
-					.map(reg -> dao.saveAndFlush(prepara((Produto) reg))).collect(Collectors.toList()));
-		} else {
-			contexto.setResposta(dao.saveAndFlush(prepara((Produto) contexto.getRequisicao())));
-		}
-	}
+	@Autowired
+	private ModeloDAO modeloDAO;
 
-	private Produto prepara(Produto produto) {
+	private Produto prepara(final Produto produto) {
 		Recurso recurso = produto.getRecurso();
 		if (recurso == null) {
 			recurso = new Recurso();
 		}
 		recurso.setRecursoTipo(RecursoTipo.PRODUTO);
 		produto.setRecurso(recurso);
-		produto.setModelo(modeloDAO.getOne(produto.getModelo().getId()));
-		produto.setMarca(marcaDAO.getOne(produto.getMarca().getId()));
+		produto.setModelo(this.modeloDAO.getOne(produto.getModelo().getId()));
+		produto.setMarca(this.marcaDAO.getOne(produto.getMarca().getId()));
 		return produto;
+	}
+
+	@Override
+	protected void procedimento(final Contexto contexto) throws Exception {
+		if (contexto.getRequisicao() instanceof Collection) {
+			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
+					.map(reg -> this.dao.saveAndFlush(this.prepara((Produto) reg))).collect(Collectors.toList()));
+		} else {
+			contexto.setResposta(this.dao.saveAndFlush(this.prepara((Produto) contexto.getRequisicao())));
+		}
 	}
 
 }

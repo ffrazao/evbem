@@ -9,7 +9,7 @@ import br.com.frazao.cadeiaresponsabilidade.CadeiaSequencial;
 public class ProdutoIniciarCdSq extends CadeiaSequencial {
 
 	@Autowired
-	ProdutoIniciarCdSq(ProdutoIniciarCmd c1) {
+	ProdutoIniciarCdSq(final ProdutoIniciarCmd c1) {
 		super(c1);
 	}
 

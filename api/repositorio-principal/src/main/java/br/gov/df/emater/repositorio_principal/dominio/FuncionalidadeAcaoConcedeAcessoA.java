@@ -7,17 +7,17 @@ public enum FuncionalidadeAcaoConcedeAcessoA {
 
 	private String descricao;
 
-	private FuncionalidadeAcaoConcedeAcessoA(String descricao) {
+	private FuncionalidadeAcaoConcedeAcessoA(final String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	@Override
 	public String toString() {
-		return getDescricao();
+		return this.getDescricao();
 	}
 
 }

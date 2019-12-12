@@ -34,9 +34,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class ReferenciaEspacial extends EntidadeBase implements Serializable, Identificavel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private Polygon area;
@@ -46,7 +46,7 @@ public class ReferenciaEspacial extends EntidadeBase implements Serializable, Id
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="referencia_espacial_tipo")
+	@Column(name = "referencia_espacial_tipo")
 	private ReferenciaEspacialTipo referenciaEspacialTipo;
 
 }

@@ -37,15 +37,8 @@ public class EmpregadorCargo extends EntidadeBase implements Serializable, Ident
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	@ManyToOne
-	@JoinColumn(name = "empregador_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
-	private Empregador empregador;
+	@Enumerated(EnumType.STRING)
+	private Confirmacao ativo;
 
 	@ManyToOne
 	@JoinColumn(name = "cargo_id")
@@ -53,7 +46,14 @@ public class EmpregadorCargo extends EntidadeBase implements Serializable, Ident
 	@JsonIdentityReference(alwaysAsId = false)
 	private Cargo cargo;
 
-	@Enumerated(EnumType.STRING)
-	private Confirmacao ativo;
+	@ManyToOne
+	@JoinColumn(name = "empregador_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = false)
+	private Empregador empregador;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 }

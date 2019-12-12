@@ -17,18 +17,18 @@ public class VeiculoSalvarCmd extends Comando {
 	@Autowired
 	private VeiculoDAO dao;
 
-	@Override
-	protected void procedimento(Contexto contexto) throws Exception {
-		if (contexto.getRequisicao() instanceof Collection) {
-			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
-					.map(reg -> dao.saveAndFlush(prepara((Veiculo) reg))).collect(Collectors.toList()));
-		} else {
-			contexto.setResposta(dao.saveAndFlush(prepara((Veiculo) contexto.getRequisicao())));
-		}
+	private Veiculo prepara(final Veiculo registro) {
+		return registro;
 	}
 
-	private Veiculo prepara(Veiculo registro) {
-		return registro;
+	@Override
+	protected void procedimento(final Contexto contexto) throws Exception {
+		if (contexto.getRequisicao() instanceof Collection) {
+			contexto.setResposta(((Collection<?>) contexto.getRequisicao()).stream()
+					.map(reg -> this.dao.saveAndFlush(this.prepara((Veiculo) reg))).collect(Collectors.toList()));
+		} else {
+			contexto.setResposta(this.dao.saveAndFlush(this.prepara((Veiculo) contexto.getRequisicao())));
+		}
 	}
 
 }

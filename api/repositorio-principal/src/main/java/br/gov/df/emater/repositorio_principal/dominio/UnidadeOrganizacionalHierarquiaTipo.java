@@ -1,22 +1,22 @@
 package br.gov.df.emater.repositorio_principal.dominio;
 
 public enum UnidadeOrganizacionalHierarquiaTipo {
-	
-	GESTAO("Gestão"), ASSESSORAMENTO("Assessoramento");	
+
+	ASSESSORAMENTO("Assessoramento"), GESTAO("Gestão");
 
 	private String descricao;
 
-	private UnidadeOrganizacionalHierarquiaTipo(String descricao) {
+	private UnidadeOrganizacionalHierarquiaTipo(final String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	@Override
 	public String toString() {
-		return getDescricao();
+		return this.getDescricao();
 	}
 
 }

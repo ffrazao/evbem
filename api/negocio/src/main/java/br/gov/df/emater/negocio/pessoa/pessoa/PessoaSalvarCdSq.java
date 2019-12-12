@@ -9,7 +9,7 @@ import br.com.frazao.cadeiaresponsabilidade.CadeiaSequencial;
 public class PessoaSalvarCdSq extends CadeiaSequencial {
 
 	@Autowired
-	PessoaSalvarCdSq(PessoaSalvarCmd c1) {
+	PessoaSalvarCdSq(final PessoaSalvarCmd c1) {
 		super(c1);
 	}
 

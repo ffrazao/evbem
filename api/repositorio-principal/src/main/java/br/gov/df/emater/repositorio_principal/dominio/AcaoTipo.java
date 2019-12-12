@@ -6,17 +6,17 @@ public enum AcaoTipo {
 
 	private String descricao;
 
-	private AcaoTipo(String descricao) {
+	private AcaoTipo(final String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	@Override
 	public String toString() {
-		return getDescricao();
+		return this.getDescricao();
 	}
 
 }

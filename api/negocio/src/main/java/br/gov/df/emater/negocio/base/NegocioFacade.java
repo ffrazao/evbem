@@ -45,7 +45,7 @@ public class NegocioFacade {
 			contexto.setComando(comandoNome);
 			contexto.setRequisicao(requisicao);
 			contexto.setUsuario(usuario);
-			
+
 			comando.executar(contexto);
 		} catch (final Exception e) {
 			throw new NegocioException(e);

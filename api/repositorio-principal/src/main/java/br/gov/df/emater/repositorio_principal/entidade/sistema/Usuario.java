@@ -69,14 +69,14 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 	@Enumerated(EnumType.STRING)
 	private UsuarioTipo tipo;
 
-	@OneToMany(mappedBy = "usuario")
-	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaoList = new ArrayList<>();
-
 	@ManyToOne
 	@JoinColumn(name = "ultimo_perfil_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Perfil ultimoPerfil;
+
+	@OneToMany(mappedBy = "usuario")
+	private List<UsuarioFormaAutenticacao> usuarioFormaAutenticacaoList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPerfil> usuarioPerfilList = new ArrayList<>();

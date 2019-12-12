@@ -40,31 +40,31 @@ public class Rota implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private BigDecimal altitude;
+
+	private BigDecimal direcao;
+
 	@Id
 	private Integer id;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar momento;
+
+	@JsonSerialize(using = PointJsonSerializer.class)
+	@JsonDeserialize(using = PointJsonDeserializer.class)
+	private Point ponto;
+
+	private BigDecimal precisao;
+
+	@Column(name = "precisao_altitude")
+	private BigDecimal precisaoAltitude;
+
+	private BigDecimal velocidade;
 
 	@ManyToOne
 	@JoinColumn(name = "viagem_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Viagem viagem;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar momento;
-	
-	@JsonSerialize(using = PointJsonSerializer.class)
-	@JsonDeserialize(using = PointJsonDeserializer.class)
-	private Point ponto;
-	
-	private BigDecimal altitude;
-	
-	private BigDecimal precisao;
-	
-	@Column(name = "precisao_altitude")
-	private BigDecimal precisaoAltitude;
-	
-	private BigDecimal direcao;
-	
-	private BigDecimal velocidade;
 
 }

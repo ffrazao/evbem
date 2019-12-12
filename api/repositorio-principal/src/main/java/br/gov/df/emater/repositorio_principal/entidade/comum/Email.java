@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@EntidadeUnica({"usuario", "dominio"})
+@EntidadeUnica({ "usuario", "dominio" })
 public class Email extends EntidadeBase implements Serializable, Identificavel {
 
 	private static final long serialVersionUID = 1L;

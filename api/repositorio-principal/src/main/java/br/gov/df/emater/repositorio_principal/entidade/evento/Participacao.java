@@ -61,5 +61,5 @@ public class Participacao extends EntidadeBase implements Serializable, Identifi
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Recurso recurso;
-	
+
 }

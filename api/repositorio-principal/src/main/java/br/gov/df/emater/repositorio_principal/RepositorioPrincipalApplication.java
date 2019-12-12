@@ -19,7 +19,7 @@ import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
 @EnableJpaRepositories("br.gov.df.emater.repositorio_principal.dao")
 public class RepositorioPrincipalApplication /* implements CommandLineRunner */ {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(final String[] args) throws IOException {
 		// @formatter:off
 		/*
 
@@ -81,10 +81,10 @@ public class RepositorioPrincipalApplication /* implements CommandLineRunner */ 
 	@Autowired
 	private ProdutoTipoDAO dao;
 
-	//@Override
+	// @Override
 	@Transactional()
-	public void run(String... args) throws Exception {
-		Optional<ProdutoTipo> t = dao.findById(1);
+	public void run(final String... args) throws Exception {
+		final Optional<ProdutoTipo> t = this.dao.findById(1);
 		System.out.println(new ObjectMapper().writeValueAsString(t.orElse(null)));
 	}
 

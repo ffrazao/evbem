@@ -21,26 +21,21 @@ public class ResourcesServerConfiguration extends ResourceServerConfigurerAdapte
 	private DataSource datasource;
 
 	@Override
-	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		TokenStore tokenStore = new JdbcTokenStore(datasource);
-		resources.resourceId("evbem_api").tokenStore(tokenStore);
-	}
-
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.anonymous().and()
-			.authorizeRequests()
-				.antMatchers("/usuario", "/s/primeiro-acesso", "/s/cadastrar-senha", "/login", "/logout")
-					.permitAll().and()
-			.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
+	public void configure(final HttpSecurity http) throws Exception {
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().anonymous().and()
+				.authorizeRequests()
+				.antMatchers("/usuario", "/s/primeiro-acesso", "/s/cadastrar-senha", "/login", "/logout").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
 				.antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
 				.antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope('write')")
 				.antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope('write')")
-				.antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')")
-				.anyRequest().authenticated();
+				.antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')").anyRequest().authenticated();
+	}
+
+	@Override
+	public void configure(final ResourceServerSecurityConfigurer resources) throws Exception {
+		final TokenStore tokenStore = new JdbcTokenStore(this.datasource);
+		resources.resourceId("evbem_api").tokenStore(tokenStore);
 	}
 
 }

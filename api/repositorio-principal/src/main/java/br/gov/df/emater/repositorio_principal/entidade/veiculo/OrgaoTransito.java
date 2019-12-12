@@ -40,10 +40,10 @@ public class OrgaoTransito extends EntidadeBase implements Serializable, Identif
 	@Column(name = "sigla")
 	private String sigla;
 
-	@Column(name = "unidade_federacao")
-	private String unidadeFederacao;
-
 	@Lob
 	private String site;
+
+	@Column(name = "unidade_federacao")
+	private String unidadeFederacao;
 
 }

@@ -60,32 +60,26 @@ public class MapaDep {
 
 	private final Set<Dep<?, ?, ?, ?>> mapa = new HashSet<>();
 
-	private <E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> void instanciaDao(
-			Dep<E, D, F, L> d) {
-		d.setDao((D) this.instanciaBean.instanciarBean(d.getDaoClass()));
-		d.getDependencias().ifPresent(c -> c.forEach(x -> instanciaDao(x)));
-	}
-
 	// @formatter:off
 	@Autowired
-	MapaDep(InstanciaBean instanciaBean) {
+	MapaDep(final InstanciaBean instanciaBean) {
 		this.instanciaBean = instanciaBean;
-		
+
 		// mapa pessoa
 		this.mapa.add(
-				Dep.of("pessoa", Pessoa.class, PessoaDAO.class, PessoaFiltroDTO.class, ListagemDTO.class, 
-					Dep.of("pessoaArquivoList", PessoaArquivo.class, PessoaArquivoDAO.class, 
+				Dep.of("pessoa", Pessoa.class, PessoaDAO.class, PessoaFiltroDTO.class, ListagemDTO.class,
+					Dep.of("pessoaArquivoList", PessoaArquivo.class, PessoaArquivoDAO.class,
 							Dep.of("arquivo", Arquivo.class, ArquivoDAO.class)),
-					Dep.of("pessoaEmailList", PessoaEmail.class, PessoaEmailDAO.class, 
+					Dep.of("pessoaEmailList", PessoaEmail.class, PessoaEmailDAO.class,
 							Dep.of("email", Email.class, EmailDAO.class)),
-					Dep.of("pessoaEnderecoList", PessoaEndereco.class, PessoaEnderecoDAO.class, 
+					Dep.of("pessoaEnderecoList", PessoaEndereco.class, PessoaEnderecoDAO.class,
 							Dep.of("endereco", Endereco.class, EnderecoDAO.class)),
-					Dep.of("pessoaFotoList", PessoaFoto.class, PessoaFotoDAO.class, 
+					Dep.of("pessoaFotoList", PessoaFoto.class, PessoaFotoDAO.class,
 							Dep.of("foto", Foto.class, FotoDAO.class)),
 					Dep.of("pessoaRelacionamentoList", PessoaRelacionamento.class, PessoaRelacionamentoDAO.class,
 							Dep.of("relacionamento", Relacionamento.class, RelacionamentoDAO.class)),
-					Dep.of("pessoaTelefoneList", PessoaTelefone.class, PessoaTelefoneDAO.class, 
-							Dep.of("telefone", Telefone.class, TelefoneDAO.class)) 
+					Dep.of("pessoaTelefoneList", PessoaTelefone.class, PessoaTelefoneDAO.class,
+							Dep.of("telefone", Telefone.class, TelefoneDAO.class))
 				));
 
 		// mapa usuario
@@ -102,9 +96,9 @@ public class MapaDep {
 						Dep.of("composicaoList", Composicao.class, ComposicaoDAO.class),
 						Dep.of("produtoPessoaList", ProdutoPessoa.class, ProdutoPessoaDAO.class)
 				));
-		
+
 		// instanciar os daos
-		this.mapa.forEach((i) -> instanciaDao(i));
+		this.mapa.forEach((i) -> this.instanciaDao(i));
 
 	}
 	// @formatter:on
@@ -112,6 +106,12 @@ public class MapaDep {
 	public Optional<Dep<?, ?, ?, ?>> getDep(final String funcionalidadeCampo) {
 		return this.mapa.stream().filter(d -> funcionalidadeCampo.equalsIgnoreCase(d.getFuncionalidadeCampo()))
 				.findFirst();
+	}
+
+	private <E extends EntidadeBase, D extends JpaRepository<E, Integer>, F extends FiltroDTO, L extends ListagemDTO> void instanciaDao(
+			final Dep<E, D, F, L> d) {
+		d.setDao(this.instanciaBean.instanciarBean(d.getDaoClass()));
+		d.getDependencias().ifPresent(c -> c.forEach(x -> this.instanciaDao(x)));
 	}
 
 }

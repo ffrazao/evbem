@@ -1,7 +1,5 @@
 package br.gov.df.emater.negocio.base.crud;
 
-import static br.gov.df.emater.comum.UtilitarioCollection.deMapStringParaMapObject;
-
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.gov.df.emater.comum.UtilitarioCollection;
 import br.gov.df.emater.repositorio_principal.base.Dep;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 
@@ -27,17 +26,18 @@ public class IniciarCmd extends Comando {
 
 		final Map<String, Object> modelo = (Map<String, Object>) contexto.getRequisicao();
 		if ((modelo != null) && !modelo.isEmpty()) {
-			if (modelo.get("id") != null && dep.isPresent()) {
+			if ((modelo.get("id") != null) && dep.isPresent()) {
 				result = dep.get().getDao().findById(Integer.valueOf((String) modelo.get("id")));
-				
+
 				result = ((Optional<?>) result).orElse(null);
-				
+
 				if (result != null) {
-					((Identificavel) result).setId(null);	
+					((Identificavel) result).setId(null);
 				}
 
 			} else {
-				result = new ObjectMapper().convertValue(deMapStringParaMapObject(modelo), dep.get().getEntidade());
+				result = new ObjectMapper().convertValue(UtilitarioCollection.deMapStringParaMapObject(modelo),
+						dep.get().getEntidade());
 			}
 		} else {
 			if (dep.isPresent()) {

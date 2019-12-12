@@ -35,6 +35,8 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 
 	private static final long serialVersionUID = 1L;
 
+	private String codigo;
+
 	@Lob
 	private String descricao;
 
@@ -42,8 +44,6 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String codigo;
-	
 	private String nome;
 
 	@ManyToOne

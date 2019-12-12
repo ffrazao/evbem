@@ -31,7 +31,7 @@ public class Cargo extends EntidadeBase implements Serializable, Identificavel, 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String nome;
 
 }

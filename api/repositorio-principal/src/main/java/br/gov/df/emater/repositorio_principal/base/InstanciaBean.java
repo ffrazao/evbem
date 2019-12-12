@@ -20,15 +20,14 @@ public class InstanciaBean implements BeanFactoryAware {
 	public InstanciaBean create() {
 		return new InstanciaBean();
 	}
-	
+
+	public <E> E instanciarBean(final Class<E> c) {
+		return this.beanFactory.getBean(c);
+	}
+
 	@Override
 	public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
 		this.beanFactory = beanFactory;
 	}
-	
-	public <E> E instanciarBean(Class<E> c) {
-		return this.beanFactory.getBean(c);
-	}
 
 }
-

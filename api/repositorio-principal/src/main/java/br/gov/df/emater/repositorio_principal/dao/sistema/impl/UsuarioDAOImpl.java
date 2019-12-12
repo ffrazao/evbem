@@ -23,11 +23,11 @@ public class UsuarioDAOImpl implements FiltroDAOExtra<UsuarioFiltroDTO, Usuario>
 	private EntityManager em;
 
 	@Override
-	public Usuario[] findByFiltro(UsuarioFiltroDTO filtro) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
-		Root<Usuario> root = criteria.from(Usuario.class);
-		List<Predicate> criteriaList = new ArrayList<>();
+	public Usuario[] findByFiltro(final UsuarioFiltroDTO filtro) {
+		final CriteriaBuilder builder = this.em.getCriteriaBuilder();
+		final CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
+		final Root<Usuario> root = criteria.from(Usuario.class);
+		final List<Predicate> criteriaList = new ArrayList<>();
 		if (StringUtils.isNotBlank(filtro.getEmail())) {
 			criteriaList
 					.add(builder.like(root.get("email"), String.format("%%%s%%", filtro.getEmail().replace(" ", "%"))));
@@ -48,7 +48,7 @@ public class UsuarioDAOImpl implements FiltroDAOExtra<UsuarioFiltroDTO, Usuario>
 			criteria.where(builder.and(criteriaList.toArray(new Predicate[0])));
 		}
 
-		final TypedQuery<Usuario> query = em.createQuery(criteria);
+		final TypedQuery<Usuario> query = this.em.createQuery(criteria);
 
 		return query.getResultList().stream().toArray(tamanho -> new Usuario[tamanho]);
 	}

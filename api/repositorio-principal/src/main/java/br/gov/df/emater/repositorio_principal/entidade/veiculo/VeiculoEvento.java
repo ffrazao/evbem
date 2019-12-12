@@ -26,14 +26,14 @@ import lombok.NoArgsConstructor;
 public class VeiculoEvento extends Evento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Transient
-	private Veiculo veiculo;
-	
-	@Column(name = "veiculo_evento_tipo")
-	private VeiculoEventoTipo veiculoEventoTipo;
-	
+
 	@Column(name = "quilometragem")
 	private BigDecimal quilometragem;
+
+	@Transient
+	private Veiculo veiculo;
+
+	@Column(name = "veiculo_evento_tipo")
+	private VeiculoEventoTipo veiculoEventoTipo;
 
 }

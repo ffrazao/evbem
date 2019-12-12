@@ -10,9 +10,9 @@ import br.gov.df.emater.transporte.principal.ProdutoFiltroDTO;
 @RestController()
 @RequestMapping("produto")
 public class ProdutoCtrl extends BaseCrudCtrl<Produto, ProdutoFiltroDTO, Produto> {
-	
+
 	public ProdutoCtrl() {
 		super("Produto");
 	}
-	
+
 }
