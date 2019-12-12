@@ -22,6 +22,7 @@ import br.gov.df.emater.repositorio_principal.dao.pessoa.PessoaTelefoneDAO;
 import br.gov.df.emater.repositorio_principal.dao.pessoa.RelacionamentoDAO;
 import br.gov.df.emater.repositorio_principal.dao.principal.PessoaDAO;
 import br.gov.df.emater.repositorio_principal.dao.principal.ProdutoDAO;
+import br.gov.df.emater.repositorio_principal.dao.principal.RecursoDAO;
 import br.gov.df.emater.repositorio_principal.dao.produto.BemPatrimonialDAO;
 import br.gov.df.emater.repositorio_principal.dao.produto.ComposicaoDAO;
 import br.gov.df.emater.repositorio_principal.dao.produto.ProdutoPessoaDAO;
@@ -43,6 +44,7 @@ import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaTelefone;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.Relacionamento;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Recurso;
 import br.gov.df.emater.repositorio_principal.entidade.produto.BemPatrimonial;
 import br.gov.df.emater.repositorio_principal.entidade.produto.Composicao;
 import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoPessoa;
@@ -68,33 +70,34 @@ public class MapaDep {
 		// mapa pessoa
 		this.mapa.add(
 				Dep.of("pessoa", Pessoa.class, PessoaDAO.class, PessoaFiltroDTO.class, ListagemDTO.class,
-					Dep.of("pessoaArquivoList", PessoaArquivo.class, PessoaArquivoDAO.class,
-							Dep.of("arquivo", Arquivo.class, ArquivoDAO.class)),
-					Dep.of("pessoaEmailList", PessoaEmail.class, PessoaEmailDAO.class,
-							Dep.of("email", Email.class, EmailDAO.class)),
-					Dep.of("pessoaEnderecoList", PessoaEndereco.class, PessoaEnderecoDAO.class,
-							Dep.of("endereco", Endereco.class, EnderecoDAO.class)),
-					Dep.of("pessoaFotoList", PessoaFoto.class, PessoaFotoDAO.class,
-							Dep.of("foto", Foto.class, FotoDAO.class)),
-					Dep.of("pessoaRelacionamentoList", PessoaRelacionamento.class, PessoaRelacionamentoDAO.class,
-							Dep.of("relacionamento", Relacionamento.class, RelacionamentoDAO.class)),
-					Dep.of("pessoaTelefoneList", PessoaTelefone.class, PessoaTelefoneDAO.class,
-							Dep.of("telefone", Telefone.class, TelefoneDAO.class))
+					Dep.of("recurso", Recurso.class, RecursoDAO.class),
+					Dep.of("arquivoList", PessoaArquivo.class, PessoaArquivoDAO.class,
+							Dep.of("arquivo", Arquivo.class, ArquivoDAO.class)).setCampoPai("pessoa"),
+					Dep.of("emailList", PessoaEmail.class, PessoaEmailDAO.class,
+							Dep.of("email", Email.class, EmailDAO.class)).setCampoPai("pessoa"),
+					Dep.of("enderecoList", PessoaEndereco.class, PessoaEnderecoDAO.class,
+							Dep.of("endereco", Endereco.class, EnderecoDAO.class)).setCampoPai("pessoa"),
+					Dep.of("fotoList", PessoaFoto.class, PessoaFotoDAO.class,
+							Dep.of("foto", Foto.class, FotoDAO.class)).setCampoPai("pessoa"),
+					Dep.of("relacionamentoList", PessoaRelacionamento.class, PessoaRelacionamentoDAO.class,
+							Dep.of("relacionamento", Relacionamento.class, RelacionamentoDAO.class)).setCampoPai("pessoa"),
+					Dep.of("telefoneList", PessoaTelefone.class, PessoaTelefoneDAO.class,
+							Dep.of("telefone", Telefone.class, TelefoneDAO.class)).setCampoPai("pessoa")
 				));
 
 		// mapa usuario
 		this.mapa.add(
 				Dep.of("usuario", Usuario.class, UsuarioDAO.class,
-						Dep.of("usuarioPerfilList", UsuarioPerfil.class, UsuarioPerfilDAO.class),
-						Dep.of("usuarioFormaAutenticacaoList", UsuarioFormaAutenticacao.class, UsuarioFormaAutenticacaoDAO.class)
+						Dep.of("usuarioPerfilList", UsuarioPerfil.class, UsuarioPerfilDAO.class).setCampoPai("usuario"),
+						Dep.of("usuarioFormaAutenticacaoList", UsuarioFormaAutenticacao.class, UsuarioFormaAutenticacaoDAO.class).setCampoPai("usuario")
 				));
 
 		// mapa produto
 		this.mapa.add(
 				Dep.of("produto", Produto.class, ProdutoDAO.class,
 						Dep.of("bemPatrimonial", BemPatrimonial.class, BemPatrimonialDAO.class),
-						Dep.of("composicaoList", Composicao.class, ComposicaoDAO.class),
-						Dep.of("produtoPessoaList", ProdutoPessoa.class, ProdutoPessoaDAO.class)
+						Dep.of("composicaoList", Composicao.class, ComposicaoDAO.class).setCampoPai("produto"),
+						Dep.of("produtoPessoaList", ProdutoPessoa.class, ProdutoPessoaDAO.class).setCampoPai("produto")
 				));
 
 		// instanciar os daos

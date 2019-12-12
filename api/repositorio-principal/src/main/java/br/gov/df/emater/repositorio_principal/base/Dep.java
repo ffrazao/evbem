@@ -36,6 +36,8 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 		return Dep.of(funcionalidadeCampo, entidade, daoClass, null, null, dependencias);
 	}
 
+	private String campoPai;
+
 	private D dao;
 
 	@Setter(value = AccessLevel.NONE)
@@ -78,6 +80,10 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 		return this.funcionalidadeCampo.equalsIgnoreCase(other.funcionalidadeCampo);
 	}
 
+	public Optional<String> getCampoPai() {
+		return Optional.ofNullable(this.campoPai);
+	}
+
 	public Optional<Dep<?, ?, ?, ?>> getDependencia(final String funcionalidadeCampo) {
 		return this.dependencias.stream()
 				.filter(d -> funcionalidadeCampo.equalsIgnoreCase(this.getFuncionalidadeCampo())).findFirst();
@@ -98,6 +104,11 @@ public class Dep<E extends EntidadeBase, D extends JpaRepository<E, Integer>, F 
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.funcionalidadeCampo);
+	}
+
+	public Dep<E, D, F, L> setCampoPai(final String valor) {
+		this.campoPai = valor;
+		return this;
 	}
 
 }

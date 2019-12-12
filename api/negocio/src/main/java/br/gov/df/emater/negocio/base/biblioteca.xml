@@ -12,10 +12,14 @@
 				classe="br.gov.df.emater.negocio.base.crud.IniciarCmd" />
 		</cadeia>
 		<cadeia nome="criar" tipo="SEQUENCIAL">
-			<comando nome="prepararCmd"
-				classe="br.gov.df.emater.negocio.base.crud.PrepararCmd"/>
-			<comando nome="criarCmd"
-				classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
+			<comando nome="ordenavelEPriorizavelCmd"
+				classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
+			<cadeia nome="preparar" classe="br.gov.df.emater.negocio.base.crud.PrepararCdSq">
+				<comando nome="entidadeUnicaCmd"
+					classe="br.gov.df.emater.negocio.base.crud.EntidadeUnicaCmd"/>
+				<comando nome="criarCmd"
+					classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
+			</cadeia>
 		</cadeia>
 		<cadeia nome="restaurar" tipo="SEQUENCIAL">
 			<comando nome="restaurarCmd"

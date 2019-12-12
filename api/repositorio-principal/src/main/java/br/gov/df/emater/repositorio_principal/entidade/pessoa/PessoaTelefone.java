@@ -2,11 +2,9 @@ package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
@@ -28,6 +27,7 @@ import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Priorizavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Visivel;
 import br.gov.df.emater.repositorio_principal.entidade.comum.Telefone;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -54,17 +54,22 @@ public class PessoaTelefone extends EntidadeBase
 
 	private Integer ordem;
 
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
+	@JsonIgnore
+	private Pessoa pessoa;
+
 	@Enumerated(EnumType.STRING)
 	private Confirmacao principal;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "telefone_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = false)
 	private Telefone telefone;
 
 	@Enumerated(EnumType.STRING)
-	private Visibilidade visibilidade;
+	private Visibilidade visibilidade = Visibilidade.PUBLICO;
 
 	@PrePersist
 	@PreUpdate

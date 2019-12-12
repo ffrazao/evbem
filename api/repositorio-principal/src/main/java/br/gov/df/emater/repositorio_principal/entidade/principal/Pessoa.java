@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -50,20 +49,16 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "pessoa_id")
+	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaArquivo> arquivoList = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_id")
+	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaEmail> emailList = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "pessoa_id")
+	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaEndereco> enderecoList = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "pessoa_id")
+	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaFoto> fotoList = new ArrayList<>();
 
 	@Id
@@ -83,12 +78,10 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@MapsId
 	private Recurso recurso;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "pessoa_id")
+	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaRelacionamento> relacionamentoList = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pessoa_id")
+	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaTelefone> telefoneList = new ArrayList<>();
 
 }

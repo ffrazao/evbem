@@ -35,7 +35,7 @@ public class Recurso extends EntidadeBase implements Serializable, Identificavel
 	private static final long serialVersionUID = 1L;
 
 	@Enumerated(EnumType.STRING)
-	private Confirmacao ativo;
+	private Confirmacao ativo = Confirmacao.S;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

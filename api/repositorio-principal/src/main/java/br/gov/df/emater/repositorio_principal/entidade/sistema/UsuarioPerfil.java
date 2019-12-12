@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
@@ -55,8 +56,7 @@ public class UsuarioPerfil extends EntidadeBase implements Serializable, Identif
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	@JsonIgnore
 	private Usuario usuario;
 
 }

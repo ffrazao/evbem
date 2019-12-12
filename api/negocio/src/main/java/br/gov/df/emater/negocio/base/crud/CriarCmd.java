@@ -1,13 +1,19 @@
 package br.gov.df.emater.negocio.base.crud;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.gov.df.emater.negocio.base.Constantes;
 import br.gov.df.emater.repositorio_principal.base.Dep;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 
@@ -18,20 +24,53 @@ public class CriarCmd extends Comando {
 	@Override
 	protected void procedimento(final Contexto contexto) throws Exception {
 
-		final Optional<Dep<?, ?, ?, ?>> depOpt = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
+		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA)).get();
 
-		if (depOpt.isPresent()) {
-			final Dep<?, ?, ?, ?> dep = depOpt.get();
+		final EntidadeBase entidade = (EntidadeBase) contexto.get(Constantes.ENTIDADE);
 
-			final Collection<Integer> result = ((Collection<EntidadeBase>) contexto.getRequisicao()).stream()
-					.map((reg) -> this.salvar(dep, reg)).collect(Collectors.toList());
+		final Integer id = this.salvar(dep, entidade);
 
-			contexto.setResposta(result);
+		List<Integer> idList = (List<Integer>) contexto.get(Constantes.ID_LIST);
+		if (idList == null) {
+			idList = new ArrayList<>();
+			contexto.put(Constantes.ID_LIST, idList);
 		}
-
+		
+		idList.add(id);
 	}
 
-	private Integer salvar(final Dep<?, ?, ?, ?> dep, final EntidadeBase entidade) {
+	private Integer salvar(final Dep<?, ?, ?, ?> dep, EntidadeBase entidade) {
+		return salvar(dep, entidade, null);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Integer salvar(final Dep<?, ?, ?, ?> dep, EntidadeBase entidade, EntidadeBase pai) {
+		Set<Dep<?, ?, ?, ?>> subDeps = dep.getDependencias().get();
+
+		// salvar dependencias que a entidade necessita
+		final BeanWrapper wrapper = new BeanWrapperImpl(entidade);
+		for (Dep<?, ?, ?, ?> depSub : subDeps) {
+			Object valor = wrapper.getPropertyValue(depSub.getFuncionalidadeCampo());
+			if (!(valor instanceof Collection<?>)) {
+				salvar(depSub, (EntidadeBase) valor);
+			}
+		}
+
+		if (dep.getCampoPai().isPresent()) {
+			wrapper.setPropertyValue(dep.getCampoPai().get(), pai);
+		}
+
+		((JpaRepository) dep.getDao()).saveAndFlush(entidade);
+
+		// salvar dependencias necessitam da entidade
+		for (Dep<?, ?, ?, ?> depSub : subDeps) {
+			Object valor = wrapper.getPropertyValue(depSub.getFuncionalidadeCampo());
+			if (valor instanceof Collection<?>) {
+				if (!((Collection) valor).isEmpty()) {
+					((Collection) valor).forEach(v -> salvar(depSub, (EntidadeBase) v, entidade));
+				}
+			}
+		}
 		return entidade.getId();
 	}
 
