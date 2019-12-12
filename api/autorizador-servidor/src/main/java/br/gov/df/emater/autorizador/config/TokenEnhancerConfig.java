@@ -19,25 +19,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenEnhancerConfig implements TokenEnhancer {
 
-	public TokenEnhancerConfig() {
-	}
-
 	@Autowired
 	private DataSource dataSource;
 
+	public TokenEnhancerConfig() {
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		DefaultOAuth2AccessToken tempResult = (DefaultOAuth2AccessToken) accessToken;
+	public OAuth2AccessToken enhance(final OAuth2AccessToken accessToken, final OAuth2Authentication authentication) {
+		final DefaultOAuth2AccessToken tempResult = (DefaultOAuth2AccessToken) accessToken;
 
 		Map<String, Object> details = new HashMap<>();
-		Object userDetails = authentication.getUserAuthentication().getDetails();
+		final Object userDetails = authentication.getUserAuthentication().getDetails();
 		if (userDetails != null) {
 			details = (Map<String, Object>) userDetails;
 		}
 
-		try (Connection con = dataSource.getConnection()) {
-			StringBuilder sql = new StringBuilder();
+		try (Connection con = this.dataSource.getConnection()) {
+			final StringBuilder sql = new StringBuilder();
 			sql.append("SELECT DISTINCT").append("\n");
 			sql.append("    id, nome, email, foto, pessoa_id").append("\n");
 			sql.append("FROM").append("\n");
@@ -56,7 +56,7 @@ public class TokenEnhancerConfig implements TokenEnhancer {
 					}
 				}
 			}
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			e.printStackTrace();
 		}
 

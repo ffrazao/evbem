@@ -1,8 +1,7 @@
 package br.gov.df.emater.autorizador.controller;
 
-import static java.util.Arrays.asList;
-
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -47,41 +46,41 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public void logoutPage(HttpServletRequest request, HttpServletResponse response) {
+	public void logoutPage(final HttpServletRequest request, final HttpServletResponse response) {
 		// remover sessões abertas
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		// remover do token store
-		String authHeader = request.getHeader("Authorization");
+		final String authHeader = request.getHeader("Authorization");
 		if (authHeader != null) {
-			String tokenValue = authHeader.replace("Bearer", "").trim();
-			OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
+			final String tokenValue = authHeader.replace("Bearer", "").trim();
+			final OAuth2AccessToken accessToken = this.tokenStore.readAccessToken(tokenValue);
 			if (accessToken != null) {
-				tokenStore.removeAccessToken(accessToken);
+				this.tokenStore.removeAccessToken(accessToken);
 			}
 		}
 	}
 
 	@RequestMapping(value = "/approval/revoke", method = RequestMethod.POST)
-	public String revokApproval(@ModelAttribute Approval approval) {
+	public String revokApproval(@ModelAttribute final Approval approval) {
 
-		approvalStore.revokeApprovals(asList(approval));
-		tokenStore.findTokensByClientIdAndUserName(approval.getClientId(), approval.getUserId())
-				.forEach(tokenStore::removeAccessToken);
+		this.approvalStore.revokeApprovals(Arrays.asList(approval));
+		this.tokenStore.findTokensByClientIdAndUserName(approval.getClientId(), approval.getUserId())
+				.forEach(this.tokenStore::removeAccessToken);
 		return "redirect:/";
 	}
 
 	@RequestMapping("/")
-	public ModelAndView root(Map<String, Object> model, Principal principal) {
+	public ModelAndView root(final Map<String, Object> model, final Principal principal) {
 
-		List<Approval> approvals = clientDetailsService.listClientDetails().stream()
-				.map(clientDetails -> approvalStore.getApprovals(principal.getName(), clientDetails.getClientId()))
+		final List<Approval> approvals = this.clientDetailsService.listClientDetails().stream()
+				.map(clientDetails -> this.approvalStore.getApprovals(principal.getName(), clientDetails.getClientId()))
 				.flatMap(Collection::stream).collect(Collectors.toList());
 
 		model.put("approvals", approvals);
-		model.put("clientDetails", clientDetailsService.listClientDetails());
+		model.put("clientDetails", this.clientDetailsService.listClientDetails());
 		return new ModelAndView("index", model);
 
 	}

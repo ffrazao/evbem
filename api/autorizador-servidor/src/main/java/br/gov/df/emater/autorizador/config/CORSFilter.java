@@ -19,11 +19,16 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements Filter {
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+	@Override
+	public void destroy() {
+	}
+
+	@Override
+	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletResponse response = (HttpServletResponse) res;
-		HttpServletRequest request = (HttpServletRequest) req;
+		final HttpServletResponse response = (HttpServletResponse) res;
+		final HttpServletRequest request = (HttpServletRequest) req;
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -40,10 +45,8 @@ public class CORSFilter implements Filter {
 
 	}
 
-	public void init(FilterConfig filterConfig) {
-	}
-
-	public void destroy() {
+	@Override
+	public void init(final FilterConfig filterConfig) {
 	}
 
 }

@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @FrameworkEndpoint
 public class RevokeTokenEndpoint {
- 
+
 	@Autowired
-    private TokenStore tokenStore;	
- 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/oauth/token")
-    @ResponseBody
-    public void revokeToken(HttpServletRequest request) {
-    	String authHeader = request.getHeader("Authorization");
-        if (authHeader != null) {
-            String tokenValue = authHeader.replace("Bearer", "").trim();
-            OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
-            tokenStore.removeAccessToken(accessToken);
-        }
-    }
+	private TokenStore tokenStore;
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/oauth/token")
+	@ResponseBody
+	public void revokeToken(final HttpServletRequest request) {
+		final String authHeader = request.getHeader("Authorization");
+		if (authHeader != null) {
+			final String tokenValue = authHeader.replace("Bearer", "").trim();
+			final OAuth2AccessToken accessToken = this.tokenStore.readAccessToken(tokenValue);
+			this.tokenStore.removeAccessToken(accessToken);
+		}
+	}
 }

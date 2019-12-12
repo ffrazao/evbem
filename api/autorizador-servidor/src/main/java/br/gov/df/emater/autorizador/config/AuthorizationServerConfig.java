@@ -26,50 +26,50 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
-	private DataSource datasource;
+	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private AuthenticationManager authenticationManager;
+	private DataSource datasource;
 
 	@Autowired
 	private TokenEnhancer tokenEnhancer;
 
 	@Bean
-	@Primary
-	public JdbcClientDetailsService clientDetailsService() {// 4
-		return new JdbcClientDetailsService(datasource);
-	}
-
-	@Bean
-	public TokenStore tokenStore() {// 3
-		return new JdbcTokenStore(datasource);
-	}
-
-	@Bean
 	public ApprovalStore approvalStore() {// 1
-		return new JdbcApprovalStore(datasource);
+		return new JdbcApprovalStore(this.datasource);
 	}
 
 	@Bean
 	public AuthorizationCodeServices authorizationCodeServices() {// 2
-		return new JdbcAuthorizationCodeServices(datasource);
+		return new JdbcAuthorizationCodeServices(this.datasource);
+	}
+
+	@Bean
+	@Primary
+	public JdbcClientDetailsService clientDetailsService() {// 4
+		return new JdbcClientDetailsService(this.datasource);
 	}
 
 	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.withClientDetails(clientDetailsService());
+	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		endpoints.authenticationManager(this.authenticationManager).approvalStore(this.approvalStore())
+				.authorizationCodeServices(this.authorizationCodeServices()).tokenStore(this.tokenStore())
+				.tokenEnhancer(this.tokenEnhancer);
 	}
 
 	@Override
-	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+	public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 
 	}
 
 	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.authenticationManager(authenticationManager).approvalStore(approvalStore())
-				.authorizationCodeServices(authorizationCodeServices()).tokenStore(tokenStore())
-				.tokenEnhancer(tokenEnhancer);
+	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
+		clients.withClientDetails(this.clientDetailsService());
+	}
+
+	@Bean
+	public TokenStore tokenStore() {// 3
+		return new JdbcTokenStore(this.datasource);
 	}
 
 }

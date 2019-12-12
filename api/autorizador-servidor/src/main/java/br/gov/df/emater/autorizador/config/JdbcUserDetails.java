@@ -24,20 +24,20 @@ public class JdbcUserDetails implements UserDetailsService {
 	private DataSource dataSource;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		User result = null;
 		try {
-			Connection c = dataSource.getConnection();
-			PreparedStatement ps = c
+			final Connection c = this.dataSource.getConnection();
+			final PreparedStatement ps = c
 					.prepareStatement("select login, senha, ativo from sistema.usuario where login = ?");
 			ps.setString(1, username);
-			ResultSet rs = ps.executeQuery();
+			final ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				result = new User(rs.getString("login"), rs.getString("senha"),
 						"S".equalsIgnoreCase(rs.getString("ativo")), true, true, true,
 						new ArrayList<GrantedAuthority>());
 			}
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			throw new RuntimeException(e);
 		}
 		if (result == null) {
