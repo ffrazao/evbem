@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.domain.Example;
@@ -15,7 +18,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EntidadeUnicaComponent {
+public class EntidadeUnicaUtil {
 
 	@Autowired
 	private EntityManager em;
@@ -27,24 +30,21 @@ public class EntidadeUnicaComponent {
 		}
 		EntidadeUnica entidadeUnica = AnnotationUtils.findAnnotation(entidade.getClass(), EntidadeUnica.class);
 		if (entidadeUnica != null) {
+			BeanWrapper entidadeExemplo = new BeanWrapperImpl(BeanUtils.instantiateClass(entidade.getClass()));
+			BeanWrapper entidadeOrigem = new BeanWrapperImpl(entidade);
+			Arrays.stream(entidadeUnica.value()).forEach(valorUnico -> entidadeExemplo.setPropertyValue(valorUnico,
+					entidadeOrigem.getPropertyValue(valorUnico)));
 
-			// aprender a como instanciar uma classe generica
-			try {
-				Object entidadeExemplo = entidade.getClass().newInstance();
-				for (String valorUnico : entidadeUnica.value()) {
-					entidadeExemplo.getClass().getField(valorUnico).set(entidadeExemplo, entidade.getClass().getField(valorUnico).get(entidade));
-				}
-
-				Example exemplo = Example.of(entidadeExemplo, ExampleMatcher.matchingAll());
-
-				SimpleJpaRepository<?, ?> jpa = new SimpleJpaRepository(entidade.getClass(), em);
-				List resp = jpa.findAll(exemplo);
-
-				System.out.println(resp);
-				
-			} catch (InstantiationException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-				e.printStackTrace();
-			}
+			SimpleJpaRepository jpa = new SimpleJpaRepository(entidade.getClass(), em);
+/*			List consulta = jpa.findAll(Example.of(entidadeExemplo.getWrappedInstance(), ExampleMatcher.matchingAll()));
+			if (consulta.size() == 1) {
+				// restaurar o id do registro
+				BeanWrapper entidadeConsulta = new BeanWrapperImpl(consulta.get(0));
+				entidadeOrigem.setPropertyValue("id", entidadeConsulta.getPropertyValue("id"));
+//				entidade = consulta.get(0);
+				em.detach(consulta.get(0));
+				em.detach(entidade);
+			}*/
 		}
 		Class<?> clazz = entidade.getClass();
 		while (!Arrays.asList(EntidadeBase.class, Object.class, Class.class, Enum.class).contains(clazz)) {

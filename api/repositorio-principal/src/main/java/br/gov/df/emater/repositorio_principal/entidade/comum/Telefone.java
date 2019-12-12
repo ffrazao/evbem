@@ -59,7 +59,6 @@ public class Telefone extends EntidadeBase implements Serializable, Identificave
 		if (sb.length() > 0) {
 			sb = new StringBuilder(String.format("(%s) ", sb.toString().trim()));
 		}
-		sb.append(" ");
 		sb.append(this.numero);
 		return sb.toString().trim();
 	}
@@ -95,15 +94,15 @@ public class Telefone extends EntidadeBase implements Serializable, Identificave
 		String ddi = null, ddd = null, numero = null;
 		if (StringUtils.isNotBlank(telefone)) {
 			if (telefone.contains(")")) {
-				String[] parte = telefone.split(")");
+				String[] parte = telefone.split("\\)");
 				if (parte[0].contains(" ")) {
 					String[] subparte = parte[0].split(" ");
 					ddi = subparte[0];
 					ddd = subparte[1];
 				} else {
-					ddd = parte[0];
+					ddd = parte[0].trim().concat(")");
 				}
-				numero = parte[1];
+				numero = parte[1].trim();
 			} else {
 				numero = telefone;
 			}

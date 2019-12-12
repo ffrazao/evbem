@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnica;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;
@@ -55,7 +54,7 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@JoinColumn(name = "pessoa_id")
 	private List<PessoaArquivo> arquivoList = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pessoa_id")
 	private List<PessoaEmail> emailList = new ArrayList<>();
 
@@ -79,7 +78,7 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@Column(name = "pessoa_tipo")
 	private PessoaTipo pessoaTipo;
 
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = false)
 	@JoinColumn(name = "id")
 	@MapsId
 	private Recurso recurso;
@@ -88,7 +87,7 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 	@JoinColumn(name = "pessoa_id")
 	private List<PessoaRelacionamento> relacionamentoList = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pessoa_id")
 	private List<PessoaTelefone> telefoneList = new ArrayList<>();
 

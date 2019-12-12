@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnicaComponent;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnicaUtil;
 
 @Component
 public class PrepararCmd extends Comando {
 
 	@Autowired
-	private EntidadeUnicaComponent entidadeUnica;
+	private EntidadeUnicaUtil entidadeUnica;
 
 	@Override
 	protected <k, v> void procedimento(Contexto contexto) throws Exception {
