@@ -2,7 +2,6 @@ package br.gov.df.emater.negocio.base.crud;
 
 import java.beans.PropertyDescriptor;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;

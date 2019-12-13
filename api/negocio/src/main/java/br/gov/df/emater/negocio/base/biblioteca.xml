@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <biblioteca>
 
+	<!-- Definição dos comandos genéricos, para uso em toda a biblioteca -->
 	<comando nome="antes"
 		classe="br.gov.df.emater.negocio.base.crud.AntesCmd" />
 	<comando nome="depois"
 		classe="br.gov.df.emater.negocio.base.crud.DepoisCmd" />
 
+	<!-- Definição dos catalogos modelo -->
 	<catalogo nome="crud" antes="antes" depois="depois">
 		<cadeia nome="iniciar" tipo="SEQUENCIAL">
 			<comando nome="iniciarCmd"
 				classe="br.gov.df.emater.negocio.base.crud.IniciarCmd" />
 		</cadeia>
 		<cadeia nome="criar" tipo="SEQUENCIAL">
-			<comando nome="ordenavelEPriorizavelCmd"
-				classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
-			<cadeia nome="preparar" classe="br.gov.df.emater.negocio.base.crud.PrepararCdSq">
+			<cadeia nome="prepararColecao" tipo="SEQUENCIAL">
+				<comando nome="ordenavelEPriorizavelCmd"
+					classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
+			</cadeia>
+			<cadeia nome="prepararEntidade" classe="br.gov.df.emater.negocio.base.crud.PrepararCdSq">
 				<comando nome="entidadeUnicaCmd"
 					classe="br.gov.df.emater.negocio.base.crud.EntidadeUnicaCmd"/>
 				<comando nome="criarCmd"
@@ -43,6 +47,7 @@
 		</cadeia>
 	</catalogo>
 
+	<!-- Definição dos catalogos específicos da aplicação -->
 	<catalogo nome="pessoa" modelo="crud" />
 	<catalogo nome="produto" modelo="crud" />
 	<catalogo nome="usuario" modelo="crud" />
