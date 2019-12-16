@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.util.CollectionUtils;
 
 import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
@@ -25,7 +26,7 @@ public class ViagemDAOImpl implements FiltroDAOExtra<ViagemFiltroDTO, Viagem> {
 	private EntityManager em;
 
 	@Override
-	public Viagem[] findByFiltro(final ViagemFiltroDTO filtro) {
+	public Page<Viagem> findByFiltro(final ViagemFiltroDTO filtro) {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<Viagem> sql = cb.createQuery(Viagem.class);
 
@@ -53,10 +54,11 @@ public class ViagemDAOImpl implements FiltroDAOExtra<ViagemFiltroDTO, Viagem> {
 
 		final TypedQuery<Viagem> query = this.em.createQuery(sql);
 
-		query.setFirstResult((filtro.getPagina() - 1) * filtro.getTamanho());
-		query.setMaxResults(filtro.getTamanho());
+		query.setFirstResult((filtro.getPag() - 1) * filtro.getQtd());
+		query.setMaxResults(filtro.getQtd());
 
-		return query.getResultList().stream().toArray(size -> new Viagem[size]);
+		return (Page<Viagem>) paginar(filtro, query);
+
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.util.CollectionUtils;
 
 import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
@@ -25,8 +26,9 @@ public class PessoaDAOImpl implements FiltroDAOExtra<PessoaFiltroDTO, Pessoa> {
 	@Autowired
 	private EntityManager em;
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Pessoa[] findByFiltro(PessoaFiltroDTO filtro) {
+	public Page<Pessoa> findByFiltro(PessoaFiltroDTO filtro) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Pessoa> sql = cb.createQuery(Pessoa.class);
 
@@ -43,7 +45,7 @@ public class PessoaDAOImpl implements FiltroDAOExtra<PessoaFiltroDTO, Pessoa> {
 			pl.add(cb.or(criarPredicado(cb, root, "nome", pesq), criarPredicado(cb, root, "nomeReduzido", pesq),
 					criarPredicado(cb, j1, "cpf", pesq)
 //					, criarPredicado(cb, j2, "cnpj", pesq)
-					));
+			));
 		} else {
 			if (!CollectionUtils.isEmpty(filtro.getNome())) {
 				pl.add(criarPredicado(cb, root, "nome", colecaoOuUnidade(filtro.getNome())));
@@ -71,10 +73,7 @@ public class PessoaDAOImpl implements FiltroDAOExtra<PessoaFiltroDTO, Pessoa> {
 
 		TypedQuery<? extends Pessoa> query = em.createQuery(sql);
 
-		query.setFirstResult((filtro.getPagina() - 1) * filtro.getTamanho());
-		query.setMaxResults(filtro.getTamanho());
-
-		return query.getResultList().stream().toArray(size -> new Pessoa[size]);
+		return (Page<Pessoa>) paginar(filtro, query);
 	}
 
 }

@@ -1,5 +1,7 @@
 package br.gov.df.emater.transporte;
 
+import org.springframework.data.domain.Sort.Direction;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,10 +11,16 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class FiltroDTO implements DTO {
 
-	private boolean chegouAoFim;
+	// numero da página
+	private Integer pag = 1;
 
-	private Integer pagina = 1;
-
-	private Integer tamanho = 1000;
+	// quantidade de registros por pagina
+	private Integer qtd = 1000;
+	
+	// campo de ordenação da página
+	private String ordem = "";
+	
+	// direção de ordenação da página
+	private Direction dir = Direction.ASC;
 
 }

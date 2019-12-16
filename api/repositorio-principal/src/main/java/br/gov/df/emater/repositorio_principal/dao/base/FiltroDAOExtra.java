@@ -5,9 +5,16 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.From;
 import javax.persistence.criteria.Predicate;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import br.gov.df.emater.transporte.FiltroDTO;
 
 @SuppressWarnings("unchecked")
 public interface FiltroDAOExtra<F, R> {
@@ -75,6 +82,18 @@ public interface FiltroDAOExtra<F, R> {
 						.replaceAll("\\]", "");
 	}
 
-	R[] findByFiltro(F filtro);
+	Page<R> findByFiltro(F filtro);
+
+	default <T> Page<T> paginar(final FiltroDTO filtro, final TypedQuery<T> query) {
+		final int totalRegistros = query.getResultList().size();
+
+		query.setFirstResult((filtro.getPag() - 1) * filtro.getQtd());
+		query.setMaxResults(filtro.getQtd());
+
+		final Page<T> result = new PageImpl<T>(query.getResultList(),
+				PageRequest.of(filtro.getPag(), filtro.getQtd(), filtro.getDir(), filtro.getOrdem()), totalRegistros);
+
+		return result;
+	}
 
 }

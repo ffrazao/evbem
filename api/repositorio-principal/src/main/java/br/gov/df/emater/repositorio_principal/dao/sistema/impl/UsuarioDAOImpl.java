@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
 import br.gov.df.emater.repositorio_principal.entidade.sistema.Usuario;
@@ -23,7 +24,7 @@ public class UsuarioDAOImpl implements FiltroDAOExtra<UsuarioFiltroDTO, Usuario>
 	private EntityManager em;
 
 	@Override
-	public Usuario[] findByFiltro(final UsuarioFiltroDTO filtro) {
+	public Page<Usuario> findByFiltro(final UsuarioFiltroDTO filtro) {
 		final CriteriaBuilder builder = this.em.getCriteriaBuilder();
 		final CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
 		final Root<Usuario> root = criteria.from(Usuario.class);
@@ -50,7 +51,8 @@ public class UsuarioDAOImpl implements FiltroDAOExtra<UsuarioFiltroDTO, Usuario>
 
 		final TypedQuery<Usuario> query = this.em.createQuery(criteria);
 
-		return query.getResultList().stream().toArray(tamanho -> new Usuario[tamanho]);
+		return (Page<Usuario>) paginar(filtro, query);
+
 	}
 
 }

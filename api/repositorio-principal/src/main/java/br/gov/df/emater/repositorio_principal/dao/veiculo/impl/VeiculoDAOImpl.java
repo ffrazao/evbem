@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.util.CollectionUtils;
 
 import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
@@ -31,7 +32,7 @@ public class VeiculoDAOImpl implements FiltroDAOExtra<VeiculoFiltroDTO, Veiculo>
 	private EntityManager em;
 
 	@Override
-	public Veiculo[] findByFiltro(final VeiculoFiltroDTO filtro) {
+	public Page<Veiculo> findByFiltro(final VeiculoFiltroDTO filtro) {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<Veiculo> sql = cb.createQuery(Veiculo.class);
 
@@ -100,10 +101,11 @@ public class VeiculoDAOImpl implements FiltroDAOExtra<VeiculoFiltroDTO, Veiculo>
 
 		final TypedQuery<Veiculo> query = this.em.createQuery(sql);
 
-		query.setFirstResult((filtro.getPagina() - 1) * filtro.getTamanho());
-		query.setMaxResults(filtro.getTamanho());
+		query.setFirstResult((filtro.getPag() - 1) * filtro.getQtd());
+		query.setMaxResults(filtro.getQtd());
 
-		return query.getResultList().stream().toArray(size -> new Veiculo[size]);
+		return (Page<Veiculo>) paginar(filtro, query);
+
 	}
 
 }

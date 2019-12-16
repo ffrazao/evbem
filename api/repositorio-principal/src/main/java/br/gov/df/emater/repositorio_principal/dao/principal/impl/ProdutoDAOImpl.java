@@ -1,11 +1,10 @@
 package br.gov.df.emater.repositorio_principal.dao.principal.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 import br.gov.df.emater.repositorio_principal.dao.base.FiltroDAOExtra;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
@@ -16,13 +15,11 @@ public class ProdutoDAOImpl implements FiltroDAOExtra<ProdutoFiltroDTO, Produto>
 	@Autowired
 	private EntityManager em;
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Produto[] findByFiltro(ProdutoFiltroDTO filtro) {
-		Collection<Produto> result = new ArrayList<>();
+	public Page<Produto> findByFiltro(ProdutoFiltroDTO filtro) {
+		return (Page<Produto>) paginar(filtro, (TypedQuery<Produto>) em.createNamedQuery("Produto", Produto.class).getResultList());
 
-		result = em.createNamedQuery("Produto", Produto.class).getResultList();
-
-		return result.stream().toArray(tamanho -> new Produto[tamanho]);
 
 		/* @formatter:off
 		List<Object> param = new ArrayList<>();

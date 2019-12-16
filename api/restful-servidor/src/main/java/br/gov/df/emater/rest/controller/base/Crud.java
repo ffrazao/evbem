@@ -4,11 +4,13 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-import br.gov.df.emater.negocio.base.AlterarEntidade;
-import br.gov.df.emater.negocio.base.ExcluirEntidade;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 
-public interface Crud<E extends Identificavel, F, R> {
+import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
+import br.gov.df.emater.transporte.FiltroDTO;
+
+public interface Crud<E extends Identificavel, F extends FiltroDTO, R> {
 
 	String ALTERAR = "alterar";
 	String CRIAR = "criar";
@@ -18,18 +20,18 @@ public interface Crud<E extends Identificavel, F, R> {
 	String RESTAURAR = "restaurar";
 	String SALVAR = "salvar";
 
-	List<AlterarEntidade<E>> alterar(List<AlterarEntidade<E>> entidades, Principal usuario) throws Exception;
+	ResponseEntity<Void> alterar(final List<Integer> ids, List<E> entidades, final Principal usuario) throws Exception;
 
-	List<E> criar(List<E> entidades, Principal usuario) throws Exception;
+	ResponseEntity<Void> criar(final List<E> entidades, final Principal usuario) throws Exception;
 
-	List<ExcluirEntidade> excluir(List<Integer> ids, Principal usuario) throws Exception;
+	ResponseEntity<Void> excluir(final List<Integer> ids, final Principal usuario) throws Exception;
 
-	E iniciar(Map<String, Object> modelo, Principal usuario) throws Exception;
+	ResponseEntity<E> iniciar(final Map<String, Object> modelo, final Principal usuario) throws Exception;
 
-	List<R> listar(F filtro, Principal usuario) throws Exception;
+	ResponseEntity<Page<R>> listar(final F filtro, final Principal usuario) throws Exception;
 
-	List<E> restaurar(List<Integer> ids, Principal usuario) throws Exception;
+	ResponseEntity<List<E>> restaurar(final List<Integer> ids, final Principal usuario) throws Exception;
 
-	List<E> salvar(List<E> entidades, Principal usuario) throws Exception;
+	ResponseEntity<List<E>> salvar(final List<E> entidades, final Principal usuario) throws Exception;
 
 }
