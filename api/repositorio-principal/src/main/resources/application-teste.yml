@@ -1,0 +1,36 @@
+# configuracao de log
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: DEBUG
+            StatementCreatorUtils: TRACE
+          datasource: TRACE
+      hibernate:
+        SQL:
+          TRACE
+        type:
+          descriptor:
+            sql:
+              BasicBinder:
+                TRACE
+
+# conexão ao banco de dados 
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    hibernate: {ddl-auto: create}
+    properties:
+      hibernate: {show_sql: true, format_sql: true, use_sql_comments: true, dialect: org.hibernate.dialect.H2Dialect}
+  datasource: 
+    hikari: {connection-test-query: SELECT 1 FROM DUAL, minimum-idle: 1, maximum-pool-size: 5}
+    url: "jdbc:h2:mem:test;INIT=RUNSCRIPT FROM '~/eclipse-workspace/evbem/api/repositorio-principal/src/main/resources/schema1.sql'"
+    username: sa
+    password: 
+    #initialization-mode: never
+    continue-on-error: false
+
+  jackson:    serialization:      fail-on-empty-beans: false

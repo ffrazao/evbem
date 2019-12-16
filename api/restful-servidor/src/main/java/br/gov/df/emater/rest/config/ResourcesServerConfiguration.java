@@ -22,14 +22,23 @@ public class ResourcesServerConfiguration extends ResourceServerConfigurerAdapte
 
 	@Override
 	public void configure(final HttpSecurity http) throws Exception {
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().anonymous().and()
-				.authorizeRequests()
-				.antMatchers("/usuario", "/s/primeiro-acesso", "/s/cadastrar-senha", "/login", "/logout").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
+		// @formatter:off
+		http
+			.authorizeRequests()
+				.antMatchers("/favicon.ico", "/login*/**", "/logout*/**", "/h2-console*/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
 				.antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
 				.antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope('write')")
 				.antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope('write')")
-				.antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')").anyRequest().authenticated();
+				.antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')")
+				.anyRequest().fullyAuthenticated()
+			.and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+				.anonymous()
+			.and() // esta configuração é para que o console do h2 funcione
+				.headers().frameOptions().sameOrigin();
+		// @formatter:on
 	}
 
 	@Override

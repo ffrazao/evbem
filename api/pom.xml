@@ -28,6 +28,7 @@
 		<spring-security-test.version>5.1.5.RELEASE</spring-security-test.version>
 		<hikaricp.version>3.3.1</hikaricp.version>
 		<mysql.version>8.0.16</mysql.version>
+		<h2.version>1.4.200</h2.version>
 		<hibernate-spatial.version>5.4.3.Final</hibernate-spatial.version>
 		<lombok.version>1.18.8</lombok.version>
 		<junit.version>4.12</junit.version>

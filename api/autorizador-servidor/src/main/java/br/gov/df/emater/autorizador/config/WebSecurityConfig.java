@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().anonymous().and()
-				.authorizeRequests().antMatchers("/login", "/logout", "/logout.do", "/usuario").permitAll()
+				.authorizeRequests().antMatchers("/login", "/logout", "/logout.do", "/usuario", "/h2-console").permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated().and()
 //			.formLogin().loginProcessingUrl("/login.do").usernameParameter("username").passwordParameter("password").loginPage("/login").and()
 				// .formLogin().usernameParameter("username").passwordParameter("password").loginPage("/login").and()
