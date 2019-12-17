@@ -16,9 +16,12 @@ public class PrepararCdSq extends CadeiaSequencial {
 
 	@Override
 	protected <k, v> boolean antesProcedimento(Contexto contexto) {
-		Iterator<?> iterator = ((Collection<?>) contexto.getRequisicao()).iterator();
+		Iterator<?> iterator = (Iterator<?>) contexto.get(PREPARAR_INTERATOR);
 
-		contexto.put(PREPARAR_INTERATOR, iterator);
+		if (iterator == null) {
+			iterator = ((Collection<?>) contexto.getRequisicao()).iterator();
+			contexto.put(PREPARAR_INTERATOR, iterator);
+		}
 		contexto.put(Constantes.ENTIDADE, iterator.next());
 
 		return super.antesProcedimento(contexto);
@@ -27,11 +30,8 @@ public class PrepararCdSq extends CadeiaSequencial {
 	@Override
 	protected <k, v> boolean vaiRepetir(Contexto contexto) {
 		Iterator<?> iterator = (Iterator<?>) contexto.get(PREPARAR_INTERATOR);
-		boolean continua = iterator.hasNext();
-		if (continua) {
-			contexto.put(Constantes.ENTIDADE, iterator.next());
-		}
-		return continua;
+
+		return iterator.hasNext();
 	}
 
 }

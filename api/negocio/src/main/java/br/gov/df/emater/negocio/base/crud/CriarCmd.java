@@ -30,10 +30,10 @@ public class CriarCmd extends Comando {
 
 		final Integer id = this.salvar(dep, entidade);
 
-		List<Integer> idList = (List<Integer>) contexto.get(Constantes.ID_LIST);
+		List<Integer> idList = (List<Integer>) contexto.getResposta();
 		if (idList == null) {
 			idList = new ArrayList<>();
-			contexto.put(Constantes.ID_LIST, idList);
+			contexto.setResposta(idList);
 		}
 		
 		idList.add(id);

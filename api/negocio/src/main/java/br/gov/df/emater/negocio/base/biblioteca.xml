@@ -6,12 +6,14 @@
 	<comando nome="depois" classe="br.gov.df.emater.negocio.base.crud.DepoisCmd" />
 
 	<!-- CRUD - internos -->
+	<comando nome="entidadeUnicaCmd" classe="br.gov.df.emater.negocio.base.crud.EntidadeUnicaCmd"/>
+	<comando nome="criarCmd" classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
 	<cadeia nome="prepararColecao" tipo="SEQUENCIAL">
 		<comando nome="ordenavelEPriorizavelCmd" classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
 	</cadeia>
 	<cadeia nome="prepararEntidade" classe="br.gov.df.emater.negocio.base.crud.PrepararCdSq">
-		<comando nome="entidadeUnicaCmd" classe="br.gov.df.emater.negocio.base.crud.EntidadeUnicaCmd"/>
-		<comando nome="criarCmd" classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
+		<comando nome="entidadeUnicaCmd"/>
+		<comando nome="criarCmd"/>
 	</cadeia>
 
 

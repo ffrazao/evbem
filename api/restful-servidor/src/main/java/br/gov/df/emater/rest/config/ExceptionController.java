@@ -17,25 +17,26 @@ public class ExceptionController {
 	
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<ErroPadrao> erro(NegocioException e, HttpServletRequest r) {
+		e.printStackTrace();
 		ErroPadrao ep = new ErroPadrao(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ep);
 	}
 	
 	@ExceptionHandler(NegocioIntegridadeDadosException.class)
 	public ResponseEntity<ErroPadrao> erro(NegocioIntegridadeDadosException e, HttpServletRequest r) {
+		e.printStackTrace();
 		ErroPadrao ep = new ErroPadrao(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ep);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErroPadrao> erro(MethodArgumentNotValidException e, HttpServletRequest r) {
+		e.printStackTrace();
 		ErroPadaroValidacao ep = new ErroPadaroValidacao(HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
 		for (FieldError x: e.getBindingResult().getFieldErrors()) {
 			ep.addMensagemCampo(x.getField(), x.getDefaultMessage());
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ep);
 	}
-	
-	
 
 }
