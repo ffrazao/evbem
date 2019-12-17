@@ -1,28 +1,27 @@
 package br.gov.df.emater.negocio.base.crud;
 
-import org.springframework.beans.BeanUtils;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.gov.df.emater.repositorio_principal.base.Dep;
 
 @Component
 public class ExcluirCmd extends Comando {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void procedimento(final Contexto contexto) throws Exception {
-		final Object modelo = contexto.getRequisicao();
-		Object instancia = null;
-		if (modelo != null) {
 
-			if (modelo instanceof Integer) {
-				// recuperar pelo id
-			} else {
+		final List<Integer> ids = (List<Integer>) contexto.getRequisicao();
 
-			}
-		}
-		instancia = modelo == null ? BeanUtils.instantiateClass((Class<?>) contexto.get("entidade")) : modelo;
-		contexto.setResposta(instancia);
+		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA)).get();
+
+		ids.stream().forEach(id -> dep.getDao().deleteById(id));
+
 	}
 
 }

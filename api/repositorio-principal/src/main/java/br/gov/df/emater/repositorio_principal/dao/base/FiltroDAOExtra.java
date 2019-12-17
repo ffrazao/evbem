@@ -13,11 +13,12 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.util.CollectionUtils;
 
 import br.gov.df.emater.transporte.FiltroDTO;
 
 @SuppressWarnings("unchecked")
-public interface FiltroDAOExtra<F, R> {
+public interface FiltroDAOExtra<F extends FiltroDTO, R> {
 
 	CharSequence LIKE_CHAR = "%";
 
@@ -90,10 +91,13 @@ public interface FiltroDAOExtra<F, R> {
 		query.setFirstResult((filtro.getPag() - 1) * filtro.getQtd());
 		query.setMaxResults(filtro.getQtd());
 
-		final Page<T> result = new PageImpl<T>(query.getResultList(),
-				PageRequest.of(filtro.getPag(), filtro.getQtd(), filtro.getDir(), filtro.getOrdem()), totalRegistros);
-
-		return result;
+		if (CollectionUtils.isEmpty(filtro.getOrdem())) {
+			return new PageImpl<T>(query.getResultList(), PageRequest.of(filtro.getPag() - 1, filtro.getQtd()),
+					totalRegistros);
+		} else {
+			return new PageImpl<T>(query.getResultList(), PageRequest.of(filtro.getPag() - 1, filtro.getQtd(),
+					filtro.getDir(), filtro.getOrdem().toArray(new String[filtro.getOrdem().size()])), totalRegistros);
+		}
 	}
 
 }

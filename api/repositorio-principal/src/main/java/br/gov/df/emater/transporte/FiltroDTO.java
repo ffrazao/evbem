@@ -1,5 +1,8 @@
 package br.gov.df.emater.transporte;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.domain.Sort.Direction;
 
 import lombok.Data;
@@ -18,7 +21,7 @@ public class FiltroDTO implements DTO {
 	private Integer qtd = 1000;
 	
 	// campo de ordenação da página
-	private String ordem = "";
+	private List<String> ordem = new ArrayList<>();
 	
 	// direção de ordenação da página
 	private Direction dir = Direction.ASC;
