@@ -18,7 +18,7 @@ public class ExcluirCmd extends Comando {
 
 		final List<Integer> ids = (List<Integer>) contexto.getRequisicao();
 
-		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA)).get();
+		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(IncluirMapaDependenciaCmd.DEPENDENCIA)).get();
 
 		ids.stream().forEach(id -> dep.getDao().deleteById(id));
 

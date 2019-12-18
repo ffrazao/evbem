@@ -2,7 +2,9 @@
 <biblioteca>
 
 	<!-- Definição dos comandos genéricos, para uso em toda a biblioteca -->
-	<comando nome="antes" classe="br.gov.df.emater.negocio.base.crud.AntesCmd" />
+	<cadeia nome="antes" tipo="SEQUENCIAL">
+		<comando nome="incluirMapaDependencia" classe="br.gov.df.emater.negocio.base.crud.IncluirMapaDependenciaCmd" />
+	</cadeia>
 	<comando nome="depois" classe="br.gov.df.emater.negocio.base.crud.DepoisCmd" />
 
 	<!-- CRUD - internos -->
@@ -11,7 +13,7 @@
 	<cadeia nome="prepararColecao" tipo="SEQUENCIAL">
 		<comando nome="ordenavelEPriorizavelCmd" classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
 	</cadeia>
-	<cadeia nome="prepararEntidade" classe="br.gov.df.emater.negocio.base.crud.PrepararCdSq">
+	<cadeia nome="prepararEntidade" classe="br.gov.df.emater.negocio.base.comum.IteirarColecaoCdSq">
 		<comando nome="entidadeUnicaCmd"/>
 		<comando nome="criarCmd"/>
 	</cadeia>
@@ -24,6 +26,7 @@
 	<cadeia nome="criar" tipo="SEQUENCIAL">
 		<cadeia nome="prepararColecao" />
 		<cadeia nome="prepararEntidade" />
+		<comando nome="converterRespostaParaStringCmd" classe="br.gov.df.emater.negocio.base.comum.ConverterRespostaParaStringCmd"/>
 	</cadeia>
 	<cadeia nome="restaurar" tipo="SEQUENCIAL">
 		<comando nome="restaurarCmd" classe="br.gov.df.emater.negocio.base.crud.RestaurarCmd" />

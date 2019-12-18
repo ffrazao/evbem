@@ -24,7 +24,7 @@ public class CriarCmd extends Comando {
 	@Override
 	protected void procedimento(final Contexto contexto) throws Exception {
 
-		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA)).get();
+		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(IncluirMapaDependenciaCmd.DEPENDENCIA)).get();
 
 		final EntidadeBase entidade = (EntidadeBase) contexto.get(Constantes.ENTIDADE);
 

@@ -22,7 +22,7 @@ public class IniciarCmd extends Comando {
 	protected void procedimento(final Contexto contexto) throws Exception {
 		Object result = null;
 
-		final Optional<Dep<?, ?, ?, ?>> dep = (Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA);
+		final Optional<Dep<?, ?, ?, ?>> dep = (Optional<Dep<?, ?, ?, ?>>) contexto.get(IncluirMapaDependenciaCmd.DEPENDENCIA);
 
 		final Map<String, Object> modelo = (Map<String, Object>) contexto.getRequisicao();
 		if ((modelo != null) && !modelo.isEmpty()) {

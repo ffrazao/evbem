@@ -11,9 +11,9 @@ import br.gov.df.emater.repositorio_principal.base.Dep;
 import br.gov.df.emater.repositorio_principal.base.MapaDep;
 
 @Component
-public class AntesCmd extends Comando {
+public class IncluirMapaDependenciaCmd extends Comando {
 
-	public static final String DEPENDENCIA = "dependencia";
+	public static final String DEPENDENCIA = "IncluirMapaDependenciaCmd_dependencia";
 
 	@Autowired
 	private MapaDep mapa;
@@ -22,7 +22,7 @@ public class AntesCmd extends Comando {
 	protected void procedimento(final Contexto contexto) throws Exception {
 		this.log().info("Identificação das dependencias");
 		final Optional<Dep<?, ?, ?, ?>> dep = this.mapa.getDep(contexto.getCatalogo());
-		contexto.put(AntesCmd.DEPENDENCIA, dep);
+		contexto.put(IncluirMapaDependenciaCmd.DEPENDENCIA, dep);
 	}
 
 }

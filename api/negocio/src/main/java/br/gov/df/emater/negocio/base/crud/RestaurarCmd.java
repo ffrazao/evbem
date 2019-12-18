@@ -18,7 +18,7 @@ public class RestaurarCmd extends Comando {
 	protected void procedimento(final Contexto contexto) throws Exception {
 		final List<Integer> ids = (List<Integer>) contexto.getRequisicao();
 
-		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(AntesCmd.DEPENDENCIA)).get();
+		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(IncluirMapaDependenciaCmd.DEPENDENCIA)).get();
 
 		Collection<?> result = dep.getDao().findAllById(ids);
 

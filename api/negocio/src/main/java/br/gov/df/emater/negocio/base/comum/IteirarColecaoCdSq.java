@@ -1,4 +1,4 @@
-package br.gov.df.emater.negocio.base.crud;
+package br.gov.df.emater.negocio.base.comum;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,17 +10,17 @@ import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.negocio.base.Constantes;
 
 @Component
-public class PrepararCdSq extends CadeiaSequencial {
+public class IteirarColecaoCdSq extends CadeiaSequencial {
 
-	public static final String PREPARAR_INTERATOR = "prepararInterator";
+	public static final String ITERADOR = "IteirarColecaoCdSq_iterador";
 
 	@Override
 	protected <k, v> boolean antesProcedimento(Contexto contexto) {
-		Iterator<?> iterator = (Iterator<?>) contexto.get(PREPARAR_INTERATOR);
+		Iterator<?> iterator = (Iterator<?>) contexto.get(ITERADOR);
 
 		if (iterator == null) {
 			iterator = ((Collection<?>) contexto.getRequisicao()).iterator();
-			contexto.put(PREPARAR_INTERATOR, iterator);
+			contexto.put(ITERADOR, iterator);
 		}
 		contexto.put(Constantes.ENTIDADE, iterator.next());
 
@@ -29,7 +29,7 @@ public class PrepararCdSq extends CadeiaSequencial {
 
 	@Override
 	protected <k, v> boolean vaiRepetir(Contexto contexto) {
-		Iterator<?> iterator = (Iterator<?>) contexto.get(PREPARAR_INTERATOR);
+		Iterator<?> iterator = (Iterator<?>) contexto.get(ITERADOR);
 
 		return iterator.hasNext();
 	}

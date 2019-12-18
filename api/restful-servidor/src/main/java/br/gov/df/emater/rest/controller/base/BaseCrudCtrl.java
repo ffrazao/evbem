@@ -60,11 +60,11 @@ public class BaseCrudCtrl<E extends Identificavel, F extends FiltroDTO, R> exten
 
 	@Override
 	@PostMapping()
-	public ResponseEntity<Void> criar(@Valid @RequestBody(required = true) final List<E> entidades, final Principal usuario)
-			throws Exception {
+	public ResponseEntity<Void> criar(@Valid @RequestBody(required = true) final List<E> entidades,
+			final Principal usuario) throws Exception {
 		// eliminar o valor dos Id's (PK's) para garantir criação de novos registros
 		entidades.stream().forEach(e -> e.setId(null));
-		List<E> result = (List<E>) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.CRIAR,
+		String result = (String) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.CRIAR,
 				entidades, usuario);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{ids}").buildAndExpand(result).toUri();
 		return ResponseEntity.created(uri).build();
@@ -72,12 +72,14 @@ public class BaseCrudCtrl<E extends Identificavel, F extends FiltroDTO, R> exten
 
 	@Override
 	@DeleteMapping(value = "/{ids}")
-	public ResponseEntity<Void> excluir(@Valid @PathVariable(name = "ids", required = true) final List<Integer> ids, final Principal usuario) throws Exception {
+	public ResponseEntity<Void> excluir(@Valid @PathVariable(name = "ids", required = true) final List<Integer> ids,
+			final Principal usuario) throws Exception {
 		try {
-			this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.EXCLUIR, ids, usuario);			
+			this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.EXCLUIR, ids, usuario);
 			return ResponseEntity.noContent().build();
 		} catch (DataIntegrityViolationException e) {
-			throw new NegocioIntegridadeDadosException("Não é possível excluir o(s) registro(s), há dados vinculados.", e);
+			throw new NegocioIntegridadeDadosException("Não é possível excluir o(s) registro(s), há dados vinculados.",
+					e);
 		}
 	}
 
@@ -99,14 +101,16 @@ public class BaseCrudCtrl<E extends Identificavel, F extends FiltroDTO, R> exten
 	@Override
 	@GetMapping()
 	public ResponseEntity<Page<R>> listar(@Valid final F filtro, final Principal usuario) throws Exception {
-		Page<R> result = (Page<R>) this.getNegocioFacade().executarSomenteLeitura(this.getFuncionalidade(), Crud.LISTAR, filtro, usuario);
+		Page<R> result = (Page<R>) this.getNegocioFacade().executarSomenteLeitura(this.getFuncionalidade(), Crud.LISTAR,
+				filtro, usuario);
 		return ResponseEntity.ok(result);
 	}
 
 	@Override
 	@GetMapping(value = "/{ids}")
-	public ResponseEntity<List<E>> restaurar(@Valid @PathVariable(name = "ids", required = true) final List<Integer> ids,
-			final Principal usuario) throws Exception {
+	public ResponseEntity<List<E>> restaurar(
+			@Valid @PathVariable(name = "ids", required = true) final List<Integer> ids, final Principal usuario)
+			throws Exception {
 		List<E> result = (List<E>) this.getNegocioFacade().executarSomenteLeitura(this.getFuncionalidade(),
 				Crud.RESTAURAR, ids, usuario);
 		return ResponseEntity.ok(result);
