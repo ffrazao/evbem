@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.NomeavelCodificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,10 +21,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "pessoa", name = "relacionamento_funcao")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class RelacionamentoFuncao extends EntidadeBase implements Serializable, Identificavel, NomeavelCodificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class RelacionamentoFuncao extends EntidadeBase implements NomeavelCodificavel {
 
 	private String codigo;
 
@@ -39,5 +35,15 @@ public class RelacionamentoFuncao extends EntidadeBase implements Serializable, 
 
 	@Column(name = "nome_se_feminino")
 	private String nomeSeFeminino;
+
+	public RelacionamentoFuncao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public RelacionamentoFuncao infoBasica() {
+		RelacionamentoFuncao result = (RelacionamentoFuncao) super.infoBasica();
+		return result;
+	}
 
 }

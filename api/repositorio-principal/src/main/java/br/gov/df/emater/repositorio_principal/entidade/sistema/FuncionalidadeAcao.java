@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.FuncionalidadeAcaoConcedeAcessoA;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Pai;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -42,16 +36,15 @@ import lombok.Setter;
 @Table(catalog = "sistema", name = "funcionalidade_acao")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class FuncionalidadeAcao extends EntidadeBase
-		implements Serializable, Identificavel, Ativavel, Pai<FuncionalidadeAcao> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class FuncionalidadeAcao extends EntidadeBase implements Ativavel, Pai<FuncionalidadeAcao> {
 
 	@ManyToOne
 	@JoinColumn(name = "acao_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Acao acao;
 
 	@Enumerated(EnumType.STRING)
@@ -70,8 +63,9 @@ public class FuncionalidadeAcao extends EntidadeBase
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Funcionalidade funcionalidade;
 
 	@Id
@@ -80,8 +74,25 @@ public class FuncionalidadeAcao extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private FuncionalidadeAcao pai;
+
+	public FuncionalidadeAcao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public FuncionalidadeAcao infoBasica() {
+		FuncionalidadeAcao result = (FuncionalidadeAcao) copy();
+		if (this.getAcao() != null) {
+			result.setAcao(this.getAcao().infoBasica());
+		}
+		if (this.getFuncionalidade() != null) {
+			result.setFuncionalidade(this.getFuncionalidade().infoBasica());
+		}
+		return result;
+	}
 
 }

@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class ViagemFiltroDTO extends FiltroDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private Set<Optional<String>> pesq;
 
 }

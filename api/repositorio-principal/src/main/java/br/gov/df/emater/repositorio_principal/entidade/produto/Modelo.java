@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,12 +9,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.NomeavelCodificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,10 +23,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "produto")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Modelo extends EntidadeBase implements Serializable, Identificavel, NomeavelCodificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Modelo extends EntidadeBase implements NomeavelCodificavel {
 
 	private String codigo;
 
@@ -48,8 +40,23 @@ public class Modelo extends EntidadeBase implements Serializable, Identificavel,
 
 	@ManyToOne
 	@JoinColumn(name = "produto_tipo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;
+
+	public Modelo(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Modelo infoBasica() {
+		Modelo result = (Modelo) copy();
+		if (result.getProdutoTipo() != null) {
+			result.setProdutoTipo(result.getProdutoTipo().infoBasica());
+		}
+		result.setDescricao(this.getDescricao());
+		return result;
+	}
 
 }

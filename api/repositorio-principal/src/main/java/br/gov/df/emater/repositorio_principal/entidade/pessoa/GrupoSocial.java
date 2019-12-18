@@ -30,10 +30,9 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("GrupoSocial")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
 public class GrupoSocial extends Pessoa implements Serializable, Temporalizavel {
-
-	private static final long serialVersionUID = 1L;
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao administrado;
@@ -49,5 +48,15 @@ public class GrupoSocial extends Pessoa implements Serializable, Temporalizavel 
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar termino;
+
+	public GrupoSocial(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public GrupoSocial infoBasica() {
+		GrupoSocial result = (GrupoSocial) super.infoBasica();
+		return result;
+	}
 
 }

@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +10,6 @@ import javax.persistence.Table;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.NomeavelCodificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,10 +23,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "pessoa", name = "relacionamento_tipo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class RelacionamentoTipo extends EntidadeBase implements Serializable, Identificavel, NomeavelCodificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class RelacionamentoTipo extends EntidadeBase implements NomeavelCodificavel {
 
 	private String codigo;
 
@@ -41,5 +37,15 @@ public class RelacionamentoTipo extends EntidadeBase implements Serializable, Id
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao temporal;
+
+	public RelacionamentoTipo(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public RelacionamentoTipo infoBasica() {
+		RelacionamentoTipo result = (RelacionamentoTipo) super.infoBasica();
+		return result;
+	}
 
 }

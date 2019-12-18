@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -16,13 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,23 +30,24 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "sistema", name = "historico_atividade")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class HistoricoAtividade extends EntidadeBase implements Serializable, Identificavel, Temporalizavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class HistoricoAtividade extends EntidadeBase implements Temporalizavel {
 
 	@ManyToOne
 	@JoinColumn(name = "acao_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Acao acao;
 
 	private Integer duracao;
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Funcionalidade funcionalidade;
 
 	@Id
@@ -67,8 +62,9 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 
 	@ManyToOne
 	@JoinColumn(name = "modulo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Modulo modulo;
 
 	@Lob
@@ -86,8 +82,31 @@ public class HistoricoAtividade extends EntidadeBase implements Serializable, Id
 
 	@ManyToOne
 	@JoinColumn(name = "token_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Token token;
+
+	public HistoricoAtividade(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public HistoricoAtividade infoBasica() {
+		HistoricoAtividade result = (HistoricoAtividade) super.infoBasica();
+		if (result.getAcao() != null) {
+			result.setAcao(result.getAcao().infoBasica());
+		}
+		if (result.getFuncionalidade() != null) {
+			result.setFuncionalidade(result.getFuncionalidade().infoBasica());
+		}
+		if (result.getModulo() != null) {
+			result.setModulo(result.getModulo().infoBasica());
+		}
+		if (result.getToken() != null) {
+			result.setToken(result.getToken().infoBasica());
+		}
+		return result;
+	}
 
 }

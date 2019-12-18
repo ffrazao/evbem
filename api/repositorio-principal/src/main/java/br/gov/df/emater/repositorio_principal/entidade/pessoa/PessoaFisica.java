@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.DiscriminatorValue;
@@ -28,10 +27,9 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("PessoaFisica")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class PessoaFisica extends Pessoa implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class PessoaFisica extends Pessoa {
 
 	private String cpf;
 
@@ -43,5 +41,15 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private PessoaFisicaSexo sexo;
+
+	public PessoaFisica(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public PessoaFisica infoBasica() {
+		PessoaFisica result = (PessoaFisica) super.infoBasica();
+		return result;
+	}
 
 }

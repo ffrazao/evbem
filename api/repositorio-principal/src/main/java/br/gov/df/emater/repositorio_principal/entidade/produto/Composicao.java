@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -14,12 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
@@ -34,10 +28,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "produto")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Composicao extends EntidadeBase implements Serializable, Identificavel, Temporalizavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Composicao extends EntidadeBase implements Temporalizavel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,17 +41,35 @@ public class Composicao extends EntidadeBase implements Serializable, Identifica
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "principal_produto_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Produto principal;
 
 	@ManyToOne
 	@JoinColumn(name = "produto_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Produto produto;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar termino;
+
+	public Composicao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Composicao infoBasica() {
+		Composicao result = (Composicao) super.infoBasica();
+		if (result.getPrincipal() != null) {
+			result.setPrincipal(result.getPrincipal().infoBasica());
+		}
+		if (result.getProduto() != null) {
+			result.setProduto(result.getProduto().infoBasica());
+		}
+		return result;
+	}
 
 }

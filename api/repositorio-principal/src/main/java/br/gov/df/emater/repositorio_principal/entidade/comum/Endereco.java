@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +10,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,14 +22,17 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "comum")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Endereco extends ReferenciaEspacial implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Endereco extends ReferenciaEspacial {
 
 	private String cep;
 
 	private String complemento;
+
+	public Endereco(Integer valor) {
+		super(valor);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,8 +40,9 @@ public class Endereco extends ReferenciaEspacial implements Serializable, Identi
 
 	@ManyToOne
 	@JoinColumn(name = "localizacao_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Localizacao localizacao;
 
 	private String logradouro;
@@ -56,4 +53,10 @@ public class Endereco extends ReferenciaEspacial implements Serializable, Identi
 	@Column(name = "ponto_referencia")
 	private String pontoReferencia;
 
+	@Override
+	public Endereco infoBasica() {
+		Endereco result = (Endereco) super.infoBasica();
+		result.setLocalizacao((Localizacao) this.getLocalizacao().infoBasica());
+		return result;
+	}
 }

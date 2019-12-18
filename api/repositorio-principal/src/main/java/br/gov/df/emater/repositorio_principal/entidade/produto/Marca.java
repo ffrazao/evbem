@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -39,10 +33,9 @@ import lombok.Setter;
 @Table(catalog = "produto")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Marca extends EntidadeBase implements Serializable, Identificavel, PaiNomeavel<Marca> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Marca extends EntidadeBase implements PaiNomeavel<Marca> {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao fabricante;
@@ -62,19 +55,21 @@ public class Marca extends EntidadeBase implements Serializable, Identificavel, 
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Marca pai;
 
-	public Marca(Integer id) {
-		setId(id);
+	public Marca(Integer valor) {
+		super(valor);
 	}
 
-	public Marca(Integer id, String nome, Confirmacao fabricante, Integer pai) {
-		this(id);
-		setNome(nome);
-		setFabricante(fabricante);
-		setPai(new Marca(pai));
+	@Override
+	public Marca infoBasica() {
+		Marca result = (Marca) copy();
+		result.setLogotipo(this.getLogotipo());
+		result.setFabricante(this.getFabricante());
+		return result;
 	}
 
 }

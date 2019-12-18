@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnica;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,11 +23,10 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "comum")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
 @EntidadeUnica({ "ddi", "ddd", "numero" })
-public class Telefone extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+public class Telefone extends EntidadeBase {
 
 	private String ddd;
 
@@ -41,6 +37,10 @@ public class Telefone extends EntidadeBase implements Serializable, Identificave
 	private Integer id;
 
 	private String numero;
+
+	public Telefone(Integer valor) {
+		super(valor);
+	}
 
 	@Transient
 	public String getTelefone() {
@@ -61,6 +61,12 @@ public class Telefone extends EntidadeBase implements Serializable, Identificave
 		}
 		sb.append(this.numero);
 		return sb.toString().trim();
+	}
+
+	@Override
+	public Telefone infoBasica() {
+		Telefone result = (Telefone) super.infoBasica();
+		return result;
 	}
 
 	public void setDdd(String ddd) {

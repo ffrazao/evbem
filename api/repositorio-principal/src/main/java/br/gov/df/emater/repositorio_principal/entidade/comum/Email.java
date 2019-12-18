@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeUnica;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,11 +23,10 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "comum")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
 @EntidadeUnica({ "usuario", "dominio" })
-public class Email extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+public class Email extends EntidadeBase {
 
 	private String dominio;
 
@@ -40,10 +36,19 @@ public class Email extends EntidadeBase implements Serializable, Identificavel {
 
 	private String usuario;
 
+	public Email(Integer valor) {
+		super(valor);
+	}
+
 	@Transient
 	public String getEmail() {
 		return StringUtils.isBlank(usuario) || StringUtils.isBlank(dominio) ? ""
 				: String.format("%s@%s", usuario, dominio);
+	}
+
+	@Override
+	public Email infoBasica() {
+		return (Email) super.infoBasica();
 	}
 
 	@Transient

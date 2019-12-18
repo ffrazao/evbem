@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
@@ -15,14 +14,12 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.geo.Point;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.gov.df.emater.repositorio_principal.conversor.PointJsonDeserializer;
 import br.gov.df.emater.repositorio_principal.conversor.PointJsonSerializer;
+import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -35,10 +32,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "veiculo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Rota implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Rota extends EntidadeBase {
 
 	private BigDecimal altitude;
 
@@ -63,8 +59,22 @@ public class Rota implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "viagem_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Viagem viagem;
+
+	public Rota(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Rota infoBasica() {
+		Rota result = (Rota) super.infoBasica();
+		if (result.getViagem() != null) {
+			result.setViagem(result.getViagem().infoBasica());
+		}
+		return result;
+	}
 
 }

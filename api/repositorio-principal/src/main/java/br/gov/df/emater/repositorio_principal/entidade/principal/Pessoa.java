@@ -1,8 +1,8 @@
 package br.gov.df.emater.repositorio_principal.entidade.principal;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.gov.df.emater.repositorio_principal.dominio.pessoa.PessoaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaArquivo;
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.PessoaEmail;
@@ -41,13 +40,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(catalog = "principal")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public class Pessoa extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Pessoa extends EntidadeBase implements Nomeavel {
 
 	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaArquivo> arquivoList = new ArrayList<>();
@@ -83,5 +81,25 @@ public class Pessoa extends EntidadeBase implements Serializable, Identificavel,
 
 	@OneToMany(mappedBy = "pessoa")
 	private List<PessoaTelefone> telefoneList = new ArrayList<>();
+
+	public Pessoa(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Pessoa infoBasica() {
+		Pessoa result = (Pessoa) super.infoBasica();
+		result.setArquivoList(result.getArquivoList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		result.setEmailList(result.getEmailList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		result.setEnderecoList(result.getEnderecoList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		result.setFotoList(result.getFotoList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		result.setRelacionamentoList(
+				result.getRelacionamentoList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		result.setTelefoneList(result.getTelefoneList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		if (result.getRecurso() != null) {
+			result.setRecurso(result.getRecurso().infoBasica());
+		}
+		return result;
+	}
 
 }

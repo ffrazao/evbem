@@ -3,11 +3,33 @@ package br.gov.df.emater.repositorio_principal.entidade.base;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javax.persistence.Transient;
+
+import br.gov.df.emater.transporte.InfoBasica;
 
 public interface Pai<T> {
+	
+	@SuppressWarnings("unchecked")
+	@Transient
+	default Pai<T> copy() {
+		Pai<T> result;
+		try {
+			result = (Pai<T>) this.getClass().newInstance();
+			if (this.getPai() != null) {
+				if (this.getPai() instanceof InfoBasica) {
+					result.setPai((T) ((InfoBasica<?>) this.getPai()).infoBasica());
+				} else {					
+					result.setPai(this.getPai());
+				}
+			}
+			if (this instanceof EntidadeBase) {
+				((EntidadeBase) result).setId(((EntidadeBase) this).getId());
+			}
+			return result;
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	public default void adicionarFilho(final T t) {
@@ -22,8 +44,8 @@ public interface Pai<T> {
 
 	public Collection<T> getFilhos();
 
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	public T getPai();
 
 	public default void removerFilho() {

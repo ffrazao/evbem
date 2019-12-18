@@ -1,15 +1,9 @@
 package br.gov.df.emater.repositorio_principal.entidade.funcional;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.pessoa.Relacionamento;
 import lombok.Data;
@@ -24,17 +18,30 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "funcional")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Emprego extends Relacionamento implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Emprego extends Relacionamento {
 
 	@ManyToOne
 	@JoinColumn(name = "empregador_cargo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private EmpregadorCargo empregadorCargo;
 
 	private String matricula;
+
+	public Emprego(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Emprego infoBasica() {
+		Emprego result = (Emprego) super.infoBasica();
+		if (result.getEmpregadorCargo() != null) {
+			result.setEmpregadorCargo(result.getEmpregadorCargo().infoBasica());
+		}
+		return result;
+	}
 
 }

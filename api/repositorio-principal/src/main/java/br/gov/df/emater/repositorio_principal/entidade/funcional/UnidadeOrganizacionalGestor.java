@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.funcional;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -15,13 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,15 +29,15 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "funcional")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class UnidadeOrganizacionalGestor extends EntidadeBase implements Serializable, Identificavel, Temporalizavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class UnidadeOrganizacionalGestor extends EntidadeBase implements Temporalizavel {
 
 	@ManyToOne
 	@JoinColumn(name = "empregado_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Empregado empregado;
 
 	@Id
@@ -61,8 +55,25 @@ public class UnidadeOrganizacionalGestor extends EntidadeBase implements Seriali
 
 	@ManyToOne
 	@JoinColumn(name = "unidade_organizacional_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private UnidadeOrganizacional unidadeOrganizacional;
+
+	public UnidadeOrganizacionalGestor(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public UnidadeOrganizacionalGestor infoBasica() {
+		UnidadeOrganizacionalGestor result = (UnidadeOrganizacionalGestor) super.infoBasica();
+		if (result.getEmpregado() != null) {
+			result.setEmpregado(result.getEmpregado().infoBasica());
+		}
+		if (result.getUnidadeOrganizacional() != null) {
+			result.setUnidadeOrganizacional(result.getUnidadeOrganizacional().infoBasica());
+		}
+		return result;
+	}
 
 }

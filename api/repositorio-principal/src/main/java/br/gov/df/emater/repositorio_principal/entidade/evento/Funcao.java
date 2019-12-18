@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.evento;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -35,10 +29,9 @@ import lombok.Setter;
 @Table(catalog = "evento")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Funcao extends EntidadeBase implements Serializable, Identificavel, PaiNomeavelCodificavel<Funcao> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Funcao extends EntidadeBase implements PaiNomeavelCodificavel<Funcao> {
 
 	private String codigo;
 
@@ -54,8 +47,14 @@ public class Funcao extends EntidadeBase implements Serializable, Identificavel,
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Funcao pai;
+
+	@Override
+	public Funcao infoBasica() {
+		return (Funcao) copy();
+	}
 
 }

@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class FiltroDTO implements DTO {
 
+	private static final long serialVersionUID = 1L;
+
 	// numero da página
 	private Integer pag = 1;
 

@@ -1,9 +1,9 @@
 package br.gov.df.emater.repositorio_principal.entidade.evento;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,10 +26,7 @@ import javax.persistence.TemporalType;
 import org.springframework.data.geo.Point;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -39,7 +36,6 @@ import br.gov.df.emater.repositorio_principal.conversor.TimestampJsonDeserialize
 import br.gov.df.emater.repositorio_principal.conversor.TimestampJsonSerializer;
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Pai;
 import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Recurso;
@@ -56,21 +52,21 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(catalog = "evento")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public class Evento extends EntidadeBase implements Serializable, Identificavel, Temporalizavel, Pai<Evento> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Evento extends EntidadeBase implements Temporalizavel, Pai<Evento> {
 
 	@Lob
 	private String descricao;
 
 	@ManyToOne
 	@JoinColumn(name = "evento_tipo_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private EventoTipo eventoTipo;
 
 	@OneToMany(mappedBy = "evento", fetch = FetchType.LAZY)
@@ -99,8 +95,9 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Evento pai;
 
 	@Enumerated(EnumType.STRING)
@@ -108,8 +105,9 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 
 	@ManyToOne
 	@JoinColumn(name = "recurso_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Recurso recurso;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -117,5 +115,31 @@ public class Evento extends EntidadeBase implements Serializable, Identificavel,
 	@JsonSerialize(using = TimestampJsonSerializer.class)
 	@JsonDeserialize(using = TimestampJsonDeserializer.class)
 	private Calendar termino;
+
+	public Evento(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Evento infoBasica() {
+		Evento result = (Evento) super.infoBasica();
+		if (result.getEventoTipo() != null) {
+			result.setEventoTipo(result.getEventoTipo().infoBasica());
+		}
+		if (result.getEvidenciaList() != null) {
+			result.setEvidenciaList(
+					result.getEvidenciaList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		}
+		if (result.getFilhos() != null) {
+			result.setFilhos(result.getFilhos().stream().map(e -> new Evento(e.getId())).collect(Collectors.toList()));
+		}
+		if (result.getPai() != null) {
+			result.setPai(new Evento(result.getPai().getId()));
+		}
+		if (result.getRecurso() != null) {
+			result.setRecurso(result.getRecurso().infoBasica());
+		}
+		return result;
+	}
 
 }

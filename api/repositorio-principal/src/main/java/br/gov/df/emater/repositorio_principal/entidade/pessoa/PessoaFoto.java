@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,15 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.Visibilidade;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Priorizavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Visivel;
@@ -40,15 +34,15 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "pessoa", name = "pessoa_foto")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class PessoaFoto extends EntidadeBase implements Serializable, Identificavel, Ordenavel, Priorizavel, Visivel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class PessoaFoto extends EntidadeBase implements Ordenavel, Priorizavel, Visivel {
 
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "foto_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Foto foto;
 
 	@Id
@@ -67,5 +61,21 @@ public class PessoaFoto extends EntidadeBase implements Serializable, Identifica
 
 	@Enumerated(EnumType.STRING)
 	private Visibilidade visibilidade = Visibilidade.PUBLICO;
+
+	public PessoaFoto(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public PessoaFoto infoBasica() {
+		PessoaFoto result = (PessoaFoto) super.infoBasica();
+		if (result.getPessoa() != null) {
+			result.setPessoa(new Pessoa(result.getPessoa().getId()));
+		}
+		if (result.getFoto() != null) {
+			result.setFoto(result.getFoto().infoBasica());
+		}
+		return result;
+	}
 
 }

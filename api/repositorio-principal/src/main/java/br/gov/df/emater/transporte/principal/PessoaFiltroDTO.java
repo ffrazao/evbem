@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class PessoaFiltroDTO extends FiltroDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private Set<Optional<String>> cnpj;
 
 	private Set<Optional<String>> cpf;

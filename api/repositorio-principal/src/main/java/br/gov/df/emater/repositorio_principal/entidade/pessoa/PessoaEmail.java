@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,19 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.Visibilidade;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Priorizavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Visivel;
@@ -42,16 +34,16 @@ import lombok.ToString;
 @Table(catalog = "pessoa", name = "pessoa_email")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
 @ToString()
-public class PessoaEmail extends EntidadeBase implements Serializable, Identificavel, Ordenavel, Priorizavel, Visivel {
-
-	private static final long serialVersionUID = 1L;
+public class PessoaEmail extends EntidadeBase implements Ordenavel, Priorizavel, Visivel {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "email_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Email email;
 
 	@Id
@@ -71,15 +63,20 @@ public class PessoaEmail extends EntidadeBase implements Serializable, Identific
 	@Enumerated(EnumType.STRING)
 	private Visibilidade visibilidade = Visibilidade.PUBLICO;
 
-	@PrePersist
-	@PreUpdate
-	public void antesSalvar() {
-		System.out.println("Salvando Pessoa Email ..." + this.toString());
-//		@MantemUnicaEntidade(
-//				atributo = {{"telefone"}}, 
-//				entidade = {{Telefone.class}}, 
-//				valor = {{"ddi","ddd","numero"}})
+	public PessoaEmail(Integer valor) {
+		super(valor);
+	}
 
+	@Override
+	public PessoaEmail infoBasica() {
+		PessoaEmail result = (PessoaEmail) super.infoBasica();
+		if (result.getPessoa() != null) {
+			result.setPessoa(new Pessoa(result.getPessoa().getId()));
+		}
+		if (result.getEmail() != null) {
+			result.setEmail(result.getEmail().infoBasica());
+		}
+		return result;
 	}
 
 }

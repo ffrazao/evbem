@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.principal;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +14,6 @@ import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.principal.RecursoTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,10 +26,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "principal")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Recurso extends EntidadeBase implements Serializable, Identificavel, Ativavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Recurso extends EntidadeBase implements Ativavel {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo = Confirmacao.S;
@@ -47,5 +43,15 @@ public class Recurso extends EntidadeBase implements Serializable, Identificavel
 	@Enumerated(EnumType.STRING)
 	@Column(name = "recurso_tipo")
 	private RecursoTipo recursoTipo;
+
+	public Recurso(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Recurso infoBasica() {
+		Recurso result = (Recurso) super.infoBasica();
+		return result;
+	}
 
 }

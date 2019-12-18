@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.principal;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +11,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,10 +23,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "principal")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Servico extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Servico extends EntidadeBase {
 
 	@Id
 	private Integer id;
@@ -39,5 +35,18 @@ public class Servico extends EntidadeBase implements Serializable, Identificavel
 	@MapsId
 	@JsonIgnore
 	private Recurso recurso;
+
+	public Servico(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Servico infoBasica() {
+		Servico result = (Servico) super.infoBasica();
+		if (result.getRecurso() != null) {
+			result.setRecurso(result.getRecurso().infoBasica());
+		}
+		return result;
+	}
 
 }

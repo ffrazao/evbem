@@ -2,7 +2,6 @@ package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
 import static br.gov.df.emater.comum.Constantes.JUNCAO_CAMPO_SET;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
@@ -21,7 +20,6 @@ import org.apache.commons.lang.StringUtils;
 
 import br.gov.df.emater.repositorio_principal.dominio.veiculo.Combustivel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Produto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,10 +33,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "veiculo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Veiculo extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Veiculo extends EntidadeBase {
 
 	@Column(name = "ano_fabricacao")
 	private Integer anoFabricacao;
@@ -68,10 +65,23 @@ public class Veiculo extends EntidadeBase implements Serializable, Identificavel
 	@Column(name = "renavan")
 	private String renavan;
 
+	public Veiculo(Integer valor) {
+		super(valor);
+	}
+
 	public Set<Combustivel> getCombustivel() {
 		return (StringUtils.isBlank(this.combustivel)) ? Collections.emptySet()
 				: Collections.unmodifiableSet(Arrays.stream(this.combustivel.split(JUNCAO_CAMPO_SET))
 						.map(c -> Combustivel.valueOf(c)).sorted().collect(Collectors.toSet()));
+	}
+
+	@Override
+	public Veiculo infoBasica() {
+		Veiculo result = (Veiculo) super.infoBasica();
+		if (result.getProduto() != null) {
+			result.setProduto(result.getProduto().infoBasica());
+		}
+		return result;
 	}
 
 	public void setCombustivel(Set<Combustivel> combustivel) {

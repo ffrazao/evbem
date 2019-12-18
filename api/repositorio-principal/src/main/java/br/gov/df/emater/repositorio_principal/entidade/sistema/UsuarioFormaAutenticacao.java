@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import javax.persistence.Convert;
@@ -15,15 +14,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.conversor.JsonHashMapConverter;
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -36,18 +30,18 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "sistema", name = "usuario_forma_autenticacao")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class UsuarioFormaAutenticacao extends EntidadeBase implements Serializable, Identificavel, Ativavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class UsuarioFormaAutenticacao extends EntidadeBase implements Ativavel {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
 
 	@ManyToOne
 	@JoinColumn(name = "forma_autenticacao_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private FormaAutenticacao formaAutenticacao;
 
 	@Id
@@ -56,12 +50,29 @@ public class UsuarioFormaAutenticacao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Usuario usuario;
 
 	@Lob
 	@Convert(converter = JsonHashMapConverter.class)
 	private Map<String, Object> valor;
+
+	public UsuarioFormaAutenticacao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public UsuarioFormaAutenticacao infoBasica() {
+		UsuarioFormaAutenticacao result = (UsuarioFormaAutenticacao) super.infoBasica();
+		if (result.getUsuario() != null) {
+			result.setUsuario(result.getUsuario().infoBasica());
+		}
+		if (result.getFormaAutenticacao() != null) {
+			result.setFormaAutenticacao(result.getFormaAutenticacao().infoBasica());
+		}
+		return result;
+	}
 
 }

@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
@@ -11,10 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.funcional.UnidadeOrganizacional;
 import lombok.Data;
@@ -29,10 +24,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "veiculo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Infracao extends VeiculoEvento implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Infracao extends VeiculoEvento {
 
 	@Column(name = "aviso_condutor")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -48,8 +42,9 @@ public class Infracao extends VeiculoEvento implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "lotacao_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private UnidadeOrganizacional lotacao;
 
 	@Column(name = "notificacao")
@@ -58,8 +53,9 @@ public class Infracao extends VeiculoEvento implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "orgao_autuador_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private OrgaoTransito orgaoAutuador;
 
 	@Column(name = "pagamento")
@@ -75,5 +71,21 @@ public class Infracao extends VeiculoEvento implements Serializable {
 	@Column(name = "vencimento")
 	@Temporal(TemporalType.DATE)
 	private Calendar vencimento;
+
+	public Infracao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Infracao infoBasica() {
+		Infracao result = (Infracao) super.infoBasica();
+		if (result.getLotacao() != null) {
+			result.setLotacao(result.getLotacao().infoBasica());
+		}
+		if (result.getOrgaoAutuador() != null) {
+			result.setOrgaoAutuador(result.getOrgaoAutuador().infoBasica());
+		}
+		return result;
+	}
 
 }

@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -40,11 +34,9 @@ import lombok.Setter;
 @Table(catalog = "sistema")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Funcionalidade extends EntidadeBase
-		implements Serializable, Identificavel, Ativavel, PaiNomeavelCodificavel<Funcionalidade> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Funcionalidade extends EntidadeBase implements Ativavel, PaiNomeavelCodificavel<Funcionalidade> {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
@@ -66,8 +58,21 @@ public class Funcionalidade extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Funcionalidade pai;
+
+	public Funcionalidade(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Funcionalidade infoBasica() {
+		Funcionalidade result = (Funcionalidade) copy();
+		result.setAtivo(this.getAtivo());
+		result.setDescricao(this.getDescricao());
+		return result;
+	}
 
 }

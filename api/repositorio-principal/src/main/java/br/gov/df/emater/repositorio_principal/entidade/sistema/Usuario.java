@@ -1,8 +1,8 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,15 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.dominio.UsuarioTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 import lombok.Data;
@@ -39,10 +34,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "sistema")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Usuario extends EntidadeBase implements Serializable, Identificavel, Ativavel, Nomeavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Usuario extends EntidadeBase implements Ativavel, Nomeavel {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
@@ -62,8 +56,9 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoa;
 
 	@Enumerated(EnumType.STRING)
@@ -71,8 +66,9 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 
 	@ManyToOne
 	@JoinColumn(name = "ultimo_perfil_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Perfil ultimoPerfil;
 
 	@OneToMany(mappedBy = "usuario")
@@ -80,5 +76,25 @@ public class Usuario extends EntidadeBase implements Serializable, Identificavel
 
 	@OneToMany(mappedBy = "usuario")
 	private List<UsuarioPerfil> usuarioPerfilList = new ArrayList<>();
+
+	public Usuario(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Usuario infoBasica() {
+		Usuario result = (Usuario) super.infoBasica();
+		if (result.getPessoa() != null) {
+			result.setPessoa((Pessoa) result.getPessoa().copy());
+		}
+		if (result.getUltimoPerfil() != null) {
+			result.setUltimoPerfil(result.getUltimoPerfil().infoBasica());
+		}
+		result.setUsuarioFormaAutenticacaoList(result.getUsuarioFormaAutenticacaoList().stream()
+				.map(e -> e.infoBasica()).collect(Collectors.toList()));
+		result.setUsuarioPerfilList(
+				result.getUsuarioPerfilList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		return result;
+	}
 
 }

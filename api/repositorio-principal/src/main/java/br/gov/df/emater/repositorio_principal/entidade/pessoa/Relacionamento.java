@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -17,15 +16,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Temporalizavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,13 +33,12 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(catalog = "pessoa")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public class Relacionamento extends EntidadeBase implements Serializable, Identificavel, Ativavel, Temporalizavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Relacionamento extends EntidadeBase implements Ativavel, Temporalizavel {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
@@ -58,11 +52,24 @@ public class Relacionamento extends EntidadeBase implements Serializable, Identi
 
 	@ManyToOne
 	@JoinColumn(name = "relacionamento_tipo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private RelacionamentoTipo relacionamentoTipo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar termino;
 
+	public Relacionamento(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Relacionamento infoBasica() {
+		Relacionamento result = (Relacionamento) super.infoBasica();
+		if (result.getRelacionamentoTipo() != null) {
+			result.setRelacionamentoTipo(result.getRelacionamentoTipo().infoBasica());
+		}
+		return result;
+	}
 }

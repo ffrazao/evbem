@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,14 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,10 +27,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "sistema", name = "modulo_funcionalidade_acao")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializable, Identificavel, Ativavel, Ordenavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class ModuloFuncionalidadeAcao extends EntidadeBase implements Ativavel, Ordenavel {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
@@ -48,8 +40,9 @@ public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidade_acao_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private FuncionalidadeAcao funcionalidadeAcao;
 
 	@Column(name = "grupo_menu")
@@ -61,10 +54,27 @@ public class ModuloFuncionalidadeAcao extends EntidadeBase implements Serializab
 
 	@ManyToOne
 	@JoinColumn(name = "modulo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Modulo modulo;
 
 	private Integer ordem;
+
+	public ModuloFuncionalidadeAcao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public ModuloFuncionalidadeAcao infoBasica() {
+		ModuloFuncionalidadeAcao result = (ModuloFuncionalidadeAcao) super.infoBasica();
+		if (result.getFuncionalidadeAcao() != null) {
+			result.setFuncionalidadeAcao(result.getFuncionalidadeAcao().infoBasica());
+		}
+		if (result.getModulo() != null) {
+			result.setModulo(result.getModulo().infoBasica());
+		}
+		return result;
+	}
 
 }

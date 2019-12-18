@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.funcional;
 
-import java.io.Serializable;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -22,9 +20,18 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("Empregador")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Empregador extends PessoaJuridica implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Empregador extends PessoaJuridica {
 
-	private static final long serialVersionUID = 1L;
+	public Empregador(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Empregador infoBasica() {
+		Empregador result = (Empregador) super.infoBasica();
+		return result;
+	}
 
 }

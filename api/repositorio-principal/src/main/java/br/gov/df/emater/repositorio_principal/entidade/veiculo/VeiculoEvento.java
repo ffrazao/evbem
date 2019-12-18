@@ -1,10 +1,11 @@
 package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -22,10 +23,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "veiculo", name = "veiculo_evento")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class VeiculoEvento extends Evento implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class VeiculoEvento extends Evento {
 
 	@Column(name = "quilometragem")
 	private BigDecimal quilometragem;
@@ -34,6 +34,20 @@ public class VeiculoEvento extends Evento implements Serializable {
 	private Veiculo veiculo;
 
 	@Column(name = "veiculo_evento_tipo")
+	@Enumerated(EnumType.STRING)
 	private VeiculoEventoTipo veiculoEventoTipo;
+
+	public VeiculoEvento(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public VeiculoEvento infoBasica() {
+		VeiculoEvento result = (VeiculoEvento) super.infoBasica();
+		if (result.getVeiculo() != null) {
+			result.setVeiculo(result.getVeiculo().infoBasica());
+		}
+		return result;
+	}
 
 }

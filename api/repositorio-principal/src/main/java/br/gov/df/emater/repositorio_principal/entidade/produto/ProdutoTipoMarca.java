@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,12 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,10 +22,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "produto", name = "produto_tipo_marca")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class ProdutoTipoMarca extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class ProdutoTipoMarca extends EntidadeBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +32,32 @@ public class ProdutoTipoMarca extends EntidadeBase implements Serializable, Iden
 
 	@ManyToOne
 	@JoinColumn(name = "marca_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Marca marca;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "produto_tipo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo produtoTipo;
+
+	public ProdutoTipoMarca(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public ProdutoTipoMarca infoBasica() {
+		ProdutoTipoMarca result = (ProdutoTipoMarca) super.infoBasica();
+		if (result.getMarca() != null) {
+			result.setMarca(result.getMarca().infoBasica());
+		}
+		if (result.getProdutoTipo() != null) {
+			result.setProdutoTipo(result.getProdutoTipo().infoBasica());
+		}
+		return result;
+	}
 
 }

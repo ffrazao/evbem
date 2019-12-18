@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.sistema;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.AcaoTipo;
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ativavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Ordenavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
@@ -42,11 +36,9 @@ import lombok.Setter;
 @Table(catalog = "sistema")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Acao extends EntidadeBase
-		implements Serializable, Identificavel, PaiNomeavelCodificavel<Acao>, Ativavel, Ordenavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Acao extends EntidadeBase implements PaiNomeavelCodificavel<Acao>, Ativavel, Ordenavel {
 
 	@Enumerated(EnumType.STRING)
 	private Confirmacao ativo;
@@ -70,11 +62,26 @@ public class Acao extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Acao pai;
 
 	@Enumerated(EnumType.STRING)
 	private AcaoTipo tipo;
+
+	public Acao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Acao infoBasica() {
+		Acao result = (Acao) copy();
+		result.setAtivo(this.getAtivo());
+		result.setDescricao(this.getDescricao());
+		result.setOrdem(this.getOrdem());
+		result.setTipo(this.getTipo());
+		return result;
+	}
 
 }

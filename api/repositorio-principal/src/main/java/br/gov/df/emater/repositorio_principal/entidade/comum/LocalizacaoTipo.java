@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,12 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -34,10 +28,9 @@ import lombok.Setter;
 @Table(catalog = "comum", name = "localizacao_tipo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class LocalizacaoTipo extends EntidadeBase implements Serializable, Identificavel, PaiNomeavel<LocalizacaoTipo> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class LocalizacaoTipo extends EntidadeBase implements PaiNomeavel<LocalizacaoTipo> {
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
@@ -51,8 +44,23 @@ public class LocalizacaoTipo extends EntidadeBase implements Serializable, Ident
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private LocalizacaoTipo pai;
+
+	public LocalizacaoTipo(Integer valor) {
+		super(valor);
+	}
+
+	public LocalizacaoTipo(Integer id, String nome) {
+		this(id);
+		setNome(nome);
+	}
+
+	@Override
+	public LocalizacaoTipo infoBasica() {
+		return (LocalizacaoTipo) ((PaiNomeavel<LocalizacaoTipo>) this).copy();
+	}
 
 }

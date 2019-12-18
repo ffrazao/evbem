@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
@@ -33,10 +28,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "produto", name = "bem_patrimonial")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class BemPatrimonial extends EntidadeBase implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class BemPatrimonial extends EntidadeBase {
 
 	@Id
 	private Integer id;
@@ -49,8 +43,9 @@ public class BemPatrimonial extends EntidadeBase implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Pessoa pessoa; // responsavel pelo bem
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -61,5 +56,21 @@ public class BemPatrimonial extends EntidadeBase implements Serializable {
 
 	@Column(name = "sigla_proprietario")
 	private String siglaProprietario;
+
+	public BemPatrimonial(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public BemPatrimonial infoBasica() {
+		BemPatrimonial result = (BemPatrimonial) super.infoBasica();
+		if (result.getPessoa() != null) {
+			result.setPessoa((Pessoa) result.getPessoa().copy());
+		}
+		if (result.getProduto() != null) {
+			result.setProduto(result.getProduto().infoBasica());
+		}
+		return result;
+	}
 
 }

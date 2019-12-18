@@ -1,5 +1,7 @@
 package br.gov.df.emater.transporte;
 
-public interface DTO {
+import java.io.Serializable;
+
+public interface DTO extends Serializable {
 
 }

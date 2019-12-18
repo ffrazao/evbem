@@ -1,9 +1,9 @@
 package br.gov.df.emater.repositorio_principal.entidade.veiculo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,10 +34,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "veiculo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Viagem extends VeiculoEvento implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Viagem extends VeiculoEvento {
 
 	@Column(name = "local_saida")
 	@JsonSerialize(using = PointJsonSerializer.class)
@@ -60,5 +59,22 @@ public class Viagem extends VeiculoEvento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "unidade_organizacional_id")
 	private UnidadeOrganizacional unidadeOrganizacional;
+
+	public Viagem(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Viagem infoBasica() {
+		Viagem result = (Viagem) super.infoBasica();
+		if (result.getPessoa() != null) {
+			result.setPessoa((Pessoa) result.getPessoa().copy());
+		}
+		if (result.getUnidadeOrganizacional() != null) {
+			result.setUnidadeOrganizacional(result.getUnidadeOrganizacional().infoBasica());
+		}
+		result.setRotaList(result.getRotaList().stream().map(e -> e.infoBasica()).collect(Collectors.toList()));
+		return result;
+	}
 
 }

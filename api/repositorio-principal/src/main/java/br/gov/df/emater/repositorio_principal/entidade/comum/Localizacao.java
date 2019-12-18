@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,11 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -33,10 +27,9 @@ import lombok.Setter;
 @Table(catalog = "comum")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Localizacao extends ReferenciaEspacial implements Serializable, Identificavel, PaiNomeavel<Localizacao> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Localizacao extends ReferenciaEspacial implements PaiNomeavel<Localizacao> {
 
 	@OneToMany(mappedBy = "pai", fetch = FetchType.LAZY)
 	@Setter(AccessLevel.PRIVATE)
@@ -48,16 +41,35 @@ public class Localizacao extends ReferenciaEspacial implements Serializable, Ide
 
 	@ManyToOne
 	@JoinColumn(name = "localizacao_tipo_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private LocalizacaoTipo localizacaoTipo;
 
 	private String nome;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Localizacao pai;
+
+	public Localizacao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Localizacao infoBasica() {
+		Localizacao result = (Localizacao) super.infoBasica();
+		result.setFilhos(null);
+		if (result.getLocalizacaoTipo() != null) {
+			result.setLocalizacaoTipo((LocalizacaoTipo) result.getLocalizacaoTipo().copy());
+		}
+		if (result.getPai() != null) {
+			result.setPai((Localizacao) result.getPai().copy());
+		}
+		return result;
+	}
 
 }

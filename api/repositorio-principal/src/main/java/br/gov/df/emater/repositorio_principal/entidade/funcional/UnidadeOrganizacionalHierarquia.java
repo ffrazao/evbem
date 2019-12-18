@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.funcional;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,13 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.UnidadeOrganizacionalHierarquiaTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,10 +24,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "funcional")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class UnidadeOrganizacionalHierarquia extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class UnidadeOrganizacionalHierarquia extends EntidadeBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,14 +37,33 @@ public class UnidadeOrganizacionalHierarquia extends EntidadeBase implements Ser
 
 	@ManyToOne
 	@JoinColumn(name = "unidade_organizacional_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private UnidadeOrganizacional unidadeOrganizacional;
 
 	@ManyToOne
 	@JoinColumn(name = "unidade_organizacional_principal_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private UnidadeOrganizacional unidadeOrganizacionalPrincipal;
+
+	public UnidadeOrganizacionalHierarquia(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public UnidadeOrganizacionalHierarquia infoBasica() {
+		UnidadeOrganizacionalHierarquia result = (UnidadeOrganizacionalHierarquia) super.infoBasica();
+		if (result.getUnidadeOrganizacional() != null) {
+			result.setUnidadeOrganizacional(result.getUnidadeOrganizacional().infoBasica());
+		}
+		if (result.getUnidadeOrganizacionalPrincipal() != null) {
+			result.setUnidadeOrganizacionalPrincipal(result.getUnidadeOrganizacionalPrincipal().infoBasica());
+		}
+
+		return result;
+	}
 
 }

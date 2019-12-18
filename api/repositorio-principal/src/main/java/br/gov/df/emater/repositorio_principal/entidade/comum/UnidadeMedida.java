@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
-import br.gov.df.emater.repositorio_principal.entidade.base.NomeavelCodificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -41,11 +34,9 @@ import lombok.Setter;
 @Table(catalog = "comum", name = "unidade_medida")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class UnidadeMedida extends EntidadeBase
-		implements Serializable, Identificavel, NomeavelCodificavel, PaiNomeavelCodificavel<UnidadeMedida> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class UnidadeMedida extends EntidadeBase implements PaiNomeavelCodificavel<UnidadeMedida> {
 
 	private String codigo;
 
@@ -65,8 +56,9 @@ public class UnidadeMedida extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private UnidadeMedida pai;
 
 	private String sigla;
@@ -77,5 +69,19 @@ public class UnidadeMedida extends EntidadeBase
 
 	@Column(name = "valor_referencia")
 	private BigDecimal valorReferencia;
+
+	public UnidadeMedida(Integer id) {
+		super(id);
+	}
+
+	@Override
+	public UnidadeMedida infoBasica() {
+		UnidadeMedida result = (UnidadeMedida) copy();
+		result.setPadraoIdentificavel(this.padraoIdentificavel);
+		result.setSigla(this.getSigla());
+		result.setUnidadeBasica(this.unidadeBasica);
+		result.setValorReferencia(this.valorReferencia);
+		return result;
+	}
 
 }

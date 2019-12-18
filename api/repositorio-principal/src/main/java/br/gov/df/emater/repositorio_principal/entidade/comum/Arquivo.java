@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -21,7 +20,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import br.gov.df.emater.repositorio_principal.conversor.PointJsonDeserializer;
 import br.gov.df.emater.repositorio_principal.conversor.PointJsonSerializer;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.Nomeavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,10 +33,9 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "comum")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Arquivo extends EntidadeBase implements Serializable, Identificavel, Nomeavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Arquivo extends EntidadeBase implements Nomeavel {
 
 	private String autores;
 
@@ -67,5 +64,14 @@ public class Arquivo extends EntidadeBase implements Serializable, Identificavel
 
 	@Column(name = "tamanho_bytes")
 	private int tamanhoBytes;
+
+	public Arquivo(Integer id) {
+		super(id);
+	}
+
+	@Override
+	public Arquivo infoBasica() {
+		return (Arquivo) super.infoBasica();
+	}
 
 }

@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.comum;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.gov.df.emater.repositorio_principal.dominio.ReferenciaEspacialTipo;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,15 +28,18 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(catalog = "comum", name = "referencia_espacial")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public class ReferenciaEspacial extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class ReferenciaEspacial extends EntidadeBase {
 
 	private Polygon area;
+
+	public ReferenciaEspacial(Integer valor) {
+		super(valor);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,5 +48,10 @@ public class ReferenciaEspacial extends EntidadeBase implements Serializable, Id
 	@Enumerated(EnumType.STRING)
 	@Column(name = "referencia_espacial_tipo")
 	private ReferenciaEspacialTipo referenciaEspacialTipo;
+
+	@Override
+	public ReferenciaEspacial infoBasica() {
+		return (ReferenciaEspacial) super.infoBasica();
+	}
 
 }

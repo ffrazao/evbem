@@ -1,7 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.evento;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,13 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.dominio.Confirmacao;
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.principal.Recurso;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,21 +25,22 @@ import lombok.NoArgsConstructor;
 @Table(catalog = "evento")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class Participacao extends EntidadeBase implements Serializable, Identificavel {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class Participacao extends EntidadeBase {
 
 	@ManyToOne
 	@JoinColumn(name = "evento_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Evento evento;
 
 	@ManyToOne
 	@JoinColumn(name = "funcao_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Funcao funcao;
 
 	@Id
@@ -58,8 +52,28 @@ public class Participacao extends EntidadeBase implements Serializable, Identifi
 
 	@ManyToOne
 	@JoinColumn(name = "recurso_id ")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private Recurso recurso;
+
+	public Participacao(Integer valor) {
+		super(valor);
+	}
+
+	@Override
+	public Participacao infoBasica() {
+		Participacao result = (Participacao) super.infoBasica();
+		if (result.getEvento() != null) {
+			result.setEvento(new Evento(result.getEvento().getId()));
+		}
+		if (result.getFuncao() != null) {
+			result.setFuncao(result.getFuncao().infoBasica());
+		}
+		if (result.getRecurso() != null) {
+			result.setRecurso(result.getRecurso().infoBasica());
+		}
+		return result;
+	}
 
 }

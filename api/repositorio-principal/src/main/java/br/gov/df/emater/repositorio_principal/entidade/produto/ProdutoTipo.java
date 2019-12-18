@@ -1,6 +1,5 @@
 package br.gov.df.emater.repositorio_principal.entidade.produto;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import br.gov.df.emater.repositorio_principal.entidade.base.EntidadeBase;
-import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
 import br.gov.df.emater.repositorio_principal.entidade.base.PaiNomeavelCodificavel;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -35,11 +29,9 @@ import lombok.Setter;
 @Table(catalog = "produto", name = "tipo")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class ProdutoTipo extends EntidadeBase
-		implements Serializable, Identificavel, PaiNomeavelCodificavel<ProdutoTipo> {
-
-	private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("serial")
+public class ProdutoTipo extends EntidadeBase implements PaiNomeavelCodificavel<ProdutoTipo> {
 
 	private String codigo;
 
@@ -55,18 +47,19 @@ public class ProdutoTipo extends EntidadeBase
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pai_id")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = false)
+	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	// property = "id")
+	// @JsonIdentityReference(alwaysAsId = false)
 	private ProdutoTipo pai;
 
 	public ProdutoTipo(Integer id) {
 		setId(id);
 	}
 
-	public ProdutoTipo(Integer id, String nome, Integer pai) {
-		this(id);
-		setNome(nome);
-		setPai(new ProdutoTipo(pai));
+	@Override
+	public ProdutoTipo infoBasica() {
+		ProdutoTipo result = (ProdutoTipo) ((PaiNomeavelCodificavel<ProdutoTipo>) this).copy();
+		return result;
 	}
 
 }

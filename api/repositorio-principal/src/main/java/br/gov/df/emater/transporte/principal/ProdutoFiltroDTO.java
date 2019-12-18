@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class ProdutoFiltroDTO extends FiltroDTO {
 
+	private static final long serialVersionUID = 1L;
+
 	private String marca;
 
 	private String modelo;
