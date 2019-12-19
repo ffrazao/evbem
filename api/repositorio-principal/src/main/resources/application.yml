@@ -1,36 +1,43 @@
 # configuracao de log
 logging:
-  level:
-    org:
-      springframework:
-        jdbc:
-          core:
-            JdbcTemplate: DEBUG
-            StatementCreatorUtils: TRACE
-          datasource: TRACE
-      hibernate:
-        SQL:
-          TRACE
-        type:
-          descriptor:
-            sql:
-              BasicBinder:
-                TRACE
-
-# conexão ao banco de dados 
+   level:
+      org:
+         springframework:
+            jdbc:
+               core:
+                  JdbcTemplate: DEBUG
+                  StatementCreatorUtils: TRACE
+               datasource: TRACE
+         hibernate:
+            SQL: TRACE
+            type:
+               descriptor:
+                  sql:
+                     BasicBinder: TRACE
 spring:
-  main:
-    allow-bean-definition-overriding: true
-  jpa:
-    hibernate: {ddl-auto: none}
-    properties:
-      hibernate: {show_sql: true, format_sql: true, use_sql_comments: true, dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect}
-  datasource: 
-    hikari: {connection-test-query: SELECT 1 FROM DUAL, minimum-idle: 1, maximum-pool-size: 5}
-    url: 'jdbc:mysql://localhost:3306/oauth2?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true'
-    username: root
-    password: root
-    initialization-mode: never
-    continue-on-error: false
-
-  jackson:    serialization:      fail-on-empty-beans: false
+   main:
+      allow-bean-definition-overriding: true
+# conexão ao banco de dados
+   jpa:
+      hibernate:
+         ddl-auto: none
+      properties:
+         hibernate:
+            show_sql: true
+            format_sql: true
+            use_sql_comments: true
+            dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+      open-in-view: true
+   datasource:
+      hikari:
+         connection-test-query: SELECT 1 FROM DUAL
+         minimum-idle: 1
+         maximum-pool-size: 5
+      url: jdbc:mysql://localhost:3306/oauth2?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      username: root
+      password: root
+      initialization-mode: never
+      continue-on-error: false
+   jackson:
+      serialization:
+         fail-on-empty-beans: false

@@ -30,6 +30,7 @@
 	</cadeia>
 	<cadeia nome="restaurar" tipo="SEQUENCIAL">
 		<comando nome="restaurarCmd" classe="br.gov.df.emater.negocio.base.crud.RestaurarCmd" />
+		<comando nome="converteInfoBasicaCmd" classe="br.gov.df.emater.negocio.base.crud.ConverteInfoBasicaCmd" />
 	</cadeia>
 	<cadeia nome="listar" tipo="SEQUENCIAL">
 		<comando nome="listarCmd" classe="br.gov.df.emater.negocio.base.crud.ListarCmd" />

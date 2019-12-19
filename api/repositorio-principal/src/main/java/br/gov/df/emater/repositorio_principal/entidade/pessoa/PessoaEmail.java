@@ -3,7 +3,6 @@ package br.gov.df.emater.repositorio_principal.entidade.pessoa;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +38,7 @@ import lombok.ToString;
 @ToString()
 public class PessoaEmail extends EntidadeBase implements Ordenavel, Priorizavel, Visivel {
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "email_id")
 	// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
 	// property = "id")

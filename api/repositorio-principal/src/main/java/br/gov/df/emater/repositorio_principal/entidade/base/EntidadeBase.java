@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public abstract class EntidadeBase implements Serializable, Identificavel, InfoBasica<EntidadeBase> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public EntidadeBase(Integer valor) {
@@ -40,37 +40,45 @@ public abstract class EntidadeBase implements Serializable, Identificavel, InfoB
 	public int hashCode() {
 		return Objects.hash(getId());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Transient
 	@Override
 	public EntidadeBase infoBasica() {
 		EntidadeBase result;
-		
+
 		try {
 			result = this.getClass().newInstance();
-			
+
 			BeanWrapper origemWrapper = new BeanWrapperImpl(this);
 			BeanWrapper destinoWrapper = new BeanWrapperImpl(result);
-			
-			for (PropertyDescriptor w: origemWrapper.getPropertyDescriptors()) {
+
+			for (PropertyDescriptor w : origemWrapper.getPropertyDescriptors()) {
 				Object valor = origemWrapper.getPropertyValue(w.getName());
-				
+
+				if ("arquivoList".equalsIgnoreCase(w.getName()) || "telefoneList".equalsIgnoreCase(w.getName())
+						|| "enderecoList".equalsIgnoreCase(w.getName()) || "fotoList".equalsIgnoreCase(w.getName())
+						|| "relacionamentoList".equalsIgnoreCase(w.getName())) {
+					continue;
+				}
+
 				if (valor instanceof Collection) {
 					Collection<EntidadeBase> valorCol = (Collection<EntidadeBase>) valor.getClass().newInstance();
-					for (EntidadeBase col: (Collection<EntidadeBase>) valor) {
+					for (EntidadeBase col : (Collection<EntidadeBase>) valor) {
 						valorCol.add(col);
 					}
 					valor = valorCol;
 				}
-				
-				destinoWrapper.setPropertyValue(w.getName(), valor);
+
+				if (!"class".equalsIgnoreCase(w.getName())) {
+					destinoWrapper.setPropertyValue(w.getName(), valor);
+				}
 			}
-			
+
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException(e);
-		} 
-		
+		}
+
 		return result;
 	}
 

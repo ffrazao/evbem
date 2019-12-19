@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
 import br.gov.df.emater.repositorio_principal.base.Dep;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 
 @Component
 public class RestaurarCmd extends Comando {
@@ -21,6 +22,12 @@ public class RestaurarCmd extends Comando {
 		final Dep<?, ?, ?, ?> dep = ((Optional<Dep<?, ?, ?, ?>>) contexto.get(IncluirMapaDependenciaCmd.DEPENDENCIA)).get();
 
 		Collection<?> result = dep.getDao().findAllById(ids);
+		
+		((List<Pessoa>) result).get(0).getTelefoneList().size();
+		((List<Pessoa>) result).get(0).getEmailList().size();
+
+		((List<Pessoa>) result).get(1).getTelefoneList().size();
+		((List<Pessoa>) result).get(1).getEmailList().size();
 
 		contexto.setResposta(result);
 	}
