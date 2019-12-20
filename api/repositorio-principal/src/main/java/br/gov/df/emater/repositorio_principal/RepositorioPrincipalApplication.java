@@ -8,18 +8,18 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.gov.df.emater.repositorio_principal.dao.produto.ProdutoTipoDAO;
-import br.gov.df.emater.repositorio_principal.entidade.produto.ProdutoTipo;
+import br.gov.df.emater.repositorio_principal.dao.principal.PessoaDAO;
+import br.gov.df.emater.repositorio_principal.entidade.principal.Pessoa;
 
 @SpringBootApplication(scanBasePackages = "br.gov.df.emater")
-@EnableJpaRepositories("br.gov.df.emater.repositorio_principal.dao")
 public class RepositorioPrincipalApplication /* implements CommandLineRunner */ {
 
 	public static void main(final String[] args) throws IOException {
+		SpringApplication.run(RepositorioPrincipalApplication.class, args);
+
 		// @formatter:off
 		/*
 
@@ -74,17 +74,15 @@ public class RepositorioPrincipalApplication /* implements CommandLineRunner */ 
 		}
 		 */
 		// @formatter:on
-
-		SpringApplication.run(RepositorioPrincipalApplication.class, args);
 	}
 
 	@Autowired
-	private ProdutoTipoDAO dao;
+	private PessoaDAO dao;
 
 	// @Override
-	@Transactional()
+	@Transactional
 	public void run(final String... args) throws Exception {
-		final Optional<ProdutoTipo> t = this.dao.findById(1);
+		final Optional<Pessoa> t = this.dao.findById(1);
 		System.out.println(new ObjectMapper().writeValueAsString(t.orElse(null)));
 	}
 
