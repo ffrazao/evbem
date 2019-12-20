@@ -4,12 +4,15 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.persistence.Transient;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
+import br.gov.df.emater.repositorio_principal.base.Dep;
 import br.gov.df.emater.transporte.InfoBasica;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,8 +47,10 @@ public abstract class EntidadeBase implements Serializable, Identificavel, InfoB
 	@SuppressWarnings("unchecked")
 	@Transient
 	@Override
-	public EntidadeBase infoBasica() {
+	public EntidadeBase infoBasica(Dep<?,?,?,?> dep) {
 		EntidadeBase result;
+
+		Hibernate.initialize(this);
 
 		try {
 			result = this.getClass().newInstance();
@@ -56,13 +61,16 @@ public abstract class EntidadeBase implements Serializable, Identificavel, InfoB
 			for (PropertyDescriptor w : origemWrapper.getPropertyDescriptors()) {
 				Object valor = origemWrapper.getPropertyValue(w.getName());
 
-				if ("arquivoList".equalsIgnoreCase(w.getName()) || "telefoneList".equalsIgnoreCase(w.getName())
-						|| "enderecoList".equalsIgnoreCase(w.getName()) || "fotoList".equalsIgnoreCase(w.getName())
-						|| "relacionamentoList".equalsIgnoreCase(w.getName())) {
-					continue;
-				}
+//				if ("arquivoList".equalsIgnoreCase(w.getName()) || "telefoneList".equalsIgnoreCase(w.getName())
+//						|| "enderecoList".equalsIgnoreCase(w.getName()) || "fotoList".equalsIgnoreCase(w.getName())
+//						|| "relacionamentoList".equalsIgnoreCase(w.getName())) {
+//					continue;
+//				}
 
 				if (valor instanceof Collection) {
+					Optional<Dep<?, ?, ?, ?>> subDep = dep.getDependencia(w.getName());
+					s
+					Hibernate.initialize(valor);
 					Collection<EntidadeBase> valorCol = (Collection<EntidadeBase>) valor.getClass().newInstance();
 					for (EntidadeBase col : (Collection<EntidadeBase>) valor) {
 						valorCol.add(col);

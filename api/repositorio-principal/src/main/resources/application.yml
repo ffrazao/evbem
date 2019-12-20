@@ -21,13 +21,14 @@ spring:
    jpa:
       hibernate:
          ddl-auto: none
+         enable-lazy-load-no-trans: true
       properties:
          hibernate:
             show_sql: true
             format_sql: true
             use_sql_comments: true
             dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
-      open-in-view: true
+      #open-in-view: true
    datasource:
       hikari:
          connection-test-query: SELECT 1 FROM DUAL

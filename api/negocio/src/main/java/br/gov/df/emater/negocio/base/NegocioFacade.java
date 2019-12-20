@@ -4,8 +4,10 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import br.com.frazao.cadeiaresponsabilidade.Biblioteca;
 import br.com.frazao.cadeiaresponsabilidade.BibliotecaSpring;
@@ -16,7 +18,11 @@ import br.com.frazao.cadeiaresponsabilidade.ContextoBase;
 @Service
 public class NegocioFacade {
 
-	private final BibliotecaSpring biblioteca;
+	 
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+    
+    private final BibliotecaSpring biblioteca;
 
 	@Autowired
 	public NegocioFacade(final BibliotecaSpring biblioteca) throws Exception {
@@ -179,10 +185,23 @@ public class NegocioFacade {
 		return this.executar(catalogo, comando, requisicao, null, null);
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	// @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public Object executarSomenteLeitura(final String catalogo, final String comando, final Object requisicao,
 			final Principal usuario) throws NegocioException {
-		return this.executar(catalogo, comando, requisicao, usuario, null);
+		Object result = null;
+
+		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+		result = transactionTemplate.execute(status -> {
+			try {
+				return this.executar(catalogo, comando, requisicao, usuario, null);
+			} catch (NegocioException e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+
+		
+		return result;
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
