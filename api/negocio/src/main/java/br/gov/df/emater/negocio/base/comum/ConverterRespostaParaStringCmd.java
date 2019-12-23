@@ -15,10 +15,11 @@ public class ConverterRespostaParaStringCmd extends Comando {
 	protected void procedimento(final Contexto contexto) throws Exception {
 		Object resposta = contexto.getResposta();
 		String result = null;
+
 		if (resposta instanceof Collection) {
-			result = StringUtils.join(((Collection<?>) resposta).iterator(), ",");
+			result = resposta == null ? "" : StringUtils.join(((Collection<?>) resposta).iterator(), ",");
 		} else {
-			result = resposta.toString();
+			result = resposta == null ? "" : resposta.toString();
 		}
 		contexto.setResposta(result);
 	}

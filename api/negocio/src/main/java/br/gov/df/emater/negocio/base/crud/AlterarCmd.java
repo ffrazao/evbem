@@ -5,23 +5,25 @@ import org.springframework.stereotype.Component;
 
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.gov.df.emater.negocio.base.Constantes;
 
 @Component
 public class AlterarCmd extends Comando {
 
 	@Override
 	protected void procedimento(final Contexto contexto) throws Exception {
-		final Object modelo = contexto.getRequisicao();
+		final Object requisicao = contexto.getRequisicao();
+		final Object salvo = contexto.get(Constantes.ID_LIST_RESULT);
 		Object instancia = null;
-		if (modelo != null) {
+		if (salvo != null) {
 
-			if (modelo instanceof Integer) {
+			if (salvo instanceof Integer) {
 				// recuperar pelo id
 			} else {
 
 			}
 		}
-		instancia = modelo == null ? BeanUtils.instantiateClass((Class<?>) contexto.get("entidade")) : modelo;
+		instancia = salvo == null ? BeanUtils.instantiateClass((Class<?>) contexto.get("entidade")) : salvo;
 		contexto.setResposta(instancia);
 	}
 

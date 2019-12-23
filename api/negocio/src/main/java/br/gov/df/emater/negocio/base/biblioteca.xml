@@ -7,42 +7,57 @@
 	</cadeia>
 	<comando nome="depois" classe="br.gov.df.emater.negocio.base.crud.DepoisCmd" />
 
-	<!-- CRUD - internos -->
+	<!-- Operações de apoio -->
+	<comando nome="converterInfoBasicaCmd" classe="br.gov.df.emater.negocio.base.crud.ConverterInfoBasicaCmd" />
+	<comando nome="converterRespostaParaStringCmd" classe="br.gov.df.emater.negocio.base.comum.ConverterRespostaParaStringCmd"/>
 	<comando nome="entidadeUnicaCmd" classe="br.gov.df.emater.negocio.base.crud.EntidadeUnicaCmd"/>
-	<comando nome="criarCmd" classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
+	<comando nome="ordenavelEPriorizavelCmd" classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
 	<cadeia nome="prepararColecao" tipo="SEQUENCIAL">
-		<comando nome="ordenavelEPriorizavelCmd" classe="br.gov.df.emater.negocio.base.crud.OrdenavelEPriorizavelCmd"/>
+		<comando nome="ordenavelEPriorizavelCmd" />
 	</cadeia>
 	<cadeia nome="prepararEntidade" classe="br.gov.df.emater.negocio.base.comum.IteirarColecaoCdSq">
 		<comando nome="entidadeUnicaCmd"/>
-		<comando nome="criarCmd"/>
 	</cadeia>
+	
+	<!-- CRUD - internos -->
+	<comando nome="iniciarCmd" classe="br.gov.df.emater.negocio.base.crud.IniciarCmd" />
+	<comando nome="criarCmd" classe="br.gov.df.emater.negocio.base.crud.CriarCmd" />
+	<comando nome="restaurarCmd" classe="br.gov.df.emater.negocio.base.crud.RestaurarCmd" />
+	<comando nome="listarCmd" classe="br.gov.df.emater.negocio.base.crud.ListarCmd" />
+	<comando nome="alterarCmd" classe="br.gov.df.emater.negocio.base.crud.AlterarCmd" />
+	<comando nome="salvarCmd" classe="br.gov.df.emater.negocio.base.crud.SalvarCmd" />
+	<comando nome="excluirCmd" classe="br.gov.df.emater.negocio.base.crud.ExcluirCmd" />
 
-
-	<!-- CRUD -->
+	<!-- Cadeias do CRUD -->
 	<cadeia nome="iniciar" tipo="SEQUENCIAL">
-		<comando nome="iniciarCmd" classe="br.gov.df.emater.negocio.base.crud.IniciarCmd" />
+		<comando nome="iniciarCmd" />
 	</cadeia>
 	<cadeia nome="criar" tipo="SEQUENCIAL">
 		<cadeia nome="prepararColecao" />
-		<cadeia nome="prepararEntidade" />
-		<comando nome="converterRespostaParaStringCmd" classe="br.gov.df.emater.negocio.base.comum.ConverterRespostaParaStringCmd"/>
+		<cadeia nome="prepararEntidade">
+			<comando nome="criarCmd" ordem="1"/>
+		</cadeia>
+		<comando nome="converterRespostaParaStringCmd" />
 	</cadeia>
 	<cadeia nome="restaurar" tipo="SEQUENCIAL">
-		<comando nome="restaurarCmd" classe="br.gov.df.emater.negocio.base.crud.RestaurarCmd" />
-		<comando nome="converteInfoBasicaCmd" classe="br.gov.df.emater.negocio.base.crud.ConverteInfoBasicaCmd" />
+		<comando nome="restaurarCmd" />
+		<comando nome="converterInfoBasicaCmd" />
 	</cadeia>
 	<cadeia nome="listar" tipo="SEQUENCIAL">
-		<comando nome="listarCmd" classe="br.gov.df.emater.negocio.base.crud.ListarCmd" />
+		<comando nome="listarCmd" />
 	</cadeia>
 	<cadeia nome="alterar" tipo="SEQUENCIAL">
-		<comando nome="alterarCmd" classe="br.gov.df.emater.negocio.base.crud.AlterarCmd" />
+		<comando nome="restaurarCmd" />
+		<cadeia nome="prepararColecao" />
+		<cadeia nome="prepararEntidade">
+			<comando nome="alterarCmd" ordem="1"/>
+		</cadeia>
 	</cadeia>
 	<cadeia nome="salvar" tipo="SEQUENCIAL">
-		<comando nome="salvarCmd" classe="br.gov.df.emater.negocio.base.crud.SalvarCmd" />
+		<comando nome="salvarCmd" />
 	</cadeia>
 	<cadeia nome="excluir" tipo="SEQUENCIAL">
-		<comando nome="excluirCmd" classe="br.gov.df.emater.negocio.base.crud.ExcluirCmd" />
+		<comando nome="excluirCmd" />
 	</cadeia>
 
 	<!-- Definição dos catalogos modelo -->

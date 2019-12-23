@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.com.frazao.cadeiaresponsabilidade.ContextoBase;
+import br.gov.df.emater.negocio.base.Constantes;
 import br.gov.df.emater.negocio.base.NegocioException;
 import br.gov.df.emater.negocio.base.NegocioIntegridadeDadosException;
 import br.gov.df.emater.repositorio_principal.entidade.base.Identificavel;
@@ -40,6 +43,7 @@ public class BaseCrudCtrl<E extends Identificavel, F extends FiltroDTO, R> exten
 	@PutMapping(value = "/{ids}")
 	public ResponseEntity<Void> alterar(@Valid @PathVariable(name = "ids", required = true) final List<Integer> ids,
 			@Valid @RequestBody(required = true) final List<E> entidades, final Principal usuario) throws Exception {
+		
 		// garantir que os itens modificados serão os informados
 		if (ids.size() != entidades.size()) {
 			throw new NegocioException(
@@ -54,7 +58,11 @@ public class BaseCrudCtrl<E extends Identificavel, F extends FiltroDTO, R> exten
 			}
 			entidades.get(i).setId(ids.get(i));
 		}
-		this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.ALTERAR, entidades, usuario);
+		
+		Contexto contexto = new ContextoBase();
+		contexto.put(Constantes.ID_LIST, ids);
+		
+		this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.ALTERAR, entidades, usuario, contexto);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -66,7 +74,7 @@ public class BaseCrudCtrl<E extends Identificavel, F extends FiltroDTO, R> exten
 		entidades.stream().forEach(e -> e.setId(null));
 		String result = (String) this.getNegocioFacade().executarComEscrita(this.getFuncionalidade(), Crud.CRIAR,
 				entidades, usuario);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{ids}").buildAndExpand(result).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{entidade}").buildAndExpand(result).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
