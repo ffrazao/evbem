@@ -5,8 +5,8 @@ import java.util.Iterator;
 
 import org.springframework.stereotype.Component;
 
-import br.com.frazao.cadeiaresponsabilidade.CadeiaSequencial;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
+import br.com.frazao.cadeiaresponsabilidade.impl.CadeiaSequencial;
 import br.gov.df.emater.negocio.base.Constantes;
 
 @Component

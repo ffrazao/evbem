@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
-import br.com.frazao.cadeiaresponsabilidade.ContextoBase;
+import br.com.frazao.cadeiaresponsabilidade.impl.ContextoBase;
 import br.gov.df.emater.negocio.base.Constantes;
 import br.gov.df.emater.negocio.base.NegocioException;
 import br.gov.df.emater.negocio.base.NegocioIntegridadeDadosException;

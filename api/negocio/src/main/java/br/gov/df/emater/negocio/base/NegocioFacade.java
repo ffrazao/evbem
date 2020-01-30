@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import br.com.frazao.cadeiaresponsabilidade.Biblioteca;
-import br.com.frazao.cadeiaresponsabilidade.BibliotecaSpring;
 import br.com.frazao.cadeiaresponsabilidade.Comando;
 import br.com.frazao.cadeiaresponsabilidade.Contexto;
-import br.com.frazao.cadeiaresponsabilidade.ContextoBase;
+import br.com.frazao.cadeiaresponsabilidade.impl.ContextoBase;
+import br.com.frazao.cadeiaresponsabilidade.spring.BibliotecaSpring;
 
 @Service
 public class NegocioFacade {
